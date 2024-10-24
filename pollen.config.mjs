@@ -3,27 +3,7 @@ import extend from 'extend'
 import { defineConfig } from 'pollen-css/utils'
 import { pick } from '@txjs/shared'
 import { isArray } from '@txjs/bool'
-
-const defaultColors = {
-	black: '#000000',
-  white: '#ffffff',
-  red: '#ee0a24',
-  blue: '#1989fa',
-  orange: '#ff976a',
-  green: '#07c160',
-  primary: '#1677ff',
-  grey: [
-    '#f8f8f8',
-    '#efefef',
-    '#dfdfdf',
-    '#c6c6c6',
-    '#adadad',
-    '#949494',
-    '#626262',
-    '#494949',
-    '#303030'
-  ]
-}
+import { palettes } from './theme.mjs'
 
 const generateSerial = (color, items) => {
 	return items
@@ -81,7 +61,7 @@ const formatterColor = (palettes = {}) => {
 }
 
 export default defineConfig((config) => {
-  const presetColors = paletteSerial(defaultColors)
+  const presetColors = paletteSerial(palettes)
   const modules = pick(config, ['size', 'radius', 'layer', 'line', 'weight'])
 
   modules.size = {

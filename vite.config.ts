@@ -7,6 +7,7 @@ import Inject from '@rollup/plugin-inject'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import ejs from 'ejs'
 import { version } from './package.json'
+import { token } from './theme.mjs'
 
 const resolve = (path: string) => {
   return fileURLToPath(new URL(path, import.meta.url))
@@ -15,6 +16,7 @@ const resolve = (path: string) => {
 export default defineConfig(({ mode }) => {
   const isDev = mode === 'development'
   const env = loadEnv(mode, process.cwd())
+  const theme = { token }
 
   return {
     server: {
@@ -126,7 +128,7 @@ export default defineConfig(({ mode }) => {
               attrs: {
                 type: 'text/javascript'
               },
-              children: `window.THEME = {}`
+              children: `window.THEME = ${JSON.stringify(theme)}`
             }
           ]
         }
