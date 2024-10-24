@@ -1,0 +1,108 @@
+:global(#app) {
+  height: 100%;
+}
+
+.layout {
+  width: 100%;
+  height: 100%;
+
+  &__sider {
+    &-menu {
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+
+      :global {
+        @submenu-cls: ~'.ant-menu-submenu';
+
+        @{submenu-cls} {
+          clear: both;
+          overflow: hidden;
+
+          &-arrow {
+            &:before,
+            &:after {
+              height: 1px;
+            }
+
+            &:before {
+              transform: rotate(-45deg) translateX(3px) translateZ(0px);
+            }
+
+            &:after {
+              transform: rotate(45deg) translateX(-3px) translateZ(0px);
+            }
+          }
+        }
+
+        @{submenu-cls}-open@{submenu-cls}-inline > @{submenu-cls}-title > @{submenu-cls}-arrow {
+          &:before {
+            transform: rotate(45deg) translateX(3px) translateZ(0px);
+          }
+
+          &:after {
+            transform: rotate(-45deg) translateX(-3px) translateZ(0px);
+          }
+        }
+      }
+    }
+
+    &-trigger {
+      cursor: pointer;
+      position: absolute;
+      right: var(--size-3);
+      bottom: var(--size-3);
+      color: var(--color-text-light);
+      font-size: var(--size-lg);
+      width: var(--size-6);
+      height: var(--size-6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-xs);
+      background-color: var(--color-bgcolor);
+
+      &:hover {
+        background-color: var(--color-grey-2);
+      }
+
+      &--collapsed {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+  }
+
+  :global .ant-layout {
+    &-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      line-height: 60px;
+      padding: 0;
+      z-index: var(--layer-5);
+    }
+
+    &-sider {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100%;
+      background-color: var(--color-white);
+      box-shadow: 0 2px 8px -2px rgb(var(--color-black-base), 0.1);
+
+      &:after {
+        content: ' ';
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: block;
+        width: 1px;
+        height: 100%;
+        background-color: var(--color-border);
+      }
+    }
+  }
+}

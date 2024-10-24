@@ -1,0 +1,72 @@
+@image-cls: ~'@{prefix}-image';
+
+:root {
+
+}
+
+.@{image-cls} {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+
+  &--block {
+    display: block;
+  }
+
+  &--round {
+    border-radius: var(--radius-full);
+    overflow: hidden;
+
+    .@{image-cls}__img {
+      border-radius: inherit;
+    }
+  }
+
+  &--full {
+    width: 100%;
+    overflow: hidden;
+
+    &:after {
+      content: ' ';
+      display: block;
+      padding-top: 100%;
+    }
+
+    .@{image-cls} {
+      &__img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+    }
+  }
+
+  &__img,
+  &__loading,
+  &__error {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__loading,
+  &__error {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--color-bgcolor);
+
+    &-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 50%;
+      height: 50%;
+      transform: translate(-50%, -50%);
+      transform-origin: 0 0;
+      background: no-repeat center / contain;
+    }
+  }
+}
