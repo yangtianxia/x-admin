@@ -1,0 +1,13 @@
+{
+  "cssvar.files": [
+    "./node_modules/pollen-css/dist/pollen.css"
+  ],
+  "cssvar.ignore": [],
+  "cssvar.disableSort": true,
+  "cssvar.extensions": ["css", "less", "sass", "scss", "vue", "html", "jsx", "tsx"],
+  "cssVariables.lookupFiles": [
+    "**/*.css",
+    "**/*.less",
+    "./node_modules/pollen-css/dist/pollen.css"
+  ]
+}
