@@ -39,9 +39,7 @@ export const APP_KEY = createInjectionKey<AppProvide>(name)
 
 export default defineComponent({
   name,
-
   props: appProps,
-
   setup(props, { slots }) {
     const { parent: appContext } = useParent(APP_CONTEXT_KEY)
 
