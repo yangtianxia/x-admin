@@ -15,7 +15,6 @@ const [name, bem] = BEM('dashboard', less)
 
 export default defineComponent({
   name,
-
   setup () {
     useAppContext({
       loading: false
