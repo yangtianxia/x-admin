@@ -5,8 +5,8 @@ import { defineComponent } from 'vue'
 import { useAssets } from '@/hooks/assets'
 
 // Components
-import LoginBanner from './components/LoginBanner'
-import LoginForm from './components/LoginForm'
+import LoginBanner from './components/banner'
+import LoginForm from './components/form'
 
 // Style
 import style from './index.module.less'
@@ -15,7 +15,6 @@ const [name, bem] = BEM('login', style)
 
 export default defineComponent({
   name,
-
   setup() {
     return () => (
       <div class={bem()}>
