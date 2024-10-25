@@ -8,6 +8,7 @@ import { useAppContext } from '@/hooks/app-context'
 import { App } from '@/components/app'
 import { Breadcrumb } from '@/components/breadcrumb'
 
+// Style
 import less from './index.module.less'
 
 const [name, bem] = BEM('dashboard', less)
@@ -16,7 +17,7 @@ export default defineComponent({
   name,
 
   setup () {
-    const appContext = useAppContext({
+    useAppContext({
       loading: false
     })
 
