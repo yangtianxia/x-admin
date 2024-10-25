@@ -38,9 +38,7 @@ export type ResultProps = ExtractPropTypes<typeof resultProps>
 
 export default defineComponent({
   name,
-
   props: resultProps,
-
   setup(props, { slots }) {
     const option = reactive({
       image: props.image,
