@@ -29,7 +29,7 @@ export const usePermission = () => {
         }
 
         if (firstElement && firstElement?.children) {
-          cloneRouters.push(...firstElement?.children)
+          cloneRouters.push(...firstElement!.children)
         }
       }
       return null
