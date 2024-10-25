@@ -4,6 +4,7 @@ import { defineComponent } from 'vue'
 // Component
 import { Result } from '@/components/result'
 
+// Style
 import style from './index.module.less'
 
 const [name, bem] = BEM('not-found', style)
