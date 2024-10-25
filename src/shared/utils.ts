@@ -11,6 +11,6 @@ export const toIOSDate = (value: string) => {
   return value
 }
 
-export const getRGBA = (input: string, alpha = 1) => {
+export const getCSSVar = (input: string, alpha = 1) => {
   return `rgba(var(--color-${input}-base), ${alpha})`
 }
