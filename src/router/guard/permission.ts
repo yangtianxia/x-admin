@@ -5,7 +5,7 @@ import { usePermission } from '@/hooks/permission'
 import { useMenuTree } from '@/hooks/menu-tree'
 
 import { appRoutes } from '../routes'
-import { WHITE_LIST, NOT_FOUND } from '../constant'
+import { WHITE_LIST, NOT_FOUND_ROUTE } from '../constant'
 
 export default function setupPermissionGuard(router: Router) {
   router.beforeEach(async (to, from, next) => {
@@ -46,16 +46,14 @@ export default function setupPermissionGuard(router: Router) {
         next()
       } else {
         const serverFirstMenu = menuTree.value[0]
-        const destination = serverFirstMenu ? { name: serverFirstMenu.name } : NOT_FOUND
+        const destination = serverFirstMenu ? { name: serverFirstMenu.name } : NOT_FOUND_ROUTE
         next(destination)
       }
     } else {
       if (permissionsAllow) {
         next()
       } else {
-        const destination =
-          Permission.findFirstPermissionRoute(appRoutes, userStore.role) ||
-          NOT_FOUND
+        const destination = Permission.findFirstPermissionRoute(appRoutes, userStore.role) || NOT_FOUND_ROUTE
         next(destination)
       }
     }
