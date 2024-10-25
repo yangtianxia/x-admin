@@ -53,9 +53,7 @@ export type ImageProps = ExtractPropTypes<typeof imageProps>
 
 export default defineComponent({
   name,
-
   props: imageProps,
-
   setup(props, { slots }) {
     const error = ref(false)
     const loading = ref(true)
@@ -205,15 +203,18 @@ export default defineComponent({
       )
     }
 
-    return () => (
-      <div
-        class={bem({ round: props.round, block: props.block, full: props.full })}
-        style={style.value}
-      >
-        {renderImage()}
-        {renderPlaceholder()}
-        {slots.default?.()}
-      </div>
-    )
+    return () => {
+      const { round, block, full } = props
+      return (
+        <div
+          class={bem({ round, block, full })}
+          style={style.value}
+        >
+          {renderImage()}
+          {renderPlaceholder()}
+          {slots.default?.()}
+        </div>
+      )
+    }
   }
 })
