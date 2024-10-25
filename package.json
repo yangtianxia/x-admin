@@ -31,6 +31,7 @@
     "@txjs/make": "^0.0.3",
     "@txjs/shared": "^0.0.15",
     "@txjs/validator": "^0.0.9",
+    "@vant/area-data": "^2.0.0",
     "@vant/use": "^1.6.0",
     "ant-design-vue": "^4.2.3",
     "axios": "^1.4.0",
