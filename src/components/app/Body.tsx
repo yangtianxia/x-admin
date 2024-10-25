@@ -23,11 +23,8 @@ export type BodyProps = ExtractPropTypes<typeof bodyProps>
 
 export default defineComponent({
   name,
-
   inheritAttrs: false,
-
   props: bodyProps,
-
   setup(props, { slots, attrs }) {
     const app = inject(APP_KEY)
 
