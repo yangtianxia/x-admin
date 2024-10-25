@@ -1,10 +1,10 @@
 import qs from 'qs'
-import axios, { type AxiosError, type AxiosRequestConfig, type AxiosContentType } from 'axios'
+import axios, { type AxiosError, type AxiosRequestConfig, type RequestContentType } from 'axios'
 import { isPlainObject, isUndefined, isString, isNil, isFunction } from '@txjs/bool'
 import { isLogin, getToken } from '@/shared/auth'
 
 class WithAxios {
-  #contentType: AxiosContentType = 'json'
+  #contentType: RequestContentType = 'JSON'
 
   #axios = axios.create({
     baseURL: import.meta.env.DEV ? import.meta.env.VITE_PROXY_API : import.meta.env.VITE_API,
@@ -21,19 +21,15 @@ class WithAxios {
           config.headers.set('Authorization', `Bearer ${getToken()}`)
         }
         return config
-      },
-      (error) => {
-
       }
+      // ,(error) => {}
     )
 
     this.#axios.interceptors.response.use(
       (config) => {
         return config
-      },
-      (error) => {
-
       }
+      // ,(error) => {}
     )
   }
 
@@ -77,11 +73,11 @@ class WithAxios {
     return result
   }
 
-  #getContentType(type: AxiosContentType) {
+  #getContentType(type: RequestContentType) {
     switch (type) {
-      case 'json':
+      case 'JSON':
         return 'application/json'
-      case 'form-data':
+      case 'FormData':
         return 'application/x-www-form-urlencoded'
     }
   }
@@ -108,7 +104,7 @@ class WithAxios {
     config.transformRequest = [
       ...config.transformRequest,
       this.#cleanParams,
-      (data: any) => isNil(config.type) || config.type == 'json'
+      (data: any) => isNil(config.type) || config.type == 'JSON'
         ? JSON.stringify(data)
         : qs.stringify(data)
     ]
