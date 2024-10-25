@@ -3,6 +3,7 @@ import { defineConfig, loadEnv } from 'vite'
 import Autoprefixer from 'autoprefixer'
 import Vue from '@vitejs/plugin-vue'
 import VueJSX from '@vitejs/plugin-vue-jsx'
+import Legacy from '@vitejs/plugin-legacy'
 import Inject from '@rollup/plugin-inject'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import ejs from 'ejs'
@@ -70,6 +71,7 @@ export default defineConfig(({ mode }) => {
       VueJSX({
         isCustomElement: (tag) => tag.startsWith('custom')
       }),
+      Legacy(),
       Inject({
         $t: resolve('./src/locale/t.ts'),
         BEM: '@txjs/bem'
