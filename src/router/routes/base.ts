@@ -1,7 +1,7 @@
 import type { RouteRecordRaw } from 'vue-router'
 import { REDIRECT_ROUTE_NAME } from '../constant'
 
-export const DEFAULT_LAYOUT = () => import('@/views/layout')
+export const DEFAULT_LAYOUT = () => import('@/layout')
 
 export const REDIRECT_MAIN: RouteRecordRaw = {
   path: '/redirect',
