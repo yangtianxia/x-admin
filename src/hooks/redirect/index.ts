@@ -1,7 +1,7 @@
 import { reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { isValidString } from '@txjs/bool'
-import { DEFAULT_ROUTE } from '@/router/constant'
+import { LOGIN_ROUTE_NAME, DEFAULT_ROUTE } from '@/router/constant'
 import { REDIRECT_URI, REDIRECT_PARAMS } from '@/shared/constant'
 
 export const useRedirect = () => {
@@ -20,7 +20,7 @@ export const useRedirect = () => {
 
   const go = () => {
     router.replace({
-      name: 'login',
+      name: LOGIN_ROUTE_NAME,
       query: {
         [REDIRECT_URI]: fullPath
       }
