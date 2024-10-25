@@ -1,0 +1,68 @@
+.login-banner {
+  &,
+  & > div {
+    height: 100%;
+  }
+
+  :global {
+    .slick-list,
+    .slick-slide {
+      &,
+      & > div {
+        height: 100%;
+      }
+    }
+  }
+
+  & &__arrow {
+    color: rgba(var(--color-white-base), .3);
+    font-size: var(--size-6);
+    width: auto;
+    height: auto;
+    margin-top: calc(var(--size-3) * -1);
+
+    &:before {
+      content: none;
+    }
+
+    &:hover {
+      color: var(--color-grey-3);
+    }
+
+    &--left {
+      left: var(--size-4);
+    }
+
+    &--right {
+      right: var(--size-4);
+    }
+  }
+
+  &__slide {
+    &,
+    &-inner {
+      height: 100%;
+    }
+
+    &-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &-title {
+      color: var(--color-grey-1);
+      font-size: var(--size-xl);
+      font-weight: var(--weight-medium);
+      line-height: var(--line-md);
+    }
+
+    &-subtitle {
+      color: var(--color-grey-3);
+      font-size: var(--size-md);
+      line-height: var(--line-md);
+      margin-top: var(--size-2);
+    }
+  }
+}
