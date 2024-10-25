@@ -1,5 +1,5 @@
 import { unref, type Ref, type CSSProperties } from 'vue'
-import { isNil, isNumeric, isInteger, isArray } from '@txjs/bool'
+import { isNumeric, isInteger, isArray } from '@txjs/bool'
 
 export const addUnit = (value?: Numeric) => {
   if (isNumeric(value)) {
