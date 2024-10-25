@@ -11,6 +11,7 @@ import {
 // Common
 import { useRoute, useRouter } from 'vue-router'
 import { useAppStore, useUserStore } from '@/store'
+import { NOT_FOUND_ROUTE } from '@/router/constant'
 import { usePermission } from '@/hooks/permission'
 
 // Components
@@ -89,7 +90,7 @@ export default defineComponent({
       () => userStore.role,
       (roleValue) => {
         if (roleValue && !permission.accessRouter(route)) {
-          router.push({ name: 'notFound' })
+          router.push(NOT_FOUND_ROUTE)
         }
       }
     )
