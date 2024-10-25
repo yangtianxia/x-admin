@@ -1,13 +1,14 @@
 import { reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { isValidString } from '@txjs/bool'
+import { DEFAULT_ROUTE } from '@/router/constant'
 import { REDIRECT_URI, REDIRECT_PARAMS } from '@/shared/constant'
 
 export const useRedirect = () => {
-  const { params } = useRoute()
+  const { query, fullPath } = useRoute()
   const router = useRouter()
 
-  let redirect_uri = params[REDIRECT_URI] as string
+  let redirect_uri = query[REDIRECT_URI] as string
 
   if (isValidString(redirect_uri)) {
     redirect_uri = decodeURIComponent(redirect_uri)
@@ -17,15 +18,26 @@ export const useRedirect = () => {
     [REDIRECT_PARAMS]: redirect_uri
   })
 
-  const redirectTo = (callback?: UnknownCallback) => {
+  const go = () => {
+    router.replace({
+      name: 'login',
+      query: {
+        [REDIRECT_URI]: fullPath
+      }
+    })
+  }
+
+  const to = (callback?: UnknownCallback) => {
     const redirectURL = from[REDIRECT_PARAMS]
 
-    if (redirectURL) {
-      callback?.(redirectURL) ?? router.replace(redirectURL)
+    if (!redirectURL) {
+      router.replace(DEFAULT_ROUTE)
+    } else if (callback) {
+      callback(redirectURL)
     } else {
-      router.back()
+      router.replace(redirectURL)
     }
   }
 
-  return { from, params, redirectTo }
+  return { from, query, go, to }
 }
