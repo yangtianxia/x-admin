@@ -16,13 +16,11 @@ const breadcrumbProps = {
 
 export default defineComponent({
   name,
-
   props: breadcrumbProps,
-
   setup(props) {
     const routes = computed(() => {
       return [
-        {breadcrumbName: 'home', path: ''},
+        {breadcrumbName: 'HOME', path: ''},
         ...props.items.map((item) => ({
           breadcrumbName: $t(item),
           path: ''
@@ -35,10 +33,9 @@ export default defineComponent({
         <Breadcrumb
           routes={routes.value}
           itemRender={({ route }) => {
-            if (route.breadcrumbName === 'home') {
-              return <HomeOutlined />
-            }
-            return <span>{route.breadcrumbName}</span>
+            return route.breadcrumbName === 'HOME'
+              ? <HomeOutlined />
+              : <span>{route.breadcrumbName}</span>
           }}
         />
       </div>
