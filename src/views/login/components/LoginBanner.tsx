@@ -1,9 +1,11 @@
-import { Carousel } from 'ant-design-vue'
-import { Icon } from '@/components/icon'
-
-import BEM from '@txjs/bem'
+// Vue
 import { defineComponent } from 'vue'
 
+// Components
+import { Icon } from '@/components/icon'
+import { Carousel } from 'ant-design-vue'
+
+// Style
 import style from '../index.module.less'
 
 const [name, bem] = BEM('login-banner', style)
