@@ -9,18 +9,18 @@ const externalModules = import.meta.glob('./externalModules/*.ts', {
 })
 
 function formatModules(_modules: any, result: RouteRecordNormalized[]) {
-  Object.keys(_modules).forEach((key) => {
-    const defaultModule = _modules[key].default
+  Object
+    .keys(_modules)
+    .forEach((key) => {
+      const defaultModule = _modules[key].default
+      if (isNil(defaultModule)) return
 
-    if (isNil(defaultModule)) return
-
-    const moduleList = isArray(defaultModule)? [...defaultModule]: [defaultModule]
-
-    result.push(
-      ...moduleList
-    )
-  })
-  return result
+      const moduleList = isArray(defaultModule)
+        ? [...defaultModule]
+        : [defaultModule]
+      result.push(...moduleList)
+    })
+  return result.sort((a, b) => (b?.meta.order ?? 0) - (a?.meta.order ?? 0))
 }
 
 export const appRoutes: RouteRecordNormalized[] = formatModules(modules, [])
