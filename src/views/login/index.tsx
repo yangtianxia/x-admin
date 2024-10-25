@@ -1,10 +1,14 @@
-import BEM from '@txjs/bem'
+// Vue
 import { defineComponent } from 'vue'
+
+// Common
 import { useAssets } from '@/hooks/assets'
 
+// Components
 import LoginBanner from './components/LoginBanner'
 import LoginForm from './components/LoginForm'
 
+// Style
 import style from './index.module.less'
 
 const [name, bem] = BEM('login', style)
