@@ -16,6 +16,7 @@ import {
   Menu
 } from 'ant-design-vue'
 
+// Style
 import less from './index.module.less'
 
 const [name, bem] = BEM('header', less)
@@ -25,7 +26,7 @@ export default defineComponent({
 
   setup() {
     const locales = [...LOCALE_OPTIONS]
-    const { changeLocale, currentLocale } = useLocale()
+    const { changeLocale } = useLocale()
 
     const triggerBtnRef = ref<HTMLElement>()
 
