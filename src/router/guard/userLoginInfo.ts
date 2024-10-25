@@ -1,27 +1,37 @@
-import type { Router, LocationQueryRaw } from 'vue-router'
 import NProgress from 'nprogress'
-
+import type { Router, LocationQueryRaw } from 'vue-router'
 import { useUserStore } from '@/store'
 import { isLogin } from '@/shared/auth'
+import { REDIRECT_URI } from '@/shared/constant'
 
 export default function setupUserLoginInfoGuard(router: Router) {
-  router.beforeEach(async (to, from, next) => {
+  router.beforeEach(async (to, _, next) => {
     NProgress.start()
     const userStore = useUserStore()
+
     if (isLogin()) {
-      if (userStore.role) {
+      if (userStore.id) {
         next()
       } else {
         try {
           await userStore.getUserInfo()
           next()
-        } catch (err) {
-          await userStore.logout()
+        } catch (err: any) {
+          const needReset = err === 'USER_NOT_FOUND' || err?.code === 401
+
+          if (needReset) {
+            await userStore.logout()
+          }
+
+          if (to.name === 'login' || to.name === 'notPermission') {
+            next()
+            return
+          }
+
           next({
-            name: 'login',
+            name: needReset ? 'login' : 'notPermission',
             query: {
-              redirect: to.name,
-              ...to.query
+              [REDIRECT_URI]: to.fullPath
             } as LocationQueryRaw
           })
         }
@@ -34,8 +44,7 @@ export default function setupUserLoginInfoGuard(router: Router) {
       next({
         name: 'login',
         query: {
-          redirect: to.name,
-          ...to.query
+          [REDIRECT_URI]: to.fullPath
         } as LocationQueryRaw
       })
     }
