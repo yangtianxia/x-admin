@@ -1,3 +1,6 @@
+import axios from '../with-axios'
+
+/** 退出登录 */
 export function postLogout() {
-  return Promise.resolve()
+  return axios.post('/logout')
 }

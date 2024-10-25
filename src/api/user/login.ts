@@ -1,11 +1,15 @@
+import axios from '../with-axios'
+
 interface LoginReturn {
   token: string
 }
 
-export interface LoginQuery {}
+export interface LoginQuery {
+  username: string
+  password: string
+}
 
+/** 登录 */
 export function postLogin(data: LoginQuery) {
-  return Promise.resolve<LoginReturn>({
-    token: 'ddd'
-  })
+  return axios.post<LoginReturn>('/login', data)
 }
