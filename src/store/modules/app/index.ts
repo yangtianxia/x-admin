@@ -6,27 +6,22 @@ import defaultSettings from '@/config/settings'
 
 const useAppStore = defineStore('app', {
   state: (): AppState => ({ ...defaultSettings }),
-
   getters: {
     appCurrentSettings(state: AppState) {
       return { ...state }
     },
-
     appAsyncMenus(state: AppState): RouteRecordNormalized[] {
       return state.serverMenu
     }
   },
-
   actions: {
     updateSettings(settings: Partial<AppState>) {
-      // @ts-ignore-next-line
+      // @ts-ignore
       this.$patch(settings)
     },
-
     toggleMenu(value: boolean) {
       this.hideMenu = value
     },
-
     async fetchServerMenuConfig() {
       try {
         this.serverMenu = await getMenuList()
@@ -34,7 +29,6 @@ const useAppStore = defineStore('app', {
         // TODO: notify
       }
     },
-
     clearServerMenu() {
       this.serverMenu = []
     }

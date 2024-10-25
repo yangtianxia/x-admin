@@ -24,13 +24,11 @@ const useUserStore = defineStore('user', {
     certification: undefined,
     role: ''
   }),
-
   getters: {
     userInfo(state: UserState): UserState {
       return { ...state }
     }
   },
-
   actions: {
     switchRoles() {
       return new Promise((resolve) => {
@@ -38,20 +36,16 @@ const useUserStore = defineStore('user', {
         resolve(this.role)
       })
     },
-
     setInfo(partial: Partial<UserState>) {
       this.$patch(partial)
     },
-
     resetInfo() {
       this.$reset()
     },
-
     async getUserInfo() {
       const result = await getUserInfo()
       this.setInfo(result)
     },
-
     async login(loginForm: LoginQuery) {
       try {
         const result = await postLogin(loginForm)
@@ -61,7 +55,6 @@ const useUserStore = defineStore('user', {
         throw err
       }
     },
-
     logoutCallback() {
       const appStore = useAppStore()
       this.resetInfo()
@@ -69,7 +62,6 @@ const useUserStore = defineStore('user', {
       removeRouteListener()
       appStore.clearServerMenu()
     },
-
     async logout() {
       try {
         await postLogout()
