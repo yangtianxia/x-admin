@@ -18,10 +18,6 @@ export const useMenuTree = () => {
   const menuTree = computed(() => {
     const copyRoute = cloneDeep(appRoute.value) as RouteRecordNormalized[]
 
-    copyRoute.sort((a: RouteRecordNormalized, b: RouteRecordNormalized) =>
-      (a.meta.order || 0) - (b.meta.order || 0)
-    )
-
     function travel(_routes: RouteRecordRaw[], layer: number) {
       if (!_routes) {
         return null
