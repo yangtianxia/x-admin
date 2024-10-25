@@ -6,7 +6,11 @@ import type {
 } from './types'
 
 // Vue
-import { defineComponent, type PropType } from 'vue'
+import {
+  defineComponent,
+  type PropType,
+  type ExtractPropTypes
+} from 'vue'
 
 // Common
 import { camelize } from '@txjs/shared'
@@ -22,23 +26,25 @@ import {
 
 const [name] = BEM('icon')
 
+const iconProps = {
+  type: {
+    type: String as PropType <IconMap>,
+    required: true as const
+  },
+  spin: Boolean,
+  strokeWidth: Number,
+  size: [Number, String],
+  theme: String as PropType<Theme>,
+  fill: [String, Array] as PropType<string | string[]>,
+  strokeLinecap: String as PropType<StrokeLinecap>,
+  strokeLinejoin: String as PropType<StrokeLinejoin>
+}
+
+export type ImageProps = ExtractPropTypes<typeof iconProps>
+
 export default defineComponent({
   name,
-
-  props: {
-    type: {
-      type: String as PropType <IconMap>,
-      required: true
-    },
-    spin: Boolean,
-    strokeWidth: Number,
-    size: [Number, String],
-    theme: String as PropType<Theme>,
-    fill: [String, Array] as PropType<string | string[]>,
-    strokeLinecap: String as PropType<StrokeLinecap>,
-    strokeLinejoin: String as PropType<StrokeLinejoin>
-  },
-
+  props: iconProps,
   setup(props) {
     IconProvider({
       ...DEFAULT_ICON_CONFIGS,
