@@ -29,8 +29,8 @@ export const useAppContext = (options?: AppContextOption) => {
   const reload = (error: any, callback?: UnknownCallback) => {
     if (error.code === 401) return
 
-    let result = { status: error } as ResultOptions
-    let errMsg = error.message || error.errMsg || error.msg
+    const result = { status: error } as ResultOptions
+    const errMsg = error.message || error.errMsg || error.msg
 
     if (isString(error)) {
       result.desc = error
