@@ -1,38 +1,7 @@
 import tinycolor2 from 'tinycolor2'
-import extend from 'extend'
 import { defineConfig } from 'pollen-css/utils'
 import { pick } from '@txjs/shared'
-import { isArray } from '@txjs/bool'
 import { palettes } from './theme.mjs'
-
-const generateSerial = (color, items) => {
-	return items
-		.reduce(
-			(obj, value, index) => {
-				if (index === 5) {
-					obj[color] = value
-				}
-				obj[`${color}-${index + 1}`] = value
-				return obj
-			}, {}
-		)
-}
-
-const paletteSerial = (palettes) => {
-	return Object
-		.keys(palettes)
-		.reduce(
-			(obj, key) => {
-				const value = palettes[key]
-        if (isArray(value)) {
-          extend(obj, generateSerial(key, value))
-        } else {
-          obj[key] = value
-        }
-				return obj
-			}, {}
-		)
-}
 
 const alphaColor = (input) => {
   const color = tinycolor2(input)
@@ -61,7 +30,6 @@ const formatterColor = (palettes = {}) => {
 }
 
 export default defineConfig((config) => {
-  const presetColors = paletteSerial(palettes)
   const modules = pick(config, ['size', 'radius', 'layer', 'line', 'weight'])
 
   modules.size = {
@@ -95,16 +63,7 @@ export default defineConfig((config) => {
     out: 'ease-out'
   }
 
-  modules.color = {
-    ...formatterColor(presetColors),
-    bgcolor: 'var(--color-grey-1)',
-    active: 'var(--color-grey-2)',
-    border: 'var(--color-grey-3)',
-    text: 'var(--color-grey-9)',
-    'text-base': 'var(--color-grey-8)',
-    'text-light': 'var(--color-grey-7)',
-    'text-weak': 'var(--color-grey-6)',
-  }
+  modules.color = formatterColor(palettes)
 
   for (const key in config) {
     if (!modules[key]) {
