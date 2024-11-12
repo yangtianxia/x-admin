@@ -53,7 +53,7 @@ export default defineComponent({
       if (newConfig) {
         // 自定义状态不支持设置
         if (refresh && ['error', '500'].includes(status)) {
-          option.desc = $t('result.500.desc')
+          option.desc = $t('result.desc.500')
         }
 
         shallowMerge(option, newConfig)
@@ -65,7 +65,7 @@ export default defineComponent({
       const currentRefresh = props.refresh
       const newOption = omit(props, ['status', 'refresh'])
 
-      // 重新合并 option
+      // 重新合并配置
       shallowMerge(option, newOption)
 
       if (isPlainObject(currentStatus)) {
