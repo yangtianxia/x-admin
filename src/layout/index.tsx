@@ -112,17 +112,14 @@ export default defineComponent({
               v-show={!hideMenu.value}
               collapsible
               breakpoint="xl"
-              width={220}
+              width={menuWidth.value}
               trigger={null}
               collapsed={collapsed.value}
-              collapsedWidth={menuWidth.value}
               style={{ paddingTop: headerHeight.value }}
             >
-              <div class={bem('sider-menu')}>
-                <LayoutMenu />
-              </div>
+              <LayoutMenu />
               <div
-                class={bem('sider-trigger', { collapsed: collapsed.value })}
+                class={bem('trigger', { collapsed: collapsed.value })}
                 onClick={onCollapsed}
               >
                 <Icon
@@ -137,9 +134,7 @@ export default defineComponent({
             <Layout.Content>
               <LayoutPage />
             </Layout.Content>
-            {hasFooter.value ? (
-              <Layout.Footer></Layout.Footer>
-            ) : null}
+            {hasFooter.value ? <Layout.Footer /> : null}
           </Layout>
         </Layout>
       </Layout>
