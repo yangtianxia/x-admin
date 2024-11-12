@@ -17,7 +17,7 @@ export default function setupWindowGuard(router: Router) {
       bodyEl.classList.add(toName)
     }
 
-    if (fromName) {
+    if (fromName && fromName !== toName) {
       bodyEl.classList.remove(fromName)
     }
 
