@@ -6,7 +6,12 @@ import {
 } from 'vue'
 
 // Common
-import { useRoute, useRouter, type RouteRecordRaw, type RouteMeta } from 'vue-router'
+import {
+  useRoute,
+  useRouter,
+  type RouteRecordRaw,
+  type RouteMeta
+} from 'vue-router'
 import { isURL } from '@txjs/bool'
 import { makeArray } from '@txjs/make'
 import { useAppStore } from '@/store'
@@ -21,7 +26,10 @@ import { Icon } from '@/components/icon'
 // Components utils
 import { addUnit } from '@/components/_utils/style'
 
-const [name] = BEM('menu')
+// Style
+import style from './index.module.less'
+
+const [name, bem] = BEM('menu', style)
 
 export default defineComponent({
   name,
@@ -148,15 +156,17 @@ export default defineComponent({
     }
 
     return () => (
-      <Menu
-        v-model:openKeys={openKeys.value}
-        mode={topMenu.value ? 'horizontal' : 'inline'}
-        selectedKeys={selectedKey.value}
-        inlineIndent={inlineIndent.value}
-        style={{ height: '100%', width: '100%' }}
-      >
-        {renderSubMenu()}
-      </Menu>
+      <div class={bem()}>
+        <Menu
+          v-model:openKeys={openKeys.value}
+          mode={topMenu.value ? 'horizontal' : 'inline'}
+          selectedKeys={selectedKey.value}
+          inlineIndent={inlineIndent.value}
+          style={{ height: '100%', width: '100%' }}
+        >
+          {renderSubMenu()}
+        </Menu>
+      </div>
     )
   }
 })

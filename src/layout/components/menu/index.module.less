@@ -1,0 +1,39 @@
+.menu {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  :global {
+    @submenu-cls: ~'.ant-menu-submenu';
+
+    @{submenu-cls} {
+      clear: both;
+      overflow: hidden;
+
+      &-arrow {
+        &:before,
+        &:after {
+          height: 1px;
+        }
+
+        &:before {
+          transform: rotate(-45deg) translateX(3px) translateZ(0px);
+        }
+
+        &:after {
+          transform: rotate(45deg) translateX(-3px) translateZ(0px);
+        }
+      }
+    }
+
+    @{submenu-cls}-open@{submenu-cls}-inline > @{submenu-cls}-title > @{submenu-cls}-arrow {
+      &:before {
+        transform: rotate(45deg) translateX(3px) translateZ(0px);
+      }
+
+      &:after {
+        transform: rotate(-45deg) translateX(-3px) translateZ(0px);
+      }
+    }
+  }
+}
