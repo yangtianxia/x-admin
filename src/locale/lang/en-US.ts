@@ -1,11 +1,14 @@
-import localeCommon from './zh-CN/common'
+// Layout
+import HeaderLocale from './en-US/header'
+import MenuLocale from './en-US/menu'
+
+// Components
+import ResultLocale from '@/components/result/locale/en-US'
+
+// Views
 
 export default {
-  'menu.server.dashboard': 'Dashboard',
-  'menu.server.workplace': 'Workplace',
-  'menu.baiduWebsite': 'Baidu',
-  'header.action.search': 'Search',
-  'header.action.language': 'Language',
-  'header.action.locale': 'Switch to English',
-  ...localeCommon
+  ...HeaderLocale,
+  ...MenuLocale,
+  ...ResultLocale
 }

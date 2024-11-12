@@ -1,13 +1,14 @@
-import localeCommon from './zh-CN/common'
-import localeComponent from './zh-CN/component'
+// Layout
+import HeaderLocale from './zh-CN/header'
+import MenuLocale from './zh-CN/menu'
+
+// Components
+import ResultLocale from '@/components/result/locale/zh-CN'
+
+// Views
 
 export default {
-  'menu.server.dashboard': '仪表盘',
-  'menu.server.workplace': '工作台',
-  'menu.baiduWebsite': '百度一下',
-  'header.action.search': '搜索',
-  'header.action.language': '语言',
-  'header.action.locale': '切换为中文',
-  ...localeCommon,
-  ...localeComponent
+  ...HeaderLocale,
+  ...MenuLocale,
+  ...ResultLocale
 }
