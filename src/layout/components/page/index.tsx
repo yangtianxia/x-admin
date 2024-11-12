@@ -2,8 +2,7 @@
 import {
   defineComponent,
   Transition,
-  KeepAlive,
-  h
+  KeepAlive
 } from 'vue'
 
 // Common
@@ -22,26 +21,19 @@ export default defineComponent({
     return () => (
       <RouterView
         v-slots={{
-          default: ({ Component, route }: RouterViewSlot) => {
-            if (!Component) return
-
-            Component.key = route.fullPath
-            Component.type.name = route.name
-
-            return (
-              <Transition
-                appear
-                name="fade"
-                mode="out-in"
-              >
-                {route.meta.ignoreCache ? h(Component) : (
-                  <KeepAlive>
-                    {h(Component)}
-                  </KeepAlive>
-                )}
-              </Transition>
-            )
-          }
+          default: ({ Component, route }: RouterViewSlot) => (
+            <Transition
+              appear
+              name="fade"
+              mode="out-in"
+            >
+              {route.meta.ignoreCache ? <Component key={route.fullPath} /> : (
+                <KeepAlive>
+                  <Component key={route.fullPath} />
+                </KeepAlive>
+              )}
+            </Transition>
+          )
         }}
       />
     )
