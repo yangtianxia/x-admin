@@ -6,7 +6,7 @@ import { REDIRECT_URI } from '@/shared/constant'
 import { LOGIN_ROUTE_NAME } from '../constant'
 
 export default function setupUserLoginInfoGuard(router: Router) {
-  router.beforeEach(async (to, _, next) => {
+  router.beforeEach(async (to, from, next) => {
     NProgress.start()
     const userStore = useUserStore()
 
