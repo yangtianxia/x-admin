@@ -48,7 +48,7 @@ export default defineConfig(({ mode }) => {
           relativeUrls: true,
           javascriptEnabled: true,
           charset: false,
-          additionalData: `@import "./src/assets/style/vars.less";`,
+          additionalData: `@import "./src/variables.less";`,
           modifyVars: {
             '@prefix': env.VITE_PREFIX
           }
