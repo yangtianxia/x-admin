@@ -110,6 +110,8 @@ export default defineComponent({
           selectedKey.value = [
             activeMenu || menuOpenKeys[menuOpenKeys.length - 1]
           ]
+        } else {
+          selectedKey.value = []
         }
       }, true
     )
