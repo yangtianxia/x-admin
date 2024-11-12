@@ -1,9 +1,12 @@
 const createKey = <T extends string>(key: T) => `${import.meta.env.VITE_PREFIX}_${key}` as const
 
-/** 用户TOKEN */
+/** 用户凭证 */
 export const TOKEN_KEY = createKey('token')
 
-/** 本地存储LOCALE */
+/** 用户role */
+export const USER_ROLE_KEY = createKey('user_role')
+
+/** 网站语言 */
 export const LOCALE_KEY = createKey('locale')
 
 /** 重定向URL */
