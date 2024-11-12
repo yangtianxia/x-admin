@@ -1,13 +1,33 @@
 import qs from 'qs'
-import axios, { type AxiosError, type AxiosRequestConfig, type RequestContentType } from 'axios'
-import { isPlainObject, isUndefined, isString, isNil, isFunction } from '@txjs/bool'
+import axios, {
+  type AxiosError,
+  type AxiosRequestConfig,
+  type RequestContentType
+} from 'axios'
+import {
+  isPlainObject,
+  isUndefined,
+  isString,
+  isNil,
+  isFunction
+} from '@txjs/bool'
+import { useRedirect } from '@/hooks/redirect'
 import { isLogin, getToken } from '@/shared/auth'
+import { notification } from 'ant-design-vue'
+
+const createAxiosError = (errorText?: string) => ({
+  code: 400,
+  success: false,
+  msg: errorText,
+})
 
 class WithAxios {
   #contentType: RequestContentType = 'JSON'
 
   #axios = axios.create({
-    baseURL: import.meta.env.DEV ? import.meta.env.VITE_PROXY_API : import.meta.env.VITE_API,
+    baseURL: import.meta.env.DEV
+      ? import.meta.env.VITE_PROXY_API
+      : import.meta.env.VITE_API,
     timeout: 1000 * 30
   })
 
@@ -21,15 +41,77 @@ class WithAxios {
           config.headers.set('Authorization', `Bearer ${getToken()}`)
         }
         return config
+      },
+      (error) => {
+        const result = createAxiosError(error.message)
+        notification.error({
+          message: result.msg
+        })
+        return Promise.reject(result)
       }
-      // ,(error) => {}
     )
 
     this.#axios.interceptors.response.use(
       (config) => {
-        return config
+        const { data } = config
+
+        // 请求成功
+        if (data.code >= 200 && data.code < 300) {
+          return Promise.resolve(data.data)
+        }
+
+        // 登陆失效
+        if (data.code === 401) {
+          const { go } = useRedirect()
+          go()
+        } else {
+          notification.error({
+            message: data.msg
+          })
+        }
+
+        return Promise.reject(data)
+      },
+      (error: AxiosError<any>) => {
+        const message = error?.message
+        const result = createAxiosError(message)
+
+        if (message) {
+          const { status, statusText } = error.response ?? {}
+
+          if (status === 404) {
+            result.msg = $t('result.404Title')
+          } else if (status == 500) {
+            result.msg = $t('result.500Title')
+          } else if (statusText) {
+            if (statusText.startsWith('Internal Server Error')) {
+              result.msg = '服务出错，请稍后重试'
+            } else {
+              result.msg = statusText
+            }
+          } else if (message) {
+            if (message.startsWith('Network Error')) {
+              result.msg = '网络异常，请检查网络'
+            } else if (message.startsWith('timeout of')) {
+              result.msg = '请求超时，请检查网络或重新请求'
+            } else {
+              result.msg = message
+            }
+          }
+
+          if (!isNil(status)) {
+            result.code = status
+          }
+        } else {
+          result.msg = error.toString()
+        }
+
+        notification.error({
+          message: result.msg
+        })
+
+        return Promise.reject(result)
       }
-      // ,(error) => {}
     )
   }
 
