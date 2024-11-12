@@ -27,7 +27,7 @@ const bgcolor = grey1
 /** 激活色 */
 const active = grey2
 /** 描边色 */
-const border = grey3
+const border = grey2
 /** 文本色 */
 const text = grey9
 const textBase = grey8
@@ -50,7 +50,10 @@ export const palettes = {
   'grey-6': grey6,
   'grey-7': grey7,
   'grey-8': grey8,
-  'grey-9': grey9,
+  'grey-9': grey9
+}
+
+export const customPalettes = {
   bgcolor,
   active,
   border,
