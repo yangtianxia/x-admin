@@ -11,7 +11,7 @@ import { Breadcrumb } from '@/components/breadcrumb'
 // Style
 import less from './index.module.less'
 
-const [name, bem] = BEM('dashboard', less)
+const [name] = BEM('dashboard', less)
 
 export default defineComponent({
   name,
