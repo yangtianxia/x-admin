@@ -1,3 +1,6 @@
-import I18n from '@/locale'
+import I18n from '.'
 
-export default I18n.global.t
+// 忽略实例化过深问题
+const _: any = I18n.global
+
+export default _.t
