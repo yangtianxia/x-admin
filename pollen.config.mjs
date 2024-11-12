@@ -1,7 +1,7 @@
 import tinycolor2 from 'tinycolor2'
 import { defineConfig } from 'pollen-css/utils'
 import { pick } from '@txjs/shared'
-import { palettes } from './theme.mjs'
+import { palettes, customPalettes } from './theme.mjs'
 
 const alphaColor = (input) => {
   const color = tinycolor2(input)
@@ -21,9 +21,9 @@ const formatterColor = (palettes = {}) => {
       (obj, key) => {
         const value = palettes[key]
         const color = alphaColor(value)
-        const baseName = `${key}-base`
-        obj[baseName] = color
-        obj[key] = `rgb(var(--color-${baseName}))`
+        const rgbName = `${key}-rgb`
+        obj[rgbName] = color
+        obj[key] = `rgb(var(--color-${rgbName}))`
         return obj
       }, {}
     )
@@ -63,7 +63,10 @@ export default defineConfig((config) => {
     out: 'ease-out'
   }
 
-  modules.color = formatterColor(palettes)
+  modules.color = {
+    ...formatterColor(palettes),
+    ...customPalettes
+  }
 
   for (const key in config) {
     if (!modules[key]) {
