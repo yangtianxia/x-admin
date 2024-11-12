@@ -73,7 +73,6 @@ export default defineConfig(({ mode }) => {
       }),
       Legacy(),
       Inject({
-        $t: resolve('./src/locale/t.ts'),
         BEM: '@txjs/bem'
       }),
       createHtmlPlugin({
