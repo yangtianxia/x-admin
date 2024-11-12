@@ -1,6 +1,7 @@
 import 'ant-design-vue/dist/reset.css'
 import '@/assets/style/reset.less'
 import 'dayjs/locale/zh-cn'
+import '@/mock'
 
 import { createApp } from 'vue'
 import dayjs from 'dayjs'
