@@ -1,12 +1,11 @@
 import { reactive } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
 import { isValidString } from '@txjs/bool'
+import router from '@/router'
 import { LOGIN_ROUTE_NAME, DEFAULT_ROUTE } from '@/router/constant'
 import { REDIRECT_URI, REDIRECT_PARAMS } from '@/shared/constant'
 
 export const useRedirect = () => {
-  const { query, fullPath } = useRoute()
-  const router = useRouter()
+  const { query, fullPath } = router.currentRoute.value
 
   let redirect_uri = query[REDIRECT_URI] as string
 
