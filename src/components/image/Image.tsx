@@ -1,6 +1,3 @@
-// Types
-import type { ImageFit, ImagePosition } from './types'
-
 // Vue
 import {
   defineComponent,
@@ -25,6 +22,9 @@ import { notNil } from '@txjs/bool'
 import { inBrowser } from '../_utils/basic'
 import { truthProp, numericProp } from '../_utils/props'
 import { addUnit, getSizeStyle } from '../_utils/style'
+
+// Types
+import type { ImageFit, ImagePosition } from './types'
 
 const [name, bem] = BEM('image')
 
