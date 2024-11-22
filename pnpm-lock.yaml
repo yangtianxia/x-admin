@@ -12,23 +12,23 @@ importers:
         specifier: ^1.4.2
         version: 1.4.2(vue@3.5.12(typescript@5.6.3))
       '@txjs/bem':
-        specifier: ^0.0.5
-        version: 0.0.5
+        specifier: ^1.0.0
+        version: 1.0.0
       '@txjs/bool':
-        specifier: ^0.0.9
-        version: 0.0.9
+        specifier: ^1.0.0
+        version: 1.0.0
       '@txjs/make':
-        specifier: ^0.0.3
-        version: 0.0.3
+        specifier: ^1.0.0
+        version: 1.0.0
       '@txjs/shared':
-        specifier: ^0.0.15
-        version: 0.0.15
+        specifier: ^1.0.0
+        version: 1.0.0
+      '@txjs/types':
+        specifier: ^1.0.0
+        version: 1.0.0
       '@txjs/validator':
         specifier: ^0.0.9
         version: 0.0.9
-      '@vant/area-data':
-        specifier: ^2.0.0
-        version: 2.0.0
       '@vant/use':
         specifier: ^1.6.0
         version: 1.6.0(vue@3.5.12(typescript@5.6.3))
@@ -1072,23 +1072,26 @@ packages:
   '@tsconfig/node18@2.0.1':
     resolution: {integrity: sha512-UqdfvuJK0SArA2CxhKWwwAWfnVSXiYe63bVpMutc27vpngCntGUZQETO24pEJ46zU6XM+7SpqYoMgcO3bM11Ew==}
 
-  '@txjs/bem@0.0.5':
-    resolution: {integrity: sha512-oaNPVHP+iB/7+9jMHlY2/hCMLdY+kmAiQGS0zvKrBpTqQt+vBpSaIQxzNqdjtsmjifx1CTf19bxTtYio2Tq1lQ==}
+  '@txjs/bem@1.0.0':
+    resolution: {integrity: sha512-QBrdVVlMEi0vk/R9Pm9LCec7YRxS6kX8l6bwiGEwgo4UTN7jKOq8VTSpNVF7SZI2Ck/fbv/O2VzqMYtaXS/skQ==}
 
   '@txjs/bool@0.0.8':
     resolution: {integrity: sha512-eQ56O/GX/umHSRUbMvVgftvbrUUyhcNz6cGm37Nv6bzYSPxOWUDaK6vA4s/EJSOL3dBB1W/1HBw7urG4Yw6+5g==}
 
-  '@txjs/bool@0.0.9':
-    resolution: {integrity: sha512-9osu2tmE18V3civQ1vfd48ctMVZHeiNqyEEeSf4RwHotcax/lLp5UMnoe0R2dlDdksL6TWqblvVv+e1GA5lobQ==}
+  '@txjs/bool@1.0.0':
+    resolution: {integrity: sha512-gkIXXF53yO/dzSqKpkLCuYURd3tLj9jEpwEwFOMsvPSkjuwYElWH42A8/iZes6JaVR6HZTmemHgAG1tD1NcwJw==}
 
-  '@txjs/make@0.0.3':
-    resolution: {integrity: sha512-UHDbzmBKDPi6SxouOTM3L8SDT0sxJ7mY9WmJwPtdhcT0V5enHhsxUksdy/ka4r2pmk3Eoe+O2qude8Vun2Gg1g==}
+  '@txjs/make@1.0.0':
+    resolution: {integrity: sha512-c+8alNaEOG5B+VR4M6pwNBamSY5ALVyC9UgzXhm+BD6TfcJUNTBSclkFnprNHI8y7rbwVvqpqtf7arNmaQvoFA==}
 
   '@txjs/shared@0.0.14':
     resolution: {integrity: sha512-gc4F05ak2Kkhby8f/72rtTLd3gk37V3Sdsx6W9R1KXcdxirkZG86mkSLG2bG/Zkz3kzh33FNdylIdYZTC82/mQ==}
 
-  '@txjs/shared@0.0.15':
-    resolution: {integrity: sha512-/QfzlBcUGNqEgQHOf5FCiew6kvIfwCVH1RIyov41GWLbKXJDH+7lpqXbmzcIGVyRPT8P6yFzb3YyMjn7JhTMmw==}
+  '@txjs/shared@1.0.0':
+    resolution: {integrity: sha512-cNX6YgCV8uat8TJkEnhvtwjpmQN5ke8SxE+kWM0CgmCuy1/WZETHoxLA4ZYSVIn2LIFcEuZyacdK+bpwzhFW4Q==}
+
+  '@txjs/types@1.0.0':
+    resolution: {integrity: sha512-TGzDDhvrqVK0/QxwcP9cgbAmEWPMkFUY+QyMK4EVMjInCiJ3MVEcAhd6H6IVzawnI8/lAZSdPtu0rXrUxhPFxA==}
 
   '@txjs/validator@0.0.9':
     resolution: {integrity: sha512-V2LwmmJcFf9fLwzWQugnGhY9ONbTX3nDWaZpJ3qQOa4xxn67edShyn6l5AemsG7Mr39x1xihFCBYun2dJw8mhQ==}
@@ -1198,9 +1201,6 @@ packages:
 
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
-
-  '@vant/area-data@2.0.0':
-    resolution: {integrity: sha512-zgP4AA8z09S9QTNgVCCHo9cHjcybrv22RJDYPjuCkecn4SB98T5EoPQh2TwqbQXmUhbaOGgiZGy3OUaUxnY7qg==}
 
   '@vant/use@1.6.0':
     resolution: {integrity: sha512-PHHxeAASgiOpSmMjceweIrv2AxDZIkWXyaczksMoWvKV2YAYEhoizRuk/xFnKF+emUIi46TsQ+rvlm/t2BBCfA==}
@@ -3839,23 +3839,27 @@ snapshots:
 
   '@tsconfig/node18@2.0.1': {}
 
-  '@txjs/bem@0.0.5': {}
+  '@txjs/bem@1.0.0':
+    dependencies:
+      '@txjs/bool': 1.0.0
 
   '@txjs/bool@0.0.8': {}
 
-  '@txjs/bool@0.0.9': {}
+  '@txjs/bool@1.0.0': {}
 
-  '@txjs/make@0.0.3': {}
+  '@txjs/make@1.0.0': {}
 
   '@txjs/shared@0.0.14':
     dependencies:
       '@txjs/bool': 0.0.8
       shallow-clone: 3.0.1
 
-  '@txjs/shared@0.0.15':
+  '@txjs/shared@1.0.0':
     dependencies:
-      '@txjs/bool': 0.0.8
+      '@txjs/bool': 1.0.0
       shallow-clone: 3.0.1
+
+  '@txjs/types@1.0.0': {}
 
   '@txjs/validator@0.0.9':
     dependencies:
@@ -3985,8 +3989,6 @@ snapshots:
       eslint-visitor-keys: 3.4.3
 
   '@ungap/structured-clone@1.2.0': {}
-
-  '@vant/area-data@2.0.0': {}
 
   '@vant/use@1.6.0(vue@3.5.12(typescript@5.6.3))':
     dependencies:
