@@ -1,7 +1,3 @@
-// Types
-import type { VNode } from '../_utils/types'
-import type { ResultCode } from './types'
-
 // Vue
 import {
   defineComponent,
@@ -13,16 +9,20 @@ import {
 } from 'vue'
 
 // Common
-import { shallowMerge, omit } from '@txjs/shared'
+import { shallowMerge, pick } from '@txjs/shared'
 import { isPlainObject, isString } from '@txjs/bool'
+import { resultSharedProps, resultStatusConfig } from './utils'
 
 // Components
-import Image from '../image'
+import { Image } from '../image'
 
 // Component utils
 import { createVNode } from '../_utils/basic'
 import { VNodeProp } from '../_utils/props'
-import { resultSharedProps, resultStatusConfig } from './utils'
+import type { VNode } from '../_utils/types'
+
+// Types
+import type { ResultCode } from './types'
 
 const [name, bem] = BEM('result')
 
@@ -47,44 +47,39 @@ export default defineComponent({
       desc: props.desc
     })
 
-    const withOption = (status: ResultCode, refresh?: UnknownCallback) => {
-      const newConfig = resultStatusConfig[status]
+    const merge = (status: ResultCode, refresh?: UnknownCallback) => {
+      const defConfig = resultStatusConfig[status]
 
-      if (newConfig) {
-        // 自定义状态不支持设置
-        if (refresh && ['error', '500'].includes(status)) {
-          option.desc = $t('result.desc.500')
-        }
-
-        shallowMerge(option, newConfig)
+      if (!defConfig) return
+      if (refresh && ['error', '500'].includes(status)) {
+        option.desc = $t('result.desc.500')
       }
+      shallowMerge(option, defConfig)
     }
 
-    const updateOption = () => {
+    const update = () => {
       const currentStatus = props.status
       const currentRefresh = props.refresh
-      const newOption = omit(props, ['status', 'refresh'])
-
-      // 重新合并配置
-      shallowMerge(option, newOption)
+      const newOption = pick(props, ['title', 'image', 'desc', 'bottom'], true)
 
       if (isPlainObject(currentStatus)) {
         const { status, refresh, ...partial } = currentStatus
         if (isString(status)) {
-          withOption(status, refresh || currentRefresh)
+          merge(status, refresh || currentRefresh)
         }
         shallowMerge(option, partial)
       } else {
-        withOption(currentStatus, currentRefresh)
+        merge(currentStatus, currentRefresh)
       }
+      shallowMerge(option, newOption)
     }
 
     watch(
       () => props.status,
-      updateOption
+      update
     )
 
-    onMounted(updateOption)
+    onMounted(update)
 
     const renderImage = () => {
       const image = createVNode(slots.image || option.image, {
@@ -96,7 +91,6 @@ export default defineComponent({
           />
         )
       })
-
       if (image) {
         return (
           <div class={bem('img')}>
@@ -108,7 +102,6 @@ export default defineComponent({
 
     const renderTitle = () => {
       const title = createVNode(slots.title || option.title)
-
       if (title) {
         return (
           <div class={bem('title')}>
@@ -120,7 +113,6 @@ export default defineComponent({
 
     const renderDesc = () => {
       const desc = createVNode(slots.desc || option.desc)
-
       if (desc) {
         return (
           <div class={bem('desc')}>
@@ -132,7 +124,6 @@ export default defineComponent({
 
     const renderBottom = () => {
       const bottom = createVNode(slots.default || option.bottom)
-
       if (bottom) {
         return (
           <div class={bem('bottom')}>
