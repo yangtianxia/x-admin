@@ -37,7 +37,7 @@ const resultProps = shallowMerge({}, resultSharedProps, {
 export type ResultProps = ExtractPropTypes<typeof resultProps>
 
 export default defineComponent({
-  name,
+  name: 'XResult',
   props: resultProps,
   setup(props, { slots }) {
     const option = reactive({
@@ -49,7 +49,6 @@ export default defineComponent({
 
     const merge = (status: ResultCode, refresh?: UnknownCallback) => {
       const defConfig = resultStatusConfig[status]
-
       if (!defConfig) return
       if (refresh && ['error', '500'].includes(status)) {
         option.desc = $t('result.desc.500')

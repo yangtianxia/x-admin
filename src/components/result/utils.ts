@@ -1,9 +1,11 @@
 import type { PropType } from 'vue'
 import type { ResultStatus } from './types'
+import { useLocal } from '@/hooks/assets'
 
-const resolve = (path: string) => {
-  return new URL(`image/${path}`, import.meta.url).href
-}
+import img404 from './image/404.svg'
+import img500 from './image/500.svg'
+import imgNetwork from './image/network.svg'
+import imgError from './image/error.svg'
 
 export const resultSharedProps = {
   status: {
@@ -15,18 +17,18 @@ export const resultSharedProps = {
 export const resultStatusConfig = {
   404: {
     title: $t('result.title.404'),
-    image: resolve('404.svg')
+    image: useLocal(img404)
   },
   500: {
     title: $t('result.title.500'),
-    image: resolve('500.svg')
+    image: useLocal(img500)
   },
   network: {
     title: $t('result.title.network'),
-    image: resolve('network.svg')
+    image: useLocal(imgNetwork)
   },
   error: {
     title: $t('result.title.error'),
-    image: resolve('error.svg')
+    image: useLocal(imgError)
   }
 } as const

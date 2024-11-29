@@ -64,21 +64,6 @@ export const customPalettes = {
 }
 
 export const token = {
-  marginXXS: 4,
-  marginXS: 4,
-  marginSM: 8,
-  margin: 12,
-  marginMD: 16,
-  marginLG: 20,
-  marginXL: 24,
-  marginXXL: 32,
-  paddingXS: 4,
-  paddingSM: 8,
-  padding: 12,
-  paddingMD: 16,
-  paddingLG: 20,
-  paddingXL: 24,
-  borderRadius: 3,
   wireframe: true,
   colorBgLayout: bgcolor,
   colorPrimary: primary,

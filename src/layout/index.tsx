@@ -10,7 +10,7 @@ import {
 
 // Common
 import { useRoute, useRouter } from 'vue-router'
-import { useAppStore, useUserStore } from '@/store'
+import { useAppStore, useUserStore } from '@/stores'
 import { NOT_FOUND_ROUTE } from '@/router/constant'
 import { usePermission } from '@/hooks/permission'
 
@@ -24,14 +24,8 @@ import LayoutPage from './components/page'
 // Component utils
 import { addUnit } from '@/components/_utils/style'
 
-// Style
-import style from './index.module.less'
-
-const [name, bem] = BEM('layout', style)
-
 export default defineComponent({
-  name,
-
+  name: 'Layout',
   setup() {
     const appStore = useAppStore()
     const userStore = useUserStore()
@@ -40,47 +34,29 @@ export default defineComponent({
     const router = useRouter()
 
     const ready = ref(false)
-    const hasHeader = computed(() =>
-      appStore.header
-    )
-    const hasFooter = computed(() =>
-      appStore.footer
-    )
-    const hasMenu = computed(() =>
-      appStore.menu && !appStore.topMenu
-    )
-    const hideMenu = computed(() =>
-      appStore.hideMenu
-    )
-    const headerHeight = computed(() =>
-      appStore.header ? addUnit(60) : ''
-    )
+
+    const hasHeader = computed(() => appStore.header)
+    const hasMenu = computed(() => appStore.menu && !appStore.topMenu)
+    const hideMenu = computed(() => appStore.hideMenu)
+    const headerHeight = computed(() => appStore.header ? addUnit(appStore.headerHeight) : '')
     const menuWidth = computed(() =>
-      appStore.menuCollapse ? 60 : appStore.menuWidth
+      appStore.menuCollapse ? appStore.menuCollapseWidth : appStore.menuWidth
     )
-    const collapsed = computed(() =>
-      appStore.menuCollapse
-    )
-    const triggerIcon = computed(() =>
-      collapsed.value ? 'MenuFoldOne' : 'MenuUnfoldOne'
-    )
+    const collapsed = computed(() => appStore.menuCollapse)
+    const triggerIcon = computed(() => collapsed.value ? 'MenuFoldOne' : 'MenuUnfoldOne')
     const layoutStyle = computed(() => {
       const style = {} as CSSProperties
-
       if (hasMenu.value && !hideMenu.value) {
         style.paddingLeft = addUnit(menuWidth.value)
       }
-
       if (hasHeader.value) {
         style.paddingTop = headerHeight.value
       }
-
       return style
     })
 
     const onCollapsed = () => {
       if (!ready.value) return
-
       appStore.updateSettings({
         menuCollapse: !collapsed.value
       })
@@ -100,9 +76,9 @@ export default defineComponent({
     })
 
     return () => (
-      <Layout class={bem()}>
+      <Layout class="w-full h-full">
         {hasHeader.value ? (
-          <Layout.Header>
+          <Layout.Header class="z-50 fixed top-0 left-0 !p-0 w-full !h-[60px] !leading-[60px]">
             <LayoutHeader />
           </Layout.Header>
         ) : null}
@@ -112,14 +88,16 @@ export default defineComponent({
               v-show={!hideMenu.value}
               collapsible
               breakpoint="xl"
-              width={menuWidth.value}
               trigger={null}
+              width={appStore.menuWidth}
+              collapsedWidth={appStore.menuCollapseWidth}
               collapsed={collapsed.value}
               style={{ paddingTop: headerHeight.value }}
+              class="!fixed left-0 top-0 h-full bg-white shadow-[0_2px_8px_-2px_rgba(0,0,0,.1)] after:absolute after:top-0 after:right-0 after:block after:h-full after:border-r"
             >
               <LayoutMenu />
               <div
-                class={bem('trigger', { collapsed: collapsed.value })}
+                class={`cursor-pointer absolute right-3 bottom-3 flex items-center justify-center text-slate-600 text-lg w-6 h-6 rounded-[3px] bg-slate-50 transition-all hover:bg-slate-100 ${collapsed.value ? 'left-[50%] translate-x-[-50%]' : null}`}
                 onClick={onCollapsed}
               >
                 <Icon
@@ -134,7 +112,7 @@ export default defineComponent({
             <Layout.Content>
               <LayoutPage />
             </Layout.Content>
-            {hasFooter.value ? <Layout.Footer /> : null}
+            {appStore.footer ? <Layout.Footer /> : null}
           </Layout>
         </Layout>
       </Layout>

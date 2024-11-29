@@ -21,7 +21,7 @@ declare global {
 
   const BEM: typeof import('@txjs/bem')['default']
 
-  const $t: typeof import('../src/locale/t')['default']
+  const $t: typeof import('../src/locale')['default']['global']['t']
 
   type ScrollElement = Element | Window
 

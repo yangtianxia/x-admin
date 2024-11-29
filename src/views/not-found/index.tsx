@@ -4,16 +4,11 @@ import { defineComponent } from 'vue'
 // Component
 import { Result } from '@/components/result'
 
-// Style
-import style from './index.module.less'
-
-const [name, bem] = BEM('not-found', style)
-
 export default defineComponent({
-  name,
+  name: 'NotFound',
   setup() {
     return () => (
-      <div class={bem()}>
+      <div class="h-full flex flex-col items-center justify-center">
         <Result status="404" />
       </div>
     )

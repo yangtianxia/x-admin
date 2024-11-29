@@ -5,10 +5,6 @@ interface ImportMetaEnv {
   VITE_PREFIX: string
   /** 网站标题 */
   VITE_TITLE: string
-  /** 网站关键词 */
-  VITE_KEYWORD: string
-  /** 网站描述 */
-  VITE_DESCRIPTION: string
   /** 接口地址 */
   VITE_API: string
   /** 接口代理地址 */

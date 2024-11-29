@@ -1,7 +1,7 @@
 import { computed } from 'vue'
 import type { RouteRecordRaw, RouteRecordNormalized } from 'vue-router'
 import { cloneDeep } from '@txjs/shared'
-import { useAppStore } from '@/store'
+import { useAppStore } from '@/stores'
 import appClientMenus from '@/router/app-menus'
 import { usePermission } from '../permission'
 

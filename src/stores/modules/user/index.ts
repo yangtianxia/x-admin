@@ -1,9 +1,14 @@
 import { defineStore } from 'pinia'
-import { setToken, clearToken } from '@/shared/auth'
+import { isLogin, setToken, clearToken } from '@/shared/auth'
 import { removeRouteListener } from '@/shared/route-listener'
 
+import {
+  postLoginByPwd,
+  postLoginBySms,
+  type LoginByPwdQuery,
+  type LoginBySmsQuery
+} from '@/api/user/login'
 import { getUserInfo } from '@/api/user/user-info'
-import { postLogin, type LoginQuery } from '@/api/user/login'
 import { postLogout } from '@/api/user/logout'
 
 import useAppStore from '../app'
@@ -25,6 +30,9 @@ const useUserStore = defineStore('user', {
     role: ''
   }),
   getters: {
+    isLogin(state: UserState) {
+      return !!state.id && isLogin()
+    },
     userInfo(state: UserState): UserState {
       return { ...state }
     }
@@ -46,9 +54,18 @@ const useUserStore = defineStore('user', {
       const result = await getUserInfo()
       this.setInfo(result)
     },
-    async login(loginForm: LoginQuery) {
+    async loginByPwd(loginForm: Partial<LoginByPwdQuery>) {
       try {
-        const result = await postLogin(loginForm)
+        const result = await postLoginByPwd(loginForm)
+        setToken(result.token)
+      } catch (err) {
+        clearToken()
+        throw err
+      }
+    },
+    async loginBySms(loginForm: Partial<LoginBySmsQuery>) {
+      try {
+        const result = await postLoginBySms(loginForm)
         setToken(result.token)
       } catch (err) {
         clearToken()

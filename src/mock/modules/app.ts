@@ -8,7 +8,7 @@ setupMock({
       const menuList = [
         {
           path: '/dashboard',
-          name: 'Dashboard',
+          name: 'dashboardWrapper',
           meta: {
             locale: 'menu.server.dashboard',
             requiresAuth: true,

@@ -1,5 +1,5 @@
 // Vue
-import { defineComponent } from 'vue'
+import { defineComponent, reactive } from 'vue'
 
 // Components
 import { Icon } from '@/components/icon'
@@ -8,24 +8,23 @@ import { Carousel } from 'ant-design-vue'
 // Style
 import style from './index.module.less'
 
-const [name, bem] = BEM('login-banner', style)
-
-const slides = [
-  {
-    id: 1,
-    title: '开箱即用的高质量模板',
-    subtitle: '丰富的的页面模板，覆盖大多数典型业务场景'
-  },
-  {
-    id: 2,
-    title: '内置了常见问题的解决方案',
-    subtitle: '路由配置，状态管理应有尽有'
-  }
-] as const
+const [name, bem] = BEM('banner', style)
 
 export default defineComponent({
   name,
   setup() {
+    const slides = reactive([
+      {
+        id: 1,
+        title: $t('login.slide.title.1'),
+        subtitle: $t('login.slide.subtitle.1')
+      },
+      {
+        id: 2,
+        title: $t('login.slide.title.2'),
+        subtitle: $t('login.slide.subtitle.2')
+      }
+    ])
     return () => (
       <Carousel
         arrows
@@ -33,7 +32,7 @@ export default defineComponent({
         class={bem()}
         v-slots={{
           prevArrow: () => (
-            <div class={bem('arrow', 'left')}>
+            <div class="z-10 !text-white !text-opacity-30 hover:!text-gray-300 !text-3xl !w-auto !h-auto !-mt-3 !left-6 max-xl:!text-2xl max-xl:!left-3 before:!content-none">
               <Icon
                 type="LeftC"
                 theme="filled"
@@ -43,7 +42,7 @@ export default defineComponent({
             </div>
           ),
           nextArrow: () => (
-            <div class={bem('arrow', 'right')}>
+            <div class="z-10 !text-white !text-opacity-30 hover:!text-gray-300 !text-3xl !w-auto !h-auto !-mt-3 !right-6 max-xl:!text-2xl max-xl:!right-3 before:!content-none">
               <Icon
                 type="RightC"
                 theme="filled"
@@ -57,11 +56,11 @@ export default defineComponent({
         {slides.map((item) => (
           <div
             key={item.id}
-            class={bem('slide')}
+            class="h-full"
           >
-            <div class={bem('slide-inner')}>
-              <div class={bem('slide-title')}>{item.title}</div>
-              <div class={bem('slide-subtitle')}>{item.subtitle}</div>
+            <div class="h-full flex flex-col items-center justify-center">
+              <div class="text-gray-100 text-xl max-xl:text-base font-medium whitespace-nowrap">{item.title}</div>
+              <div class="text-gray-300 text-sm xl:text-xs mt-2 whitespace-nowrap">{item.subtitle}</div>
             </div>
           </div>
         ))}

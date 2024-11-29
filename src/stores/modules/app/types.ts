@@ -10,6 +10,8 @@ export interface AppState {
   menuCollapse: boolean
   footer: boolean
   menuWidth: number
+  menuCollapseWidth: number
+  headerHeight: number
   menuFromServer: boolean
   serverMenu: RouteRecordNormalized[]
   [key: string]: unknown

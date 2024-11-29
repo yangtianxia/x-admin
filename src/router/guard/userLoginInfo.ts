@@ -1,15 +1,16 @@
-import NProgress from 'nprogress'
 import type { Router, LocationQueryRaw } from 'vue-router'
-import { useUserStore } from '@/store'
+import NProgress from 'nprogress'
+import { h } from 'vue'
+import { Modal } from 'ant-design-vue'
+import { useUserStore } from '@/stores'
 import { isLogin } from '@/shared/auth'
 import { REDIRECT_URI } from '@/shared/constant'
-import { LOGIN_ROUTE_NAME } from '../constant'
+import { LOGIN_ROUTE_PATH } from '../constant'
 
 export default function setupUserLoginInfoGuard(router: Router) {
   router.beforeEach(async (to, from, next) => {
     NProgress.start()
     const userStore = useUserStore()
-
     if (isLogin()) {
       if (userStore.id) {
         next()
@@ -17,37 +18,40 @@ export default function setupUserLoginInfoGuard(router: Router) {
         try {
           await userStore.getUserInfo()
           next()
-        } catch (err: any) {
-          const needReset = err === 'USER_NOT_FOUND' || err?.code === 401
-
-          if (needReset) {
-            await userStore.logout()
+        } catch (error: any) {
+          if (error.code === 401) {
+            userStore.logoutCallback()
+            next({
+              path: LOGIN_ROUTE_PATH,
+              query: {
+                [REDIRECT_URI]: to.fullPath
+              } as LocationQueryRaw
+            })
+          } else {
+            Modal.error({
+              centered: true,
+              title: `登录错误`,
+              content: h('div', [
+                h('p', `状态：${error.code}`),
+                h('p', `原因：${error.msg || error.message}`)
+              ]),
+              okText: '刷新',
+              onOk() {
+                window.location.reload()
+              }
+            })
           }
-
-          if (to.name === LOGIN_ROUTE_NAME || to.name === 'notPermission') {
-            next()
-            return
-          }
-
-          next({
-            name: needReset ? LOGIN_ROUTE_NAME : 'notPermission',
-            query: {
-              [REDIRECT_URI]: to.fullPath
-            } as LocationQueryRaw
-          })
         }
       }
-    } else {
-      if (to.name === LOGIN_ROUTE_NAME) {
-        next()
-        return
-      }
+    } else if (to.meta.requiresAuth) {
       next({
-        name: LOGIN_ROUTE_NAME,
+        path: LOGIN_ROUTE_PATH,
         query: {
           [REDIRECT_URI]: to.fullPath
         } as LocationQueryRaw
       })
+    } else {
+      next()
     }
   })
 }

@@ -5,5 +5,12 @@ export default {
       language: 'Language',
       locale: 'Switch to English'
     }
+  },
+  menu: {
+    server: {
+      dashboard: 'Dashboard',
+      workplace: 'Workplace'
+    },
+    baiduWebsite: 'Baidu'
   }
 }

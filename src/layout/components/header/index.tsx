@@ -2,9 +2,10 @@
 import { defineComponent, ref } from 'vue'
 
 // Common
+import { useUserStore } from '@/stores'
 import { LOCALE_OPTIONS } from '@/locale'
-import { useAssets } from '@/hooks/assets'
 import { useLocale } from '@/hooks/locale'
+import { useRedirect } from '@/hooks/redirect'
 
 // Components
 import { Icon } from '@/components/icon'
@@ -16,42 +17,43 @@ import {
   Menu
 } from 'ant-design-vue'
 
-// Style
-import less from './index.module.less'
-
-const [name, bem] = BEM('header', less)
-
 export default defineComponent({
-  name,
-
+  name: 'LayoutHeader',
   setup() {
     const locales = [...LOCALE_OPTIONS]
     const { changeLocale } = useLocale()
+    const userStore = useUserStore()
+    const redirect = useRedirect()
 
-    const triggerBtnRef = ref<HTMLElement>()
+    const localeTriggerRef = ref<HTMLElement>()
 
-    const onDropdownVisible = () => {
+    const onLocaleDropdownShow = () => {
       const event = new MouseEvent('click', {
         view: window,
         bubbles: true,
         cancelable: true
       })
-      triggerBtnRef.value?.dispatchEvent(event)
+      localeTriggerRef.value?.dispatchEvent(event)
+    }
+
+    const onLogout = async () => {
+      userStore.logout()
+      redirect.goto()
     }
 
     return () => (
-      <div class={bem()}>
-        <div class={bem('left')}>
+      <div class="h-full flex justify-between border-b border-slate-200 bg-white">
+        <div class="flex items-center pl-5">
           <img
-            src={useAssets('logo.png')}
-            alt={import.meta.env.VITE_TITLE}
-            class={bem('logo')}
+            src="/logo.png"
+            class="w-8"
+            alt={$t('common.title')}
           />
-          <h5 class={bem('logo-text')}>
-            {import.meta.env.VITE_TITLE}
+          <h5 class="text-gray-900 text-xl font-semibold ml-2">
+            <span>{$t('common.title')}</span>
           </h5>
         </div>
-        <ul class={bem('right')}>
+        <ul class="flex items-center pr-8 space-x-3">
           <li>
             <Tooltip
               placement="bottom"
@@ -62,44 +64,59 @@ export default defineComponent({
               </Button>
             </Tooltip>
           </li>
-          <li>
+          <li class="relative">
             <Tooltip
               placement="bottom"
               title={$t('header.action.language')}
             >
               <Button
                 shape="circle"
-                onClick={onDropdownVisible}
+                onClick={onLocaleDropdownShow}
               >
                 <Icon type="Translate" />
               </Button>
             </Tooltip>
             <Dropdown
-              overlayStyle={{ zIndex: 1070 }}
               placement="bottom"
               trigger="click"
-              v-slots={{
-                overlay: () => (
-                  <Menu onClick={({ key }) => changeLocale(key as string)}>
-                    {locales.map((item) => (
-                      <Menu.Item key={item.value}>
-                        {item.label}
-                      </Menu.Item>
-                    ))}
-                  </Menu>
-                )
-              }}
+              overlayStyle={{ zIndex: 1070 }}
+              overlay={(
+                <Menu onClick={({ key }) => changeLocale(key as string)}>
+                  {locales.map((item) => (
+                    <Menu.Item key={item.value}>
+                      {item.label}
+                    </Menu.Item>
+                  ))}
+                </Menu>
+              )}
             >
               <div
-                ref={triggerBtnRef}
-                class={bem('trigger-btn')}
+                ref={localeTriggerRef}
+                class="absolute bottom-[14px] left-[50%]"
               />
             </Dropdown>
           </li>
           <li>
-            <Avatar>
-              <Icon type="User" />
-            </Avatar>
+            <Dropdown
+              placement="bottom"
+              trigger="click"
+              overlayStyle={{ zIndex: 1070 }}
+              overlay={(
+                <Menu>
+                  <Menu.Item
+                    icon={<Icon type="Logout" />}
+                    onClick={onLogout}
+                  >退出登录</Menu.Item>
+                </Menu>
+              )}
+            >
+              <Avatar
+                class="cursor-pointer"
+                src={userStore.avatar}
+              >
+                <Icon type="User" />
+              </Avatar>
+            </Dropdown>
           </li>
         </ul>
       </div>

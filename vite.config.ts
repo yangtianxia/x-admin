@@ -1,12 +1,13 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig, loadEnv } from 'vite'
+import Tailwindcss from 'tailwindcss'
 import Autoprefixer from 'autoprefixer'
 import Vue from '@vitejs/plugin-vue'
 import VueJSX from '@vitejs/plugin-vue-jsx'
 import Legacy from '@vitejs/plugin-legacy'
 import Inject from '@rollup/plugin-inject'
 import { createHtmlPlugin } from 'vite-plugin-html'
-import ejs from 'ejs'
+import Ejs from 'ejs'
 import { version } from './package.json'
 import { token } from './theme.mjs'
 
@@ -18,11 +19,11 @@ export default defineConfig(({ mode }) => {
   const isDev = mode === 'development'
   const env = loadEnv(mode, process.cwd())
   const theme = { token }
-
   return {
     server: {
       hmr: true,
       open: true,
+      port: 6122,
       proxy: {
         [env.VITE_PROXY_API]: {
           target: env.VITE_API,
@@ -48,7 +49,6 @@ export default defineConfig(({ mode }) => {
           relativeUrls: true,
           javascriptEnabled: true,
           charset: false,
-          additionalData: `@import "./src/variables.less";`,
           modifyVars: {
             '@prefix': env.VITE_PREFIX
           }
@@ -60,7 +60,10 @@ export default defineConfig(({ mode }) => {
         globalModulePaths: [/\.module\.[sc|sa|le|c]ss$/i]
       },
       postcss: {
-        plugins: [Autoprefixer()]
+        plugins: [
+          Autoprefixer,
+          Tailwindcss
+        ]
       }
     },
     build: {
@@ -95,28 +98,12 @@ export default defineConfig(({ mode }) => {
             },
             {
               injectTo: 'head',
-              tag: 'meta',
-              attrs: {
-                name: 'keyword',
-                content: env['VITE_KEYWORD']
-              }
-            },
-            {
-              injectTo: 'head',
-              tag: 'meta',
-              attrs: {
-                name: 'description',
-                content: env['VITE_DESCRIPTION']
-              }
-            },
-            {
-              injectTo: 'head',
               tag: 'style',
               attrs: {
                 type: 'text/css'
               },
-              children: ejs.render(
-                ejs
+              children: Ejs.render(
+                Ejs
                 .fileLoader(resolve('node_modules/pollen-css/dist/pollen.css'))
                 .toString()
                 // 删除头部注释内容
@@ -124,7 +111,8 @@ export default defineConfig(({ mode }) => {
                 {},
                 { cache: false }
               )
-            }, {
+            },
+            {
               injectTo: 'body',
               tag: 'script',
               attrs: {
