@@ -13,12 +13,11 @@ export default defineComponent({
   name: 'XBreadcrumb',
   setup() {
     const currentRoute = useRoute()
-    const matchs = currentRoute.matched
     const menuTree = useMenuTree()
 
     const routes = computed(() => [
       { path: '/', breadcrumbName: '' },
-      ...matchs.map((route) => {
+      ...currentRoute.matched.map((route) => {
         const children = menuTree.value.find((item: any) => item.name === route.name)?.children || []
         return {
           ...formatRoute(route),

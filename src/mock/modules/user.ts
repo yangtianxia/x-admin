@@ -81,7 +81,7 @@ setupMock({
         const role = localStorage.getItem(USER_ROLE_KEY) || 'admin'
         return successResponseWrap({
           name: 'admin',
-          avatar: 'https://xsgames.co/randomusers/avatar.php?g=pixel&key=3',
+          avatar: 'https://avatars.githubusercontent.com/yangtianxia',
           email: '1399378817@qq.com',
           job: 'frontend',
           jobName: '前端艺术家',
