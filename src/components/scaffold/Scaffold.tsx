@@ -11,47 +11,47 @@ import {
 // Common
 import { shallowMerge } from '@txjs/shared'
 import { useParent } from '@vant/use'
-import { APP_CONTEXT_KEY } from '@/hooks/app-context'
+import { SCAFFOLD_CONTEXT_KEY } from '@/hooks/scaffold'
 
 // Component
 import { resultSharedProps, type ResultStatus } from '../result'
 
 // Component utils
-import { APP_LOADING_KEY } from './AppContext'
 import { createInjectionKey } from '../_utils/basic'
 import { truthProp } from '../_utils/props'
+import { SCAFFOLD_LOADING_KEY } from './context'
 
-const [name, bem] = BEM('app')
+const [name, bem] = BEM('scaffold')
 
-const appProps = shallowMerge({}, resultSharedProps, {
+const scaffoldProps = shallowMerge({}, resultSharedProps, {
   loading: truthProp,
   breadcrumbs: Array as PropType<string[]>
 })
 
-export type AppProps = ExtractPropTypes<typeof appProps>
+export type ScaffoldProps = ExtractPropTypes<typeof scaffoldProps>
 
-export type AppProvide = {
+export type ScaffoldProvide = {
   readonly loading: ComputedRef<boolean>
   readonly status: ComputedRef<ResultStatus>
 }
 
-export const APP_KEY = createInjectionKey<AppProvide>(name)
+export const SCAFFOLD_KEY = createInjectionKey<ScaffoldProvide>(name)
 
 export default defineComponent({
   name,
-  props: appProps,
+  props: scaffoldProps,
   setup(props, { slots }) {
-    const { parent: appContext } = useParent(APP_CONTEXT_KEY)
+    const { parent } = useParent(SCAFFOLD_CONTEXT_KEY)
 
     const loading = computed(() =>
-      appContext?.state.loading ?? props.loading
+      parent?.state.loading ?? props.loading
     )
     const status = computed(() =>
-      appContext?.state.status ?? props.status
+      parent?.state.status ?? props.status
     )
 
-    provide(APP_LOADING_KEY, () => loading.value)
-    provide(APP_KEY, { loading, status })
+    provide(SCAFFOLD_LOADING_KEY, () => loading.value)
+    provide(SCAFFOLD_KEY, { loading, status })
 
     return () => (
       <div class={bem()}>

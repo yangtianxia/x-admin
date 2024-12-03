@@ -2,14 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root,
-  :host {
-    --color-white: 255 255 255;
-    --autofill-background: var(--color-white);
-  }
-}
-
 #nprogress {
   & > .bar {
     @apply !bg-primary;
@@ -28,7 +20,7 @@ input,
 select,
 textarea {
   &::-webkit-autofill {
-    box-shadow: inset 0 0 0 1000px var(--autofill-background);
+    box-shadow: inset 0 0 0 1000px var(--color-white);
   }
 }
 

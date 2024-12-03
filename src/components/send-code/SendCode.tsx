@@ -27,6 +27,8 @@ import {
   makeStringProp
 } from '../_utils/props'
 
+const [name, bem] = BEM('send-code')
+
 const sendCodeProps = shallowMerge({}, {
   interval: makeNumberProp(60),
   size: makeStringProp<ButtonProps['size']>('small'),
@@ -55,7 +57,7 @@ const sendCodePropsKeys = [
 export type SendCodeProps = ExtractPropTypes<typeof sendCodeProps>
 
 export default defineComponent({
-  name: 'XSendCode',
+  name,
   props: sendCodeProps,
   setup(props, { slots }) {
     const state = reactive({
@@ -109,7 +111,7 @@ export default defineComponent({
     return () => (
       <Button
         {...omit(shallowMerge({}, props, state), sendCodePropsKeys)}
-        class="!p-0 text-gray-600 hover:!text-gray-500 hover:!bg-transparent active:!text-gray-500 active:!bg-transparent"
+        class={bem()}
         onClick={onClick}
       >
         {renderText()}

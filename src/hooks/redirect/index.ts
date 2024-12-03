@@ -5,6 +5,11 @@ import router, { goBack } from '@/router'
 import { LOGIN_ROUTE_NAME } from '@/router/constant'
 import { REDIRECT_URI, REDIRECT_PARAMS } from '@/shared/constant'
 
+interface GoToOption {
+  name?: string
+  replace?: boolean
+}
+
 const whiteList: string[] = [LOGIN_ROUTE_NAME]
 
 export const useRedirect = () => {
@@ -22,21 +27,13 @@ export const useRedirect = () => {
 
   const currentRedirectUri = computed(() => state[REDIRECT_PARAMS])
 
-  const goto = (options: {
-    name?: string
-    replace?: boolean
-  } = {
-    name: LOGIN_ROUTE_NAME,
-    replace: true
-  }) => {
+  const goto = (options?: GoToOption) => {
+    const { name = LOGIN_ROUTE_NAME, replace = true } = options || {}
     const query = {} as LocationQueryRaw
-    if (options.replace) {
+    if (replace) {
       query[REDIRECT_URI] = ignore ? redirect_uri : fullPath
     }
-    router[options.replace ? 'replace' : 'push']({
-      query,
-      name: options.name
-    })
+    router[replace ? 'replace' : 'push']({ name, query })
   }
 
   const back = (callback?: UnknownCallback) => {

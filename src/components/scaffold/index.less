@@ -1,0 +1,40 @@
+@scaffold-cls: ~'@{prefix}-scaffold';
+@scaffold-body-cls: ~'@{prefix}-scaffold-body';
+
+:root,
+:host {
+  --scaffold-body-py: var(--size-4);
+  --scaffold-body-px: var(--size-4);
+  --scaffold-body-bg: var(--color-bgcolor);
+}
+
+.@{scaffold-cls} {
+  @apply relative flex flex-nowrap flex-col box-border;
+
+  & > .ant-spin-nested-loading {
+    @apply flex-1 min-h-0 flex flex-col;
+
+    & > .ant-spin-container {
+      @apply flex-1 min-h-0;
+    }
+  }
+}
+
+.@{scaffold-body-cls} {
+  @apply relative box-border;
+  min-height: 640px;
+
+  &--shrink {
+    padding: var(--scaffold-body-py) var(--scaffold-body-px) 0;
+  }
+
+  &--empty {
+    @apply p-0;
+    background-color: var(--scaffold-body-bg);
+
+    .@{prefix}-result {
+      @apply absolute top-0 bottom-0 w-full box-border;
+      height: 82%;
+    }
+  }
+}

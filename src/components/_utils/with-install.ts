@@ -17,11 +17,10 @@ export type WithInstall<T, U> = T & U & EventShim & {
 }
 
 export const withInstall = <T extends Component, U extends object>(options: T, additional?: U) => {
-  extend(options, additional);
+  extend(options, additional)
 
-  (options as Record<string, unknown>).install = (app: App) => {
+  ;(options as Record<string, unknown>).install = (app: App) => {
     const { name } = options
-
     if (name) {
       app.component(name, options)
       app.component(camelize(name), options)

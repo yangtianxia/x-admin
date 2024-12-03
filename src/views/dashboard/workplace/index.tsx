@@ -2,24 +2,32 @@
 import { defineComponent } from 'vue'
 
 // Common
-import { useAppContext } from '@/hooks/app-context'
+import { useScaffoldContext } from '@/hooks/scaffold'
 
 // Components
-import { App } from '@/components/app'
+import { Scaffold } from '@/components/scaffold'
 import { Breadcrumb } from '@/components/breadcrumb'
 
 export default defineComponent({
   name: 'DashboardPage',
   setup () {
-    useAppContext({
-      loading: false
+    const scaffold = useScaffoldContext({
+      immediate: false
+    })
+
+    scaffold.ready(async () => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          reject(new Error('error!'))
+        }, 1500)
+      })
     })
 
     return () => (
-      <App>
+      <Scaffold>
         <Breadcrumb />
-        <App.Body></App.Body>
-      </App>
+        <Scaffold.Body></Scaffold.Body>
+      </Scaffold>
     )
   }
 })

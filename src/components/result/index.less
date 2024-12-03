@@ -1,9 +1,10 @@
 @result-cls: ~'@{prefix}-result';
 
 :root {
-  --result-background: inherit;
-  --result-image-width: var(--size-56);
-  --result-image-height: var(--result-image-width);
+  --result-bg: inherit;
+  --result-padding: var(--size-3) 0 var(--size-4);
+  --result-img-w: var(--size-56);
+  --result-img-h: var(--result-img-w);
   --result-title-color: var(--color-text-base);
   --result-title-size: var(--size-md);
   --result-title-line: var(--line-md);
@@ -12,30 +13,23 @@
   --result-desc-size: var(--size-sm);
   --result-desc-line: var(--line-md);
   --result-desc-padding: 0 var(--size-6);
-  --result-bottom-margin-top: var(--size-4);
+  --result-bottom-mt: var(--size-4);
 }
 
 .@{result-cls} {
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: var(--size-3) 0 var(--size-4);
-  background-color: var(--result-background);
+  @apply box-border w-full h-full flex flex-col items-center justify-center;
+  padding: var(--result-padding);
+  background-color: var(--result-bg);
 
   &__img {
-    display: block;
-    width: var(--result-image-width);
-    height: var(--result-image-height);
+    @apply block;
+    width: var(--result-img-w);
+    height: var(--result-img-h);
   }
 
   &__title,
   &__desc {
-    word-break: break-all;
-    word-wrap: break-word;
+    @apply break-all break-words;
   }
 
   &__title {
@@ -54,6 +48,6 @@
   }
 
   &__bottom {
-    margin-top: var(--result-bottom-margin-top);
+    margin-top: var(--result-bottom-mt);
   }
 }

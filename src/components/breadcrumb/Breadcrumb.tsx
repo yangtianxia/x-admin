@@ -9,8 +9,10 @@ import { useMenuTree } from '@/hooks/menu-tree'
 import { Icon } from '../icon'
 import { Breadcrumb } from 'ant-design-vue'
 
+const [name, bem] = BEM('breadcrumb')
+
 export default defineComponent({
-  name: 'XBreadcrumb',
+  name,
   setup() {
     const currentRoute = useRoute()
     const menuTree = useMenuTree()
@@ -33,7 +35,7 @@ export default defineComponent({
     })
 
     return () => (
-      <div class="m-3">
+      <div class={bem()}>
         <Breadcrumb
           routes={routes.value}
           itemRender={({ route }: any) => {

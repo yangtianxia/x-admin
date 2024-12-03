@@ -1,4 +1,4 @@
-export const devWarn = (...args: any[]) => {
+export const printWarn = (...args: any[]) => {
   if (import.meta.env.DEV) {
     console.warn(...args)
   }
@@ -16,7 +16,5 @@ export const toIOSDate = (value: string) => {
 }
 
 export const camelToKebab = (input?: string) => {
-  return input
-    ?.replace(/([a-z0-9])([A-Z])/g, '$1-$2')
-    .toLowerCase()
+  return input?.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()
 }

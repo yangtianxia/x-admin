@@ -1,6 +1,6 @@
 import { type VNode } from '../_utils/types'
 
-export type ResultCode = '500' | '404' | 'error' | 'network'
+export type ResultCode = 500 | 404 | 'error' | 'network'
 
 export interface ResultOptions {
   status?: ResultCode

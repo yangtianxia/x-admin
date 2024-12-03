@@ -32,3 +32,7 @@ export const resultStatusConfig = {
     image: useLocal(imgError)
   }
 } as const
+
+export const hasStatusConfig = (status: any) => {
+  return status in resultStatusConfig
+}

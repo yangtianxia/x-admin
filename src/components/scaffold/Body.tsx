@@ -5,47 +5,47 @@ import {
   type ExtractPropTypes
 } from 'vue'
 
-// Component utils
-import { isNil, notNil } from '@txjs/bool'
+// Common
+import { notNil } from '@txjs/bool'
 
 // Components
 import { Spin } from 'ant-design-vue'
-import { APP_KEY } from './App'
 import { Result } from '../result'
+import { SCAFFOLD_KEY } from './Scaffold'
 
-const [name, bem] = BEM('body')
+const [name, bem] = BEM('scaffold-body')
 
-const bodyProps = {
+const scaffoldBodyProps = {
   shrink: Boolean
 }
 
-export type BodyProps = ExtractPropTypes<typeof bodyProps>
+export type ScaffoldBodyProps = ExtractPropTypes<typeof scaffoldBodyProps>
 
 export default defineComponent({
   name,
   inheritAttrs: false,
-  props: bodyProps,
+  props: scaffoldBodyProps,
   setup(props, { slots, attrs }) {
-    const app = inject(APP_KEY)
+    const scaffold = inject(SCAFFOLD_KEY)
 
-    if (isNil(app)) {
-      throw new Error('Body必须是App的字组件')
+    if (!scaffold) {
+      throw new Error('[x-admin] ScaffoldBody必须是Scaffold的子组件！')
     }
 
+    const { status, loading } = scaffold
+
     return () => {
-      const { status, loading } = app
+      const { shrink } = props
       const empty = notNil(status.value)
       return (
         <Spin
           size="large"
           spinning={loading.value}
         >
-          {status.value ? (
-            <Result status={status.value} />
-          ) : (
+          {status.value ? <Result status={status.value} /> : (
             <div
               {...attrs}
-              class={bem({ empty, shrink: props.shrink })}
+              class={bem({ empty, shrink })}
             >
               {slots.default?.()}
             </div>
