@@ -17,6 +17,10 @@ import {
 
 // Common
 import { notNil } from '@txjs/bool'
+import { pick } from '@txjs/shared'
+
+// Components
+import { Icon } from '../icon'
 
 // Component utils
 import { inBrowser } from '../_utils/basic'
@@ -46,7 +50,7 @@ const imageProps = {
   crossorigin: String as PropType<ImgHTMLAttributes['crossorigin']>,
   referrerpolicy: String as PropType<ImgHTMLAttributes['referrerpolicy']>,
   onLoad: Function as PropType<(event: Event) => void>,
-  onError: Function as PropType<(event?: Event) => void>,
+  onError: Function as PropType<(event?: Event) => void>
 }
 
 export type ImageProps = ExtractPropTypes<typeof imageProps>
@@ -63,25 +67,24 @@ export default defineComponent({
 
     const style = computed(() => {
       let result = {} as CSSProperties
-
       if (notNil(props.size)) {
         result = getSizeStyle(props.size)!
       } else {
         result.width = addUnit(props.width)
         result.height = addUnit(props.height)
       }
-
       if (notNil(props.radius)) {
         result.overflow = 'hidden'
         result.borderRadius = addUnit(props.radius)
       }
-
       return result
     })
 
     const onLoad = (event: Event) => {
-      loading.value = false
-      props.onLoad?.(event)
+      if (loading.value) {
+        loading.value = false
+        props.onLoad?.(event)
+      }
     }
 
     const triggerLoad = () => {
@@ -144,25 +147,34 @@ export default defineComponent({
       })
     })
 
-    const renderIcon = (className: unknown, slot?: Slot) => {
-      return slot?.() ?? (
-        <div class={className}></div>
-      )
-    }
-
     const renderPlaceholder = () => {
       if (loading.value && props.showLoading) {
         return (
           <div class={bem('loading')}>
-            {renderIcon(bem('loading-icon', slots.loading))}
+            <div class={bem('loading-icon')}>
+              {slots.loading?.() || (
+                <Icon
+                  type="Picture"
+                  size="100%"
+                  strokeWidth={2}
+                />
+              )}
+            </div>
           </div>
         )
       }
-
       if (error.value) {
         return (
           <div class={bem('error')}>
-            {renderIcon(bem('error-icon'), slots.error)}
+            <div class={bem('error-icon')}>
+              {slots.error?.() || (
+                <Icon
+                  type="DamageMap"
+                  size="50%"
+                  strokeWidth={2}
+                />
+              )}
+            </div>
           </div>
         )
       }
@@ -172,8 +184,8 @@ export default defineComponent({
       if (error.value || !props.src) return
 
       const attrs = {
-        alt: props.alt,
         class: bem('img'),
+        alt: props.alt,
         style: {
           objectFit: props.fit,
           objectPosition: props.position,
@@ -203,18 +215,15 @@ export default defineComponent({
       )
     }
 
-    return () => {
-      const { round, block, full } = props
-      return (
-        <div
-          class={bem({ round, block, full })}
-          style={style.value}
-        >
-          {renderImage()}
-          {renderPlaceholder()}
-          {slots.default?.()}
-        </div>
-      )
-    }
+    return () => (
+      <div
+        class={bem(pick(props, ['round', 'block', 'full']))}
+        style={style.value}
+      >
+        {renderImage()}
+        {renderPlaceholder()}
+        {slots.default?.()}
+      </div>
+    )
   }
 })

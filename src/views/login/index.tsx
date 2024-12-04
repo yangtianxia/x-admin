@@ -26,7 +26,7 @@ export default defineComponent({
               alt={$t('common.title')}
               class="w-8"
             />
-            <div class="text-gray-200 max-md:text-gray-900 text-xl font-semibold ml-2 mr-1">{$t('common.title')}</div>
+            <div class="text-gray-100 max-md:text-gray-900 text-xl font-semibold ml-2 mr-1">{$t('common.title')}</div>
           </div>
           <Dropdown
             placement="bottom"
@@ -42,7 +42,7 @@ export default defineComponent({
               </Menu>
             )}
           >
-            <div class="cursor-pointer inline-flex text-slate-700 hover:text-slate-500 items-center space-x-1">
+            <div class="cursor-pointer inline-flex text-grey-700 hover:text-gray-500 items-center space-x-1">
               <Icon type="Translate" />
               <span class="text-sm">{$t('login.locale')}</span>
             </div>

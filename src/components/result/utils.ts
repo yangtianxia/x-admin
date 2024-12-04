@@ -9,7 +9,7 @@ import imgError from './image/error.svg'
 
 export const resultSharedProps = {
   status: {
-    type: [String, Object] as PropType<ResultStatus>,
+    type: [String, Number, Object] as PropType<ResultStatus>,
     default: null as unknown
   }
 }

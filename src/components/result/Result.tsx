@@ -82,22 +82,15 @@ export default defineComponent({
     onMounted(update)
 
     const renderImage = () => {
-      const image = createVNode(slots.image || option.image, {
+      return createVNode(slots.image || option.image, {
         render: (value) => (
           <Image
-            width="100%"
+            class={bem('img')}
             lazyLoad={false}
             src={value}
           />
         )
       })
-      if (image) {
-        return (
-          <div class={bem('img')}>
-            {image}
-          </div>
-        )
-      }
     }
 
     const renderTitle = () => {

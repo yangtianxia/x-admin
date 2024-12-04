@@ -5,9 +5,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "pollen": "pollen --config pollen.config.mjs",
-    "dev": "pnpm pollen && vite",
-    "build": "vue-tsc -b && pnpm pollen && vite build",
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
@@ -60,7 +59,6 @@
     "vue-router": "^4.2.0"
   },
   "devDependencies": {
-    "@ant-design/colors": "^7.1.0",
     "@rollup/plugin-inject": "^5.0.5",
     "@rushstack/eslint-patch": "^1.2.0",
     "@tsconfig/node18": "^2.0.1",
@@ -89,7 +87,6 @@
     "less": "^4.1.3",
     "less-loader": "^12.2.0",
     "mockjs": "^1.1.0",
-    "pollen-css": "^5.0.1",
     "prettier": "^2.8.8",
     "shelljs": "^0.8.5",
     "tailwindcss": "^3.4.15",

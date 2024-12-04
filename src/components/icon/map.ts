@@ -12,6 +12,9 @@ import { default as MenuUnfoldOne } from '@icon-park/vue-next/lib/icons/MenuUnfo
 import { default as DashboardOne } from '@icon-park/vue-next/lib/icons/DashboardOne'
 import { default as Home } from '@icon-park/vue-next/lib/icons/Home'
 import { default as Logout } from '@icon-park/vue-next/lib/icons/Logout'
+import { default as DamageMap } from '@icon-park/vue-next/lib/icons/DamageMap'
+import { default as Picture } from '@icon-park/vue-next/lib/icons/Picture'
+import { default as LoadingOne } from '@icon-park/vue-next/lib/icons/LoadingOne'
 
 export const icons = {
   LeftC,
@@ -27,7 +30,10 @@ export const icons = {
   MenuUnfoldOne,
   DashboardOne,
   Home,
-  Logout
+  Logout,
+  DamageMap,
+  Picture,
+  LoadingOne
 } as const
 
 type IconMapTypeOf = typeof icons

@@ -29,10 +29,7 @@ export default defineConfig(({ mode }) => {
           target: env.VITE_API,
           changeOrigin: true,
           ws: true,
-          rewrite: (path: string) => path.replace(
-            new RegExp(`^${env.VITE_PROXY_API}`),
-            ''
-          )
+          rewrite: (path: string) => path.replace(new RegExp(`^${env.VITE_PROXY_API}`), '')
         }
       }
     },
@@ -95,22 +92,6 @@ export default defineConfig(({ mode }) => {
               injectTo: 'head',
               tag: 'title',
               children: env['VITE_TITLE']
-            },
-            {
-              injectTo: 'head',
-              tag: 'style',
-              attrs: {
-                type: 'text/css'
-              },
-              children: Ejs.render(
-                Ejs
-                .fileLoader(resolve('node_modules/pollen-css/dist/pollen.css'))
-                .toString()
-                // 删除头部注释内容
-                .replace(/\/\*([\s\S]*?)\*\//g, ''),
-                {},
-                { cache: false }
-              )
             },
             {
               injectTo: 'body',

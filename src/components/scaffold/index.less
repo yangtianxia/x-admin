@@ -3,9 +3,9 @@
 
 :root,
 :host {
-  --scaffold-body-py: var(--size-4);
-  --scaffold-body-px: var(--size-4);
-  --scaffold-body-bg: var(--color-bgcolor);
+  --scaffold-body-pt: theme('padding.4');
+  --scaffold-body-px: theme('padding.4');
+  --scaffold-body-bg: theme('backgroundColor.gray.100');
 }
 
 .@{scaffold-cls} {
@@ -25,7 +25,7 @@
   min-height: 640px;
 
   &--shrink {
-    padding: var(--scaffold-body-py) var(--scaffold-body-px) 0;
+    padding: var(--scaffold-body-pt) var(--scaffold-body-px) 0;
   }
 
   &--empty {

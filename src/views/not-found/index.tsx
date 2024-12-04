@@ -9,7 +9,7 @@ export default defineComponent({
   setup() {
     return () => (
       <div class="h-full flex flex-col items-center justify-center">
-        <Result status="404" />
+        <Result status={404} />
       </div>
     )
   }

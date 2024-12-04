@@ -111,7 +111,7 @@ export default defineComponent({
               )}
             >
               <Avatar
-                class="cursor-pointer"
+                class="cursor-pointer border-gray-400"
                 src={userStore.avatar}
               >
                 <Icon type="User" />
