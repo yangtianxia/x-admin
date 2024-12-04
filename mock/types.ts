@@ -1,5 +1,6 @@
 export interface MockParams {
   url: string
   type: string
-  body: string
+  body: Record<string, any>
+  headers: Record<string, any>
 }

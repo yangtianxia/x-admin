@@ -12,9 +12,6 @@ import i18n from '@/locale'
 import { message, notification } from 'ant-design-vue'
 import { Lazyload } from '@/components/lazy-load'
 
-// 导入mock
-import '@/mock'
-
 // BEM配置
 BEM.config({
   mode: import.meta.env.DEV ? 'always' : 'match',

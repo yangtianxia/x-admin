@@ -5,7 +5,10 @@ export const printWarn = (...args: any[]) => {
 }
 
 export const currentAPI = () => {
-  return import.meta.env.DEV ? import.meta.env.VITE_PROXY_API : import.meta.env.VITE_API
+  if (import.meta.env.PROD) {
+    return import.meta.env.VITE_API
+  }
+  return import.meta.env.VITE_MOCK !== 'enable' ? import.meta.env.VITE_PROXY_API : ''
 }
 
 export const toIOSDate = (value: string) => {

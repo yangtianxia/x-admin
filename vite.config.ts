@@ -1,5 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig, loadEnv, type UserConfig } from 'vite'
+import extend from 'extend'
+import PostcssImport from 'postcss-import'
 import Tailwindcss from 'tailwindcss'
 import Autoprefixer from 'autoprefixer'
 import Vue from '@vitejs/plugin-vue'
@@ -7,9 +9,8 @@ import VueJSX from '@vitejs/plugin-vue-jsx'
 import Legacy from '@vitejs/plugin-legacy'
 import Inject from '@rollup/plugin-inject'
 import { createHtmlPlugin } from 'vite-plugin-html'
-import Ejs from 'ejs'
+import { viteMockServe } from 'vite-plugin-mock'
 import { version } from './package.json'
-import { token } from './theme.mjs'
 
 const resolve = (path: string) => {
   return fileURLToPath(new URL(path, import.meta.url))
@@ -18,20 +19,13 @@ const resolve = (path: string) => {
 export default defineConfig(({ mode }) => {
   const isDev = mode === 'development'
   const env = loadEnv(mode, process.cwd())
-  const theme = { token }
-  return {
+  const isMock = env.VITE_MOCK === 'enable'
+
+  const config = {
     server: {
       hmr: true,
       open: true,
-      port: 6122,
-      proxy: {
-        [env.VITE_PROXY_API]: {
-          target: env.VITE_API,
-          changeOrigin: true,
-          ws: true,
-          rewrite: (path: string) => path.replace(new RegExp(`^${env.VITE_PROXY_API}`), '')
-        }
-      }
+      server: {}
     },
     resolve: {
       alias: {
@@ -47,7 +41,7 @@ export default defineConfig(({ mode }) => {
           javascriptEnabled: true,
           charset: false,
           modifyVars: {
-            '@prefix': env.VITE_PREFIX
+            '@prefix': env.VITE_PREFIX || 'x'
           }
         }
       },
@@ -58,16 +52,21 @@ export default defineConfig(({ mode }) => {
       },
       postcss: {
         plugins: [
+          PostcssImport,
           Autoprefixer,
           Tailwindcss
         ]
       }
     },
     build: {
-      minify: 'terser'
+      minify: 'terser' as const
     },
     plugins: [
       Vue(),
+      viteMockServe({
+        enable: isMock,
+        logger: true
+      }),
       VueJSX({
         isCustomElement: (tag) => tag.startsWith('custom')
       }),
@@ -91,7 +90,7 @@ export default defineConfig(({ mode }) => {
             {
               injectTo: 'head',
               tag: 'title',
-              children: env['VITE_TITLE']
+              children: env['VITE_TITLE'] || ''
             },
             {
               injectTo: 'body',
@@ -99,11 +98,36 @@ export default defineConfig(({ mode }) => {
               attrs: {
                 type: 'text/javascript'
               },
-              children: `window.THEME = ${JSON.stringify(theme)}`
+              children: `window.THEME = ${JSON.stringify({})}`
             }
           ]
         }
       })
     ]
+  } as UserConfig
+
+  if (env.VITE_PORT) {
+    extend(true, config, {
+      server: {
+        port: env.VITE_PORT
+      }
+    })
   }
+
+  if (env.VITE_PROXY_API && env.VITE_API) {
+    extend(true, config, {
+      server: {
+        proxy: {
+          [env.VITE_PROXY_API]: {
+            target: env.VITE_API,
+            changeOrigin: true,
+            ws: true,
+            rewrite: (path: string) => path.replace(new RegExp(`^${env.VITE_PROXY_API}`), '')
+          }
+        }
+      }
+    })
+  }
+
+  return config
 })

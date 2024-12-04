@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import colors from 'tailwindcss/colors'
 
 const config: Config = {
   mode: 'jit',
@@ -10,6 +11,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        ...colors,
         primary: '#468ff5',
         green: '#52c41a',
         yellow: '#eca311',

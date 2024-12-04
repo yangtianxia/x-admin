@@ -25,7 +25,7 @@ import LayoutPage from './components/page'
 import { addUnit } from '@/components/_utils/style'
 
 export default defineComponent({
-  name: 'Layout',
+  name: 'LayoutWrapper',
   setup() {
     const appStore = useAppStore()
     const userStore = useUserStore()

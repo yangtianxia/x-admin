@@ -11,7 +11,6 @@ import {
   type PropType,
   type CSSProperties,
   type ImgHTMLAttributes,
-  type Slot,
   type ExtractPropTypes
 } from 'vue'
 
