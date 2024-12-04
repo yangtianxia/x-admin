@@ -14,7 +14,7 @@ import {
 } from 'vue-router'
 import { isURL } from '@txjs/bool'
 import { makeArray } from '@txjs/make'
-import { useAppStore } from '@/store'
+import { useAppStore } from '@/stores'
 import { useMenuTree } from '@/hooks/menu-tree'
 import { useOpenWindow } from '@/hooks/open-window'
 import { listenerRouteChange } from '@/shared/route-listener'
@@ -128,7 +128,12 @@ export default defineComponent({
                 />
               )
               : () => (
-                <div style={{ minWidth: 'auto', marginLeft: addUnit(18 - inlineIndent.value) }} />
+                <div
+                  style={{
+                    minWidth: 0,
+                    marginLeft: addUnit(18 - inlineIndent.value)
+                  }}
+                />
               )
             const title = route?.meta?.locale
               ? () => $t(route.meta!.locale!)
@@ -158,13 +163,13 @@ export default defineComponent({
     }
 
     return () => (
-      <div class={bem()}>
+      <div class="h-full overflow-y-auto overflow-x-hidden">
         <Menu
           v-model:openKeys={openKeys.value}
           mode={topMenu.value ? 'horizontal' : 'inline'}
           selectedKeys={selectedKey.value}
           inlineIndent={inlineIndent.value}
-          style={{ height: '100%', width: '100%' }}
+          class={bem()}
         >
           {renderSubMenu()}
         </Menu>

@@ -8,6 +8,8 @@ const settings = {
   menuCollapse: false,
   footer: true,
   menuWidth: 220,
+  menuCollapseWidth: 80,
+  headerHeight: 60,
   menuFromServer: true,
   serverMenu: []
 }

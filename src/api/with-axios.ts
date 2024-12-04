@@ -1,4 +1,5 @@
 import qs from 'qs'
+import { notification } from 'ant-design-vue'
 import axios, {
   type AxiosError,
   type AxiosRequestConfig,
@@ -13,7 +14,7 @@ import {
 } from '@txjs/bool'
 import { useRedirect } from '@/hooks/redirect'
 import { isLogin, getToken } from '@/shared/auth'
-import { notification } from 'ant-design-vue'
+import { currentAPI } from '@/shared/utils'
 
 const createAxiosError = (errorText?: string) => ({
   code: 400,
@@ -25,9 +26,7 @@ class WithAxios {
   #contentType: RequestContentType = 'JSON'
 
   #axios = axios.create({
-    baseURL: import.meta.env.DEV
-      ? import.meta.env.VITE_PROXY_API
-      : import.meta.env.VITE_API,
+    baseURL: currentAPI(),
     timeout: 1000 * 30
   })
 
@@ -54,25 +53,23 @@ class WithAxios {
     this.#axios.interceptors.response.use(
       (config) => {
         const { data } = config
-
+        console.log(data)
         // 请求成功
         if (data.code >= 200 && data.code < 300) {
           return Promise.resolve(data.data)
         }
-
         // 登陆失效
         if (data.code === 401) {
-          const { go } = useRedirect()
-          go()
+          useRedirect().goto()
         } else {
           notification.error({
             message: data.msg
           })
         }
-
         return Promise.reject(data)
       },
       (error: AxiosError<any>) => {
+        console.log(error)
         const message = error?.message
         const result = createAxiosError(message)
 
@@ -80,9 +77,9 @@ class WithAxios {
           const { status, statusText } = error.response ?? {}
 
           if (status === 404) {
-            result.msg = $t('result.404Title')
+            result.msg = $t('result.title.404')
           } else if (status == 500) {
-            result.msg = $t('result.500Title')
+            result.msg = $t('result.title.500')
           } else if (statusText) {
             if (statusText.startsWith('Internal Server Error')) {
               result.msg = '服务出错，请稍后重试'

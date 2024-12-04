@@ -1,6 +1,6 @@
 import type { Router, RouteRecordNormalized } from 'vue-router'
 import NProgress from 'nprogress'
-import { useAppStore, useUserStore } from '@/store'
+import { useAppStore, useUserStore } from '@/stores'
 import { usePermission } from '@/hooks/permission'
 import { useMenuTree } from '@/hooks/menu-tree'
 

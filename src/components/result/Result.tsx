@@ -10,7 +10,7 @@ import {
 
 // Common
 import { shallowMerge, pick } from '@txjs/shared'
-import { isPlainObject, isString } from '@txjs/bool'
+import { isPlainObject } from '@txjs/bool'
 import { resultSharedProps, resultStatusConfig } from './utils'
 
 // Components
@@ -48,23 +48,23 @@ export default defineComponent({
     })
 
     const merge = (status: ResultCode, refresh?: UnknownCallback) => {
-      const defConfig = resultStatusConfig[status]
-
-      if (!defConfig) return
-      if (refresh && ['error', '500'].includes(status)) {
-        option.desc = $t('result.desc.500')
+      const config = resultStatusConfig[status]
+      if (config) {
+        if (refresh) {
+          option.desc = $t('result.desc.500')
+        }
+        shallowMerge(option, config)
       }
-      shallowMerge(option, defConfig)
     }
 
     const update = () => {
       const currentStatus = props.status
       const currentRefresh = props.refresh
-      const newOption = pick(props, ['title', 'image', 'desc', 'bottom'], true)
+      const newOption = pick(props, [ 'title', 'image', 'desc', 'bottom' ], true)
 
       if (isPlainObject(currentStatus)) {
         const { status, refresh, ...partial } = currentStatus
-        if (isString(status)) {
+        if (status) {
           merge(status, refresh || currentRefresh)
         }
         shallowMerge(option, partial)
@@ -82,22 +82,15 @@ export default defineComponent({
     onMounted(update)
 
     const renderImage = () => {
-      const image = createVNode(slots.image || option.image, {
+      return createVNode(slots.image || option.image, {
         render: (value) => (
           <Image
+            class={bem('img')}
             lazyLoad={false}
             src={value}
-            width="100%"
           />
         )
       })
-      if (image) {
-        return (
-          <div class={bem('img')}>
-            {image}
-          </div>
-        )
-      }
     }
 
     const renderTitle = () => {

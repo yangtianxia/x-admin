@@ -1,4 +1,7 @@
 {
+  "css.customData": [
+    ".vscode/tailwindcss.json"
+  ],
   "cssvar.files": [
     "./node_modules/pollen-css/dist/pollen.css"
   ],
@@ -9,5 +12,6 @@
     "**/*.css",
     "**/*.less",
     "./node_modules/pollen-css/dist/pollen.css"
-  ]
+  ],
+  "less.format.spaceAroundSelectorSeparator": true
 }
