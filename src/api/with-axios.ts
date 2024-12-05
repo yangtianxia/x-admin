@@ -35,7 +35,6 @@ class WithAxios {
       (config) => {
         config.type ??= this.#contentType
         config.headers.set('Content-Type', this.#getContentType(config.type))
-
         if (isLogin()) {
           config.headers.set('Authorization', `Bearer ${getToken()}`)
         }

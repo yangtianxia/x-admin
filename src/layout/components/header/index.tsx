@@ -8,6 +8,7 @@ import { useLocale } from '@/hooks/locale'
 import { useRedirect } from '@/hooks/redirect'
 
 // Components
+import { LogoutOutlined } from '@ant-design/icons-vue'
 import { Icon } from '@/components/icon'
 import {
   Avatar,
@@ -104,7 +105,7 @@ export default defineComponent({
               overlay={(
                 <Menu>
                   <Menu.Item
-                    icon={<Icon type="Logout" />}
+                    icon={<LogoutOutlined />}
                     onClick={onLogout}
                   >退出登录</Menu.Item>
                 </Menu>

@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { isLogin, setToken, clearToken } from '@/shared/auth'
 import { removeRouteListener } from '@/shared/route-listener'
+import { TOKEN_HEAD_KEY } from '@/shared/constant'
 
 import {
   postLoginByPwd,
@@ -57,7 +58,8 @@ const useUserStore = defineStore('user', {
     async loginByPwd(loginForm: Partial<LoginByPwdQuery>) {
       try {
         const result = await postLoginByPwd(loginForm)
-        setToken(result.token)
+        const token = [result.tokenHead || TOKEN_HEAD_KEY, result.token].join('')
+        setToken(token)
       } catch (err) {
         clearToken()
         throw err
@@ -66,7 +68,8 @@ const useUserStore = defineStore('user', {
     async loginBySms(loginForm: Partial<LoginBySmsQuery>) {
       try {
         const result = await postLoginBySms(loginForm)
-        setToken(result.token)
+        const token = [result.tokenHead || TOKEN_HEAD_KEY, result.token].join('')
+        setToken(token)
       } catch (err) {
         clearToken()
         throw err

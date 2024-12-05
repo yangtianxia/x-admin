@@ -1,6 +1,7 @@
 import axios from '../with-axios'
 
 interface LoginReturn {
+  tokenHead?: string
   token: string
 }
 
