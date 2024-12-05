@@ -1,8 +1,3 @@
-interface SetupMockOption {
-  mock?: boolean
-  setup(): void
-}
-
 export const successResponseWrap = (data: unknown) => {
   return {
     data,
@@ -19,8 +14,4 @@ export const failResponseWrap = (data: unknown, msg: string, code = 500) => {
     msg,
     code
   }
-}
-
-export default ({ mock, setup }: SetupMockOption) => {
-  if (mock !== false && import.meta.env.MODE !== 'production') setup()
 }

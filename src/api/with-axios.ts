@@ -53,7 +53,6 @@ class WithAxios {
     this.#axios.interceptors.response.use(
       (config) => {
         const { data } = config
-        console.log(data)
         // 请求成功
         if (data.code >= 200 && data.code < 300) {
           return Promise.resolve(data.data)
@@ -69,7 +68,6 @@ class WithAxios {
         return Promise.reject(data)
       },
       (error: AxiosError<any>) => {
-        console.log(error)
         const message = error?.message
         const result = createAxiosError(message)
 

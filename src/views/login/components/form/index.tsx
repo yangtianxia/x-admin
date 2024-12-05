@@ -185,9 +185,9 @@ export default defineComponent({
     )
 
     return () => (
-      <div class={[bem(), 'min-w-[300px] max-sm:flex-auto']}>
-        <div class="text-gray-900 text-lg font-semibold max-sm:hidden">{$t('login.form.title')} {$t('common.title')}</div>
-        <div class="text-gray-500 text-sm mt-1 max-sm:hidden">{$t('common.description')}</div>
+      <div class={[bem(), 'md:min-w-[300px] max-w-[300px] max-sm:flex-auto']}>
+        <div class="text-main text-lg font-semibold max-sm:hidden">{$t('login.form.title')} {$t('common.title')}</div>
+        <div class="text-tertiary text-sm mt-1 max-sm:hidden">{$t('common.description')}</div>
         <Form
           scrollToFirstError
           ref={formRef}

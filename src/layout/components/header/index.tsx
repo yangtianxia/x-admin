@@ -42,7 +42,7 @@ export default defineComponent({
     }
 
     return () => (
-      <div class="h-full flex justify-between border-b border-slate-200 bg-white">
+      <div class="h-full flex justify-between border-b late-200 bg-white">
         <div class="flex items-center pl-5">
           <img
             src="/logo.png"

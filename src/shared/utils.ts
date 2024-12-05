@@ -1,3 +1,5 @@
+export const isMockEnabled = import.meta.env.VITE_MOCK === 'enable'
+
 export const printWarn = (...args: any[]) => {
   if (import.meta.env.DEV) {
     console.warn(...args)
@@ -5,7 +7,11 @@ export const printWarn = (...args: any[]) => {
 }
 
 export const currentAPI = () => {
-  return import.meta.env.DEV ? import.meta.env.VITE_PROXY_API : import.meta.env.VITE_API
+  return import.meta.env.PROD
+    ? import.meta.env.VITE_API
+    : isMockEnabled
+      ? ''
+      : import.meta.env.VITE_PROXY_API || import.meta.env.VITE_API
 }
 
 export const toIOSDate = (value: string) => {
