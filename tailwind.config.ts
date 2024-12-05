@@ -9,14 +9,30 @@ const config: Config = {
     "./src/**/*.{vue,js,ts,jsx,tsx}"
   ],
   theme: {
+    colors: {
+      inherit: colors.inherit,
+      transparent: colors.transparent,
+      current: colors.current,
+      white: colors.white,
+      black: colors.black,
+      gray: colors.gray,
+      red: colors.red,
+      yellow: colors.yellow,
+      blue: colors.blue,
+      green: colors.green,
+      primary: colors.blue[500],
+    },
     extend: {
-      colors: {
-        ...colors,
-        primary: '#468ff5',
-        green: '#52c41a',
-        yellow: '#eca311',
-        red: '#ff4d4f',
-        blue: '#1677ff'
+      textColor: {
+        main: colors.gray[700],
+        secondary: colors.gray[600],
+        tertiary: colors.gray[500],
+        quaternary: colors.gray[400]
+      },
+      backgroundColor: {
+        100: colors.gray[50],
+        200: colors.gray[100],
+        300: colors.white
       }
     }
   },

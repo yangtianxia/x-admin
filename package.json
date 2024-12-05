@@ -1,7 +1,7 @@
 {
   "name": "x-admin",
   "description": "基于Ant-design-vue组件库开箱即用的中台解决方案",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
   "private": true,
   "scripts": {

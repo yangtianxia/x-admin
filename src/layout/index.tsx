@@ -76,7 +76,7 @@ export default defineComponent({
     })
 
     return () => (
-      <Layout class="w-full h-ful">
+      <Layout class="w-full h-full">
         {hasHeader.value ? (
           <Layout.Header class="z-50 fixed top-0 left-0 !p-0 w-full !h-[60px] !leading-[60px]">
             <LayoutHeader />
@@ -97,7 +97,7 @@ export default defineComponent({
             >
               <LayoutMenu />
               <div
-                class={`cursor-pointer absolute bottom-3 flex items-center justify-center text-gray-600 text-lg w-6 h-6 rounded-[3px] bg-gray-100 transition-all hover:bg-gray-200 ${collapsed.value ? 'left-2/4 translate-x-[-50%]' : 'right-3'}`}
+                class={`cursor-pointer absolute bottom-3 flex items-center justify-center text-secondary text-lg w-6 h-6 rounded-[3px] bg-gray-100 transition-all hover:bg-gray-200 ${collapsed.value ? 'left-2/4 translate-x-[-50%]' : 'right-3'}`}
                 onClick={onCollapsed}
               >
                 <Icon

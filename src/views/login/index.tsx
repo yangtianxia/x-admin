@@ -42,7 +42,7 @@ export default defineComponent({
               </Menu>
             )}
           >
-            <div class="cursor-pointer inline-flex text-grey-700 hover:text-gray-500 items-center space-x-1">
+            <div class="cursor-pointer inline-flex text-main hover:text-tertiary items-center space-x-1">
               <Icon type="Translate" />
               <span class="text-sm">{$t('login.locale')}</span>
             </div>
@@ -51,10 +51,10 @@ export default defineComponent({
         <div class="h-full w-[540px] flex-shrink-0 transition-all max-xl:w-[380px] max-md:hidden bg-gradient-to-r from-slate-900 to-slate-700">
           <LoginBanner />
         </div>
-        <div class="relative flex-1 min-w-0 max-xl:min-w-[420px] max-md:min-w-full flex justify-center items-center px-6 pb-10">
+        <div class="relative flex-1 min-w-0 max-xl:min-w-[420px] max-md:min-w-full flex justify-center items-center px-6 pb-10 bg-white">
           <LoginForm />
           <div class="absolute left-0 bottom-0 w-full h-10 flex items-center justify-center">
-            <div class="text-gray-400 text-sm">©{$t('common.copyright')}</div>
+            <div class="text-quaternary text-sm">©{$t('common.copyright')}</div>
           </div>
         </div>
       </div>
