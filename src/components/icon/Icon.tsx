@@ -24,7 +24,7 @@ import {
   type IconMapCamel
 } from './map'
 
-const [name] = BEM('icon')
+const [name] = $bem('icon')
 
 const iconProps = {
   type: {

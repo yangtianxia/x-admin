@@ -27,7 +27,7 @@ import {
   makeStringProp
 } from '../_utils/props'
 
-const [name, bem] = BEM('send-code')
+const [name, bem] = $bem('send-code')
 
 const sendCodeProps = shallowMerge({}, {
   interval: makeNumberProp(60),

@@ -27,7 +27,7 @@ export const useRedirectUri = (route: RouteLocationNormalizedLoaded) => {
 }
 
 export const useRedirect = () => {
-  const { name, query, fullPath } = router.currentRoute.value
+  const { name, fullPath } = router.currentRoute.value
   const redirectUri = getRedirectUri(router.currentRoute.value)
   const ignore = whiteList.includes(name as string)
 

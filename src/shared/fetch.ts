@@ -3,12 +3,13 @@ import axios, {
   type CancelTokenSource,
   type AxiosError,
   type AxiosRequestConfig,
+  type AxiosResponse,
   type RequestContentType,
   type InternalAxiosRequestConfig
 } from 'axios'
 
 import { notification } from 'ant-design-vue'
-import { toArray } from '@txjs/shared'
+import { toArray, shallowMerge } from '@txjs/shared'
 import {
   isPlainObject,
   isUndefined,
@@ -19,12 +20,7 @@ import {
 import { useRedirect } from '@/hooks/redirect'
 import { isLogin, getToken } from '@/shared/auth'
 import { currentAPI } from '@/shared/utils'
-
-type RequestError = AxiosError<{
-  message?: string
-  result?: any
-  errorMessage?: string
-}>
+import { REQUEST_TOKEN_KEY } from '@/shared/constant'
 
 enum RequestContentTypeEnum {
   JSON = 'application/json',
@@ -33,8 +29,6 @@ enum RequestContentTypeEnum {
   XML = 'application/xml',
   OCTET_STREAM = 'application/octet-stream',
 }
-
-const REQUEST_TOKEN_KEY = 'Authorization'
 
 const normalizeUndefined = (data?: any) => {
   if (isPlainObject(data)) {
@@ -50,19 +44,88 @@ const normalizeUndefined = (data?: any) => {
   return data
 }
 
-const failWrap = (errorText: string = 'An error occurred') => ({
-  code: 400,
-  data: null,
-  success: false,
-  msg: errorText,
-})
+export const msgWrap = (error: any) => {
+  return error.msg || error.message || error.errMsg
+}
+
+const failWrap = (msg?: string) => {
+  const CODE = 500
+  // TODO 根据业务，自行修改字段
+  const data = {
+    code: CODE,
+    data: null,
+    success: false,
+    msg
+  }
+  const update = (partial: Partial<typeof data>) => {
+    shallowMerge(data, partial)
+  }
+  const code = (code: number = CODE) => {
+    update({ code })
+  }
+  const message = (msg: string) => {
+    update({ msg })
+  }
+  return { data, code, message }
+}
 
 const requestContentType = (type?: RequestContentType) => {
   return RequestContentTypeEnum[type || 'JSON']
 }
 
-const errorHandler = (error: RequestError): Promise<any> => {
-  return Promise.reject(error)
+const errorHandler = (error: AxiosError<any>): Promise<any> => {
+  const fail = failWrap()
+  const status = error.response?.status
+  switch (status) {
+    case 400:
+      fail.message($t('fetch.400'))
+      break
+    case 403:
+      fail.message($t('fetch.403'))
+      break
+    case 404:
+      fail.message($t('fetch.404'))
+      break
+    case 405:
+      fail.message($t('fetch.405'))
+      break
+    case 408:
+      fail.message($t('fetch.408'))
+      break
+    case 500:
+      fail.message($t('fetch.500'))
+      break
+    case 501:
+      fail.message($t('fetch.501'))
+      break
+    case 502:
+      fail.message($t('fetch.502'))
+      break
+    case 503:
+      fail.message($t('fetch.503'))
+      break
+    case 504:
+      fail.message($t('fetch.504'))
+      break
+    case 505:
+      fail.message($t('fetch.505'))
+      break
+  }
+
+  fail.code(status)
+
+  if (!fail.data.msg) {
+    fail.message(msgWrap(error))
+  }
+
+  if (status === 401) {
+    useRedirect().goto()
+  } else {
+    notification.error({
+      message: fail.data.msg || 'Response failed'
+    })
+  }
+  return Promise.reject(fail.data)
 }
 
 const requestHandler = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig> => {
@@ -74,16 +137,26 @@ const requestHandler = (config: InternalAxiosRequestConfig): InternalAxiosReques
   return config
 }
 
-const responseHandler = (response: { data: any }) => {
+const responseHandler = (response: AxiosResponse) => {
   const { data } = response
+
+  // 二进制数据
+  const responseType = response.request?.responseType
+  if (responseType === 'blob' || responseType === 'arrayBuffer') {
+    return data
+  }
+
+  // 请求成功
   if (data.code >= 200 && data.code < 300) {
     return Promise.resolve(data.data)
   }
+
+  // Token过期
   if (data.code === 401) {
     useRedirect().goto()
   } else {
     notification.error({
-      message: data.msg || 'Response failed'
+      message: msgWrap(data) || 'Response failed'
     })
   }
   return Promise.reject(data)
@@ -103,17 +176,19 @@ class Fetch {
     this.#responseInterceptor()
   }
 
-  #configurationAbortToken(method: string, url: string, params: any) {
+  #configurationAbortToken(method: string, url: string, params: any, config: any) {
     const serializedParams = qs.stringify(params, {
       arrayFormat: 'brackets'
     })
-    const token = `${method}:${url}:${serializedParams}`
+    const token = [method, url, serializedParams].filter(Boolean).join(':')
     // 取消相同请求
     this.abort(token)
     // 创建新的取消令牌
     const source = axios.CancelToken.source()
     this.#abortTokens.set(token, source)
-    return { source, token }
+    // 绑定取消令牌
+    config.abortToken = token
+    config.cancelToken = source.token
   }
 
   #deleteAbortToken(token?: string) {
@@ -151,11 +226,8 @@ class Fetch {
         }
         return qs.stringify(params)
       }
-      // 绑定取消Token
       if (!config.cancelToken) {
-        const { source, token } = this.#configurationAbortToken(method, url, data)
-        config.abortToken = token
-        config.cancelToken = source.token
+        this.#configurationAbortToken(method, url, data, config)
       }
       return this.#fetch[method]<T>(url, config)
     }
@@ -167,11 +239,8 @@ class Fetch {
       config.transformRequest = toArray(config.transformRequest ?? [])
         .concat(normalizeUndefined)
         .concat((data: any) => isJSON ? JSON.stringify(data) : qs.stringify(data))
-      // 绑定取消Token
       if (!config.cancelToken) {
-        const { source, token } = this.#configurationAbortToken(method, url, data)
-        config.abortToken = token
-        config.cancelToken = source.token
+        this.#configurationAbortToken(method, url, data, config)
       }
       return this.#fetch[method]<T>(url, data, config)
     }
@@ -181,11 +250,8 @@ class Fetch {
     return <T = any>(url: string, data: any = {}, config: Omit<AxiosRequestConfig, 'type'> = {}) => {
       config.transformRequest = toArray(config.transformRequest ?? [])
         .concat(normalizeUndefined)
-      // 绑定取消Token
       if (!config.cancelToken) {
-        const { source, token } = this.#configurationAbortToken(method, url, data)
-        config.abortToken = token
-        config.cancelToken = source.token
+        this.#configurationAbortToken(method, url, data, config)
       }
       return this.#fetch[method]<T>(url, data, {
         ...config,
@@ -221,21 +287,15 @@ class Fetch {
   patchForm = this.#formWrap('patchForm')
 
   head<T = any>(url: string, config: AxiosRequestConfig = {}) {
-    // 绑定取消Token
     if (!config.cancelToken) {
-      const { source, token } = this.#configurationAbortToken('head', url, {})
-      config.abortToken = token
-      config.cancelToken = source.token
+      this.#configurationAbortToken('head', url, {}, config)
     }
     return this.#fetch.head<T>(url, config)
   }
 
   options<T = any>(url: string, config: AxiosRequestConfig = {}) {
-    // 绑定取消Token
     if (!config.cancelToken) {
-      const { source, token } = this.#configurationAbortToken('options', url, {})
-      config.abortToken = token
-      config.cancelToken = source.token
+      this.#configurationAbortToken('options', url, {}, config)
     }
     return this.#fetch.options<T>(url, config)
   }

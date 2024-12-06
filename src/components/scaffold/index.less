@@ -9,20 +9,19 @@
 }
 
 .@{scaffold-cls} {
-  @apply relative flex flex-nowrap flex-col box-border;
+  @apply flex-1 relative flex flex-nowrap flex-col box-border;
 
   & > .ant-spin-nested-loading {
     @apply flex-1 min-h-0 flex flex-col;
 
     & > .ant-spin-container {
-      @apply flex-1 min-h-0;
+      @apply flex-1 min-h-0 flex flex-col;
     }
   }
 }
 
 .@{scaffold-body-cls} {
-  @apply relative box-border;
-  min-height: 640px;
+  @apply flex-1 relative box-border;
 
   &--shrink {
     padding: var(--scaffold-body-pt) var(--scaffold-body-px) 0;

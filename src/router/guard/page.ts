@@ -4,11 +4,11 @@ import { camelToKebab } from '@/shared/utils'
 
 const bodyElement = document.body ?? document.getElementsByName('body')[0]
 
-const setTitle = (...args: string[]) => {
-  document.title = [...args, $t('common.title')].filter(isValidString).join(' - ')
+const setPageTitle = (...args: string[]) => {
+  document.title = [...args, $t('page.title')].filter(isValidString).join(' - ')
 }
 
-export default function setupWebSiteGuard(router: Router) {
+export default function setupPageGuard(router: Router) {
   router.beforeEach((to, from, next) => {
     const tname = camelToKebab(to.name as string)
     const fname = camelToKebab(from.name as string)
@@ -27,7 +27,7 @@ export default function setupWebSiteGuard(router: Router) {
       .filter(isValidString)
       .map($t)
       .reverse()
-    setTitle(...titleList)
+    setPageTitle(...titleList)
     next()
   })
 }

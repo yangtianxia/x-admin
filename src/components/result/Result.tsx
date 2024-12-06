@@ -24,7 +24,7 @@ import type { VNode } from '../_utils/types'
 // Types
 import type { ResultCode } from './types'
 
-const [name, bem] = BEM('result')
+const [name, bem] = $bem('result')
 
 const resultProps = shallowMerge({}, resultSharedProps, {
   image: VNodeProp,

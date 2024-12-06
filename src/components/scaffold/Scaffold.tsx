@@ -21,7 +21,7 @@ import { createInjectionKey } from '../_utils/basic'
 import { truthProp } from '../_utils/props'
 import { SCAFFOLD_LOADING_KEY } from './context'
 
-const [name, bem] = BEM('scaffold')
+const [name, bem] = $bem('scaffold')
 
 const scaffoldProps = shallowMerge({}, resultSharedProps, {
   loading: truthProp,

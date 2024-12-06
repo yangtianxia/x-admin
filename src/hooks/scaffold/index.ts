@@ -1,6 +1,7 @@
 import { reactive, onBeforeMount } from 'vue'
 import { useChildren } from '@vant/use'
 import { isPlainObject, isPromise } from '@txjs/bool'
+import { msgWrap } from '@/shared/fetch'
 import { createInjectionKey } from '@/components/_utils/basic'
 import type { ResultOptions, ResultStatus } from '@/components/result'
 import { hasStatusConfig } from '@/components/result/utils'
@@ -85,9 +86,9 @@ export const useScaffoldContext = (options?: ScaffoldContextOption) => {
             result.title = error.message
           } else if (isPlainObject(error)) {
             result.status = hasStatusConfig(error.code) ? error.code : 'error'
-            const errMsg = error.msg || error.message || error.errMsg
-            if (errMsg) {
-              result.title = errMsg
+            const message = msgWrap(error)
+            if (message) {
+              result.title = message
             } else {
               result.desc = JSON.stringify(error)
             }

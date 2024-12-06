@@ -7,7 +7,6 @@ import { useScaffoldContext } from '@/hooks/scaffold'
 
 // Components
 import { Scaffold } from '@/components/scaffold'
-import { Breadcrumb } from '@/components/breadcrumb'
 import { Image } from '@/components/image'
 
 export default defineComponent({
@@ -20,9 +19,12 @@ export default defineComponent({
 
     return () => (
       <Scaffold>
-        <Breadcrumb />
         <Scaffold.Body shrink>
-          <Image round size={400} src={userStore.avatar} />
+          <Image
+            round
+            size={100}
+            src={userStore.avatar}
+          />
         </Scaffold.Body>
       </Scaffold>
     )
