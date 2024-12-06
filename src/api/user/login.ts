@@ -1,6 +1,5 @@
-import axios from '../with-axios'
-
-interface LoginReturn {
+export interface LoginReturn {
+  tokenHead?: string
   token: string
 }
 
@@ -20,15 +19,15 @@ export interface LoginBySmsQuery {
 
 /** 密码登录 */
 export function postLoginByPwd(data: Partial<LoginByPwdQuery>) {
-  return axios.post<LoginReturn>('/login/pwd', data)
+  return $fetch.post<LoginReturn>('/login/pwd', data)
 }
 
 /** 验证码登录 */
 export function postLoginBySms(data: Partial<LoginBySmsQuery>) {
-  return axios.post<LoginReturn>('/login/sms', data)
+  return $fetch.post<LoginReturn>('/login/sms', data)
 }
 
 /** 短信验证码 - 登录 */
 export function postLoginCode(telephone?: string) {
-  return axios.post<LoginCodeReturn>('/login/code', { telephone })
+  return $fetch.post<LoginCodeReturn>('/login/code', { telephone })
 }

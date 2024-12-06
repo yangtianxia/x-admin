@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import tailwindScrollbar from 'tailwind-scrollbar'
 import colors from 'tailwindcss/colors'
 
 const config: Config = {
@@ -20,6 +21,7 @@ const config: Config = {
       yellow: colors.yellow,
       blue: colors.blue,
       green: colors.green,
+      slate: colors.slate,
       primary: colors.blue[500],
     },
     extend: {
@@ -31,12 +33,13 @@ const config: Config = {
       },
       backgroundColor: {
         100: colors.gray[50],
-        200: colors.gray[100],
-        300: colors.white
+        200: colors.gray[100]
       }
     }
   },
-  plugins: []
+  plugins: [
+    tailwindScrollbar
+  ]
 }
 
 export default config

@@ -13,7 +13,7 @@ import { Spin } from 'ant-design-vue'
 import { Result } from '../result'
 import { SCAFFOLD_KEY } from './Scaffold'
 
-const [name, bem] = BEM('scaffold-body')
+const [name, bem] = $bem('scaffold-body')
 
 const scaffoldBodyProps = {
   shrink: Boolean

@@ -115,7 +115,8 @@ export default defineConfig(({ mode, command }) => {
       Legacy(),
       Inject({
         $t: resolve('./src/locale/t.ts'),
-        BEM: '@txjs/bem'
+        $fetch: resolve('./src/shared/fetch.ts'),
+        $bem: '@txjs/bem'
       }),
       createHtmlPlugin({
         minify: true,

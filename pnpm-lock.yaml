@@ -78,6 +78,9 @@ importers:
         specifier: ^4.2.0
         version: 4.4.5(vue@3.5.12(typescript@5.6.3))
     devDependencies:
+      '@ant-design/icons-vue':
+        specifier: ^7.0.1
+        version: 7.0.1(vue@3.5.12(typescript@5.6.3))
       '@rollup/plugin-inject':
         specifier: ^5.0.5
         version: 5.0.5(rollup@4.24.0)
@@ -168,6 +171,9 @@ importers:
       shelljs:
         specifier: ^0.8.5
         version: 0.8.5
+      tailwind-scrollbar:
+        specifier: ^3.1.0
+        version: 3.1.0(tailwindcss@3.4.15(ts-node@10.9.2(@types/node@18.19.59)(typescript@5.6.3)))
       tailwindcss:
         specifier: ^3.4.15
         version: 3.4.15(ts-node@10.9.2(@types/node@18.19.59)(typescript@5.6.3))
@@ -2977,6 +2983,12 @@ packages:
 
   systemjs@6.15.1:
     resolution: {integrity: sha512-Nk8c4lXvMB98MtbmjX7JwJRgJOL8fluecYCfCeYBznwmpOs8Bf15hLM6z4z71EDAhQVrQrI+wt1aLWSXZq+hXA==}
+
+  tailwind-scrollbar@3.1.0:
+    resolution: {integrity: sha512-pmrtDIZeHyu2idTejfV59SbaJyvp1VRjYxAjZBH0jnyrPRo6HL1kD5Glz8VPagasqr6oAx6M05+Tuw429Z8jxg==}
+    engines: {node: '>=12.13.0'}
+    peerDependencies:
+      tailwindcss: 3.x
 
   tailwindcss@3.4.15:
     resolution: {integrity: sha512-r4MeXnfBmSOuKUWmXe6h2CcyfzJCEk4F0pptO5jlnYSIViUkVmsawj80N5h2lO3gwcmSb4n3PuN+e+GC1Guylw==}
@@ -6237,6 +6249,10 @@ snapshots:
   svg-tags@1.0.0: {}
 
   systemjs@6.15.1: {}
+
+  tailwind-scrollbar@3.1.0(tailwindcss@3.4.15(ts-node@10.9.2(@types/node@18.19.59)(typescript@5.6.3))):
+    dependencies:
+      tailwindcss: 3.4.15(ts-node@10.9.2(@types/node@18.19.59)(typescript@5.6.3))
 
   tailwindcss@3.4.15(ts-node@10.9.2(@types/node@18.19.59)(typescript@5.6.3)):
     dependencies:

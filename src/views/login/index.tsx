@@ -23,10 +23,10 @@ export default defineComponent({
           <div class="inline-flex items-center">
             <img
               src="/logo.png"
-              alt={$t('common.title')}
+              alt={$t('page.title')}
               class="w-8"
             />
-            <div class="text-gray-100 max-md:text-gray-900 text-xl font-semibold ml-2 mr-1">{$t('common.title')}</div>
+            <div class="text-gray-100 max-md:text-gray-900 text-xl font-semibold ml-2 mr-1">{$t('page.title')}</div>
           </div>
           <Dropdown
             placement="bottom"
@@ -54,7 +54,7 @@ export default defineComponent({
         <div class="relative flex-1 min-w-0 max-xl:min-w-[420px] max-md:min-w-full flex justify-center items-center px-6 pb-10 bg-white">
           <LoginForm />
           <div class="absolute left-0 bottom-0 w-full h-10 flex items-center justify-center">
-            <div class="text-quaternary text-sm">©{$t('common.copyright')}</div>
+            <div class="text-quaternary text-sm">©{$t('page.copyright')}</div>
           </div>
         </div>
       </div>

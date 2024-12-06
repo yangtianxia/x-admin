@@ -14,8 +14,9 @@ declare module '*.styl'
 declare module '*.json'
 
 declare global {
-  const BEM: typeof import('@txjs/bem')['default']
+  const $bem: typeof import('@txjs/bem')['default']
   const $t: typeof import('../src/locale')['default']['global']['t']
+  const $fetch: typeof import('../src/shared/fetch')['default']
   const themeColors: Record<string, string>
 }
 

@@ -8,7 +8,7 @@ import { Carousel } from 'ant-design-vue'
 // Style
 import style from './index.module.less'
 
-const [name, bem] = BEM('banner', style)
+const [name, bem] = $bem('banner', style)
 
 export default defineComponent({
   name,

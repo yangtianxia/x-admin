@@ -51,8 +51,9 @@
     "@typescript-eslint/no-empty-interface": "off"
   },
   "globals": {
-    "BEM": "readonly",
+    "$bem": "readonly",
     "$t": "readonly",
+    "$fetch": "readonly",
     "themeColors": "readonly"
   }
 }

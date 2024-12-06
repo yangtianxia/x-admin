@@ -33,7 +33,7 @@ import style from './index.module.less'
 
 type LoginMethod = 'pwd' | 'sms'
 
-const [name, bem] = BEM('form', style)
+const [name, bem] = $bem('form', style)
 
 const getDefaultFormModel = () => ({
   /** 登录方式 */
@@ -186,8 +186,8 @@ export default defineComponent({
 
     return () => (
       <div class={[bem(), 'md:min-w-[300px] max-w-[300px] max-sm:flex-auto']}>
-        <div class="text-main text-lg font-semibold max-sm:hidden">{$t('login.form.title')} {$t('common.title')}</div>
-        <div class="text-tertiary text-sm mt-1 max-sm:hidden">{$t('common.description')}</div>
+        <div class="text-main text-lg font-semibold max-sm:hidden">{$t('login.form.title')} {$t('page.title')}</div>
+        <div class="text-tertiary text-sm mt-1 max-sm:hidden">{$t('page.description')}</div>
         <Form
           scrollToFirstError
           ref={formRef}
@@ -207,8 +207,8 @@ export default defineComponent({
             >{$t('login.form.submit')}</Button>
             <Button
               block
-              type="link"
-              class="mt-2"
+              type="text"
+              class="text-tertiary mt-2"
               onClick={onLoginMethodSwitch}
             >{loginMethodLabel.value}</Button>
           </div>

@@ -3,6 +3,7 @@ import NProgress from 'nprogress'
 import { useAppStore, useUserStore } from '@/stores'
 import { usePermission } from '@/hooks/permission'
 import { useMenuTree } from '@/hooks/menu-tree'
+import { useRedirectUri } from '@/hooks/redirect'
 
 import { appRoutes } from '../routes'
 import { WHITE_LIST, NOT_FOUND_ROUTE } from '../constant'
@@ -14,6 +15,7 @@ export default function setupPermissionGuard(router: Router) {
     const menuTree = useMenuTree()
     const Permission = usePermission()
     const permissionsAllow = Permission.accessRouter(to)
+    const redirectUri = useRedirectUri(to)
 
     if (appStore.menuFromServer) {
       // 针对来自服务端的菜单配置进行处理
@@ -30,11 +32,9 @@ export default function setupPermissionGuard(router: Router) {
       let exist = false
       while (serverMenuConfig.length && !exist) {
         const element = serverMenuConfig.shift()
-
         if (element?.name === to.name) {
           exist = true
         }
-
         if (element?.children) {
           serverMenuConfig.push(
             ...(element.children as unknown as RouteRecordNormalized[])
@@ -44,6 +44,8 @@ export default function setupPermissionGuard(router: Router) {
 
       if (exist && permissionsAllow) {
         next()
+      } else if (redirectUri) {
+        next({ path: redirectUri })
       } else {
         const serverFirstMenu = menuTree.value[0]
         const destination = serverFirstMenu ? { name: serverFirstMenu.name } : NOT_FOUND_ROUTE
@@ -52,6 +54,8 @@ export default function setupPermissionGuard(router: Router) {
     } else {
       if (permissionsAllow) {
         next()
+      } else if (redirectUri) {
+        next({ path: redirectUri })
       } else {
         const destination = Permission.findFirstPermissionRoute(appRoutes, userStore.role) || NOT_FOUND_ROUTE
         next(destination)

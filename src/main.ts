@@ -12,8 +12,8 @@ import i18n from '@/locale'
 import { message, notification } from 'ant-design-vue'
 import { Lazyload } from '@/components/lazy-load'
 
-// BEM配置
-BEM.config({
+// bem配置
+$bem.config({
   mode: import.meta.env.DEV ? 'always' : 'match',
   prefix: import.meta.env.VITE_PREFIX
 })

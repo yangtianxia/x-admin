@@ -29,7 +29,7 @@ import { addUnit } from '@/components/_utils/style'
 // Style
 import style from './index.module.less'
 
-const [name, bem] = BEM('menu', style)
+const [name, bem] = $bem('menu', style)
 
 export default defineComponent({
   name,
@@ -163,13 +163,14 @@ export default defineComponent({
     }
 
     return () => (
-      <div class="h-full overflow-y-auto overflow-x-hidden">
+      <div class="h-full overflow-y-auto overflow-x-hidden scrollbar-thin">
         <Menu
           v-model:openKeys={openKeys.value}
+          theme="light"
+          class={bem()}
           mode={topMenu.value ? 'horizontal' : 'inline'}
           selectedKeys={selectedKey.value}
           inlineIndent={inlineIndent.value}
-          class={bem()}
         >
           {renderSubMenu()}
         </Menu>

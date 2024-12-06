@@ -15,10 +15,11 @@ import { NOT_FOUND_ROUTE } from '@/router/constant'
 import { usePermission } from '@/hooks/permission'
 
 // Components
-import { Layout } from 'ant-design-vue'
 import { Icon } from '@/components/icon'
+import { Layout } from 'ant-design-vue'
 import LayoutHeader from './components/header'
 import LayoutMenu from './components/menu'
+import LayoutBreadcrumb from './components/breadcrumb'
 import LayoutPage from './components/page'
 
 // Component utils
@@ -88,6 +89,7 @@ export default defineComponent({
               v-show={!hideMenu.value}
               collapsible
               breakpoint="xl"
+              theme="light"
               trigger={null}
               width={appStore.menuWidth}
               collapsedWidth={appStore.menuCollapseWidth}
@@ -97,7 +99,7 @@ export default defineComponent({
             >
               <LayoutMenu />
               <div
-                class={`cursor-pointer absolute bottom-3 flex items-center justify-center text-secondary text-lg w-6 h-6 rounded-[3px] bg-gray-100 transition-all hover:bg-gray-200 ${collapsed.value ? 'left-2/4 translate-x-[-50%]' : 'right-3'}`}
+                class={['cursor-pointer absolute bottom-3 flex items-center justify-center text-secondary text-lg w-6 h-6 rounded-[3px] bg-200 transition-all hover:bg-gray-200', collapsed.value ? 'left-2/4 translate-x-[-50%]' : 'right-3']}
                 onClick={onCollapsed}
               >
                 <Icon
@@ -109,13 +111,18 @@ export default defineComponent({
             </Layout.Sider>
           ) : null}
           <Layout
-            class="overflow-x-hidden"
+            class="min-h-screen overflow-hidden transition-[padding]"
             style={layoutStyle.value}
           >
-            <Layout.Content>
+            <LayoutBreadcrumb class="m-3" />
+            <Layout.Content class="flex flex-col">
               <LayoutPage />
             </Layout.Content>
-            {appStore.footer ? <Layout.Footer /> : null}
+            {appStore.footer ? (
+              <Layout.Footer class="!py-4 !px-0">
+                <p class="text-quaternary text-sm text-center">{$t('page.copyright')}</p>
+              </Layout.Footer>
+            ) : null}
           </Layout>
         </Layout>
       </Layout>

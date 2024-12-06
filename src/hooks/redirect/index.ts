@@ -1,5 +1,5 @@
 import { reactive, computed } from 'vue'
-import type { LocationQueryRaw } from 'vue-router'
+import type { LocationQueryRaw, RouteLocationNormalizedLoaded } from 'vue-router'
 import { isValidString } from '@txjs/bool'
 import router, { goBack } from '@/router'
 import { LOGIN_ROUTE_NAME } from '@/router/constant'
@@ -12,17 +12,27 @@ interface GoToOption {
 
 const whiteList: string[] = [LOGIN_ROUTE_NAME]
 
+const getRedirectUri = (route: RouteLocationNormalizedLoaded) => {
+  const { query } = route
+  const redirect_uri = query[REDIRECT_URI] as string
+  if (isValidString(redirect_uri)) {
+    return decodeURIComponent(redirect_uri)
+  }
+}
+
+export const useRedirectUri = (route: RouteLocationNormalizedLoaded) => {
+  if (route.meta.authNoAccessAfter) {
+    return getRedirectUri(route)
+  }
+}
+
 export const useRedirect = () => {
-  const { name, query, fullPath } = router.currentRoute.value
+  const { name, fullPath } = router.currentRoute.value
+  const redirectUri = getRedirectUri(router.currentRoute.value)
   const ignore = whiteList.includes(name as string)
 
-  let redirect_uri = query[REDIRECT_URI] as string
-  if (isValidString(redirect_uri)) {
-    redirect_uri = decodeURIComponent(redirect_uri)
-  }
-
   const state = reactive({
-    [REDIRECT_PARAMS]: redirect_uri
+    [REDIRECT_PARAMS]: redirectUri
   })
 
   const currentRedirectUri = computed(() => state[REDIRECT_PARAMS])
@@ -31,7 +41,7 @@ export const useRedirect = () => {
     const { name = LOGIN_ROUTE_NAME, replace = true } = options || {}
     const query = {} as LocationQueryRaw
     if (replace) {
-      query[REDIRECT_URI] = ignore ? redirect_uri : fullPath
+      query[REDIRECT_URI] = ignore ? redirectUri : fullPath
     }
     router[replace ? 'replace' : 'push']({ name, query })
   }
