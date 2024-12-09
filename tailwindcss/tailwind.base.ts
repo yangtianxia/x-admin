@@ -4,7 +4,7 @@ import colors from 'tailwindcss/colors'
 
 const config: Config = {
   mode: 'jit',
-  darkMode: 'class',
+  darkMode: ['selector', '[data-mode="dark"]'],
   content: [
     "./index.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}"

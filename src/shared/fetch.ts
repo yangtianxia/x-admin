@@ -14,6 +14,7 @@ import {
   isPlainObject,
   isUndefined,
   isNil,
+  notNil,
   isFunction
 } from '@txjs/bool'
 
@@ -150,8 +151,6 @@ const errorHandler = (error: AxiosError<any>): Promise<any> => {
 }
 
 const requestHandler = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig> => {
-  const contentType = requestContentType(config.type)
-  config.headers.set('Content-Type', contentType)
   if (isLogin()) {
     config.headers.set(REQUEST_TOKEN_KEY, getToken())
   }
@@ -197,7 +196,7 @@ class Fetch {
     this.#responseInterceptor()
   }
 
-  #configurationAbortToken(method: string, url: string, params: any, config: any) {
+  #abortTokenProvide(method: string, url: string, params: any, config: any) {
     const serializedParams = qs.stringify(params, {
       arrayFormat: 'brackets'
     })
@@ -236,44 +235,63 @@ class Fetch {
     this.#fetch.interceptors.response.use(responseHandler, errorHandler)
   }
 
+  #setConfig(config: AxiosRequestConfig) {
+    config.type ??= 'JSON'
+    config.headers ??= {}
+  }
+
+  #setHeaders(config: AxiosRequestConfig) {
+    if (!config.headers!['Content-Type']) {
+      config.headers!['Content-Type'] = requestContentType(config.type)
+    }
+  }
+
   #getWrap(method: 'get' | 'delete') {
     return <T = any>(url: string, data: any = {}, config: AxiosRequestConfig = {}) => {
-      const paramsSerializer = config.paramsSerializer
-      config.params ??= data
-      config.paramsSerializer = (params) => {
-        params = normalizeUndefined(params)
-        if (isFunction(paramsSerializer)) {
-          params = paramsSerializer.bind(null, params)
-        }
-        return qs.stringify(params)
-      }
+      this.#setConfig(config)
+      this.#setHeaders(config)
       if (!config.cancelToken) {
-        this.#configurationAbortToken(method, url, data, config)
+        this.#abortTokenProvide(method, url, data, config)
       }
+      if (isNil(config.paramsSerializer) || isFunction(config.paramsSerializer)) {
+        const paramsSerializer = config.paramsSerializer
+        config.paramsSerializer = (params) => {
+          params = normalizeUndefined(params)
+          if (notNil(paramsSerializer)) {
+            params = paramsSerializer?.bind(null, params)
+          }
+          return qs.stringify(params)
+        }
+      }
+      config.params ??= data
       return this.#fetch[method]<T>(url, config)
     }
   }
 
   #postWrap(method: 'post' | 'put' | 'patch') {
     return <T = any>(url: string, data: any = {}, config: AxiosRequestConfig = {}) => {
-      const isJSON = isNil(config.type) || config.type == 'JSON'
+      this.#setConfig(config)
+      this.#setHeaders(config)
+      if (!config.cancelToken) {
+        this.#abortTokenProvide(method, url, data, config)
+      }
       config.transformRequest = toArray(config.transformRequest ?? [])
         .concat(normalizeUndefined)
-        .concat((data: any) => isJSON ? JSON.stringify(data) : qs.stringify(data))
-      if (!config.cancelToken) {
-        this.#configurationAbortToken(method, url, data, config)
-      }
+        .concat((data: any) => config.type === 'JSON'
+          ? JSON.stringify(data)
+          : qs.stringify(data)
+        )
       return this.#fetch[method]<T>(url, data, config)
     }
   }
 
   #formWrap(method: 'postForm' | 'putForm' | 'patchForm') {
     return <T = any>(url: string, data: any = {}, config: Omit<AxiosRequestConfig, 'type'> = {}) => {
+      if (!config.cancelToken) {
+        this.#abortTokenProvide(method, url, data, config)
+      }
       config.transformRequest = toArray(config.transformRequest ?? [])
         .concat(normalizeUndefined)
-      if (!config.cancelToken) {
-        this.#configurationAbortToken(method, url, data, config)
-      }
       return this.#fetch[method]<T>(url, data, {
         ...config,
         type: 'FORM_DATA'
@@ -309,14 +327,14 @@ class Fetch {
 
   head<T = any>(url: string, config: AxiosRequestConfig = {}) {
     if (!config.cancelToken) {
-      this.#configurationAbortToken('head', url, {}, config)
+      this.#abortTokenProvide('head', url, {}, config)
     }
     return this.#fetch.head<T>(url, config)
   }
 
   options<T = any>(url: string, config: AxiosRequestConfig = {}) {
     if (!config.cancelToken) {
-      this.#configurationAbortToken('options', url, {}, config)
+      this.#abortTokenProvide('options', url, {}, config)
     }
     return this.#fetch.options<T>(url, config)
   }

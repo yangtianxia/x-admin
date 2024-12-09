@@ -19,7 +19,8 @@
     "src/**/*.tsx",
     "src/**/*.ts",
     "types/**/*.d.ts",
-    "mock/**/*.d.ts"
+    "mock/**/*.ts",
+    "tailwindcss/**/*.ts"
   ],
   "exclude": [
     "node_modules",

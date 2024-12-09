@@ -7,7 +7,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
     <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+    <meta name="version" content="<%- version %>">
     <link rel="icon" type="image/png" href="%BASE_URL%logo.png">
+    <title><%- title %></title>
     <style type="text/css">
       .loader-wrapper {
         position: absolute;
@@ -34,7 +36,7 @@
         transform: scale(.75);
         transform-origin: 50% 50%;
         opacity: .3;
-        background-color: rgb(var(--color-primary, 0 0 0));
+        background-color: var(--color-primary, #000);
         overflow: hidden;
         animation: loader-move 1s linear infinite alternate;
       }
@@ -80,10 +82,10 @@
         </div>
       </div>
     </div>
-    <script type="module" src="/src/main.ts"></script>
     <noscript>
       This website requires JavaScript to function properly.
       Please enable JavaScript to continue.
     </noscript>
+    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

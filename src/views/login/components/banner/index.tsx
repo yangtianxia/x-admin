@@ -1,5 +1,5 @@
 // Vue
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, computed } from 'vue'
 
 // Components
 import { Icon } from '@/components/icon'
@@ -13,7 +13,7 @@ const [name, bem] = $bem('banner', style)
 export default defineComponent({
   name,
   setup() {
-    const slides = reactive([
+    const slides = computed(() => [
       {
         id: 1,
         title: $t('login.slide.title.1'),
@@ -53,7 +53,7 @@ export default defineComponent({
           )
         }}
       >
-        {slides.map((item) => (
+        {slides.value.map((item) => (
           <div
             key={item.id}
             class="h-full"

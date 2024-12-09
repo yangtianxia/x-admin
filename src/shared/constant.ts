@@ -12,6 +12,9 @@ export const TOKEN_HEAD = 'Bearer '
 /** 网站语言 */
 export const LOCALE = createKey('locale')
 
+/** 网站主题 */
+export const THEME = createKey('theme')
+
 /** 重定向URL */
 export const REDIRECT_URI = createKey('redirect_uri')
 
