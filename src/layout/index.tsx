@@ -79,9 +79,7 @@ export default defineComponent({
     return () => (
       <Layout class="w-full h-full">
         {hasHeader.value ? (
-          <Layout.Header class="z-50 fixed top-0 left-0 !p-0 w-full !h-[60px] !leading-[60px]">
-            <LayoutHeader />
-          </Layout.Header>
+          <LayoutHeader />
         ) : null}
         <Layout>
           {hasMenu.value ? (
@@ -89,13 +87,12 @@ export default defineComponent({
               v-show={!hideMenu.value}
               collapsible
               breakpoint="xl"
-              theme="light"
               trigger={null}
               width={appStore.menuWidth}
               collapsedWidth={appStore.menuCollapseWidth}
               collapsed={collapsed.value}
               style={{ paddingTop: headerHeight.value }}
-              class="!fixed left-0 top-0 h-full bg-white shadow-[0_2px_8px_-2px_rgba(0,0,0,.1)] after:absolute after:top-0 after:right-0 after:block after:h-full after:border-r"
+              class="!fixed left-0 top-0 h-full shadow-[0_2px_8px_-2px_rgba(0,0,0,.1)] after:absolute after:top-0 after:right-0 after:block after:h-full after:border-r"
             >
               <LayoutMenu />
               <div

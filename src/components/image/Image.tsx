@@ -169,7 +169,7 @@ export default defineComponent({
               {slots.error?.() || (
                 <Icon
                   type="DamageMap"
-                  size="50%"
+                  size="100%"
                   strokeWidth={2}
                 />
               )}

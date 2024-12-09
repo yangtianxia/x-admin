@@ -1,5 +1,5 @@
 declare module 'axios' {
-  type RequestContentType = 'JSON' | 'FORM_DATA' | 'MULTIPART' | 'XML' | 'OCTET_STREAM'
+  type RequestContentType = 'JSON' | 'FORM_DATA' | 'MULTIPART' | 'OCTET_STREAM'
 
   interface AxiosRequestConfig {
     /** 取消请求token */

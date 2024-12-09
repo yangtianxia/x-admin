@@ -43,7 +43,7 @@ export default defineComponent({
     }
 
     return () => (
-      <div class="h-full flex justify-between border-b late-200 bg-white">
+      <div class="z-50 fixed top-0 left-0 w-full h-[60px] flex justify-between border-b late-200">
         <div class="flex items-center pl-5">
           <img
             src="/logo.png"
@@ -112,7 +112,7 @@ export default defineComponent({
               )}
             >
               <Avatar
-                class="cursor-pointer border-gray-400"
+                class="cursor-pointer border-gray-300"
                 src={userStore.avatar}
               >
                 <Icon type="User" />

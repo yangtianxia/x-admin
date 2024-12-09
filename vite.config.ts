@@ -33,7 +33,7 @@ const colorToRgb = (input: string) => {
     return Object
       .values(color.toRgb())
       .slice(0, 3)
-      .toString()
+      .join(' ')
   }
 }
 

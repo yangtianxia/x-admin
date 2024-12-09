@@ -26,7 +26,6 @@ enum RequestContentTypeEnum {
   JSON = 'application/json',
   FORM_DATA = 'application/x-www-form-urlencoded',
   MULTIPART = 'multipart/form-data',
-  XML = 'application/xml',
   OCTET_STREAM = 'application/octet-stream',
 }
 
@@ -75,7 +74,26 @@ const requestContentType = (type?: RequestContentType) => {
 
 const errorHandler = (error: AxiosError<any>): Promise<any> => {
   const fail = failWrap()
-  const status = error.response?.status
+  const message = error.message
+  let status = error.response?.status
+
+  // 网络异常
+  if (message.startsWith('Network Error')) {
+    status = 1000
+  }
+  // 请求超时
+  else if (message.startsWith('timeout')) {
+    status = 408
+  }
+  // 服务器异常
+  else if (message.endsWith('500')) {
+    status = 500
+  }
+  // 请求地址不存在
+  else if (message.endsWith('404')) {
+    status = 404
+  }
+
   switch (status) {
     case 400:
       fail.message($t('fetch.400'))
@@ -109,6 +127,9 @@ const errorHandler = (error: AxiosError<any>): Promise<any> => {
       break
     case 505:
       fail.message($t('fetch.505'))
+      break
+    case 1000:
+      fail.message($t('fetch.1000'))
       break
   }
 
