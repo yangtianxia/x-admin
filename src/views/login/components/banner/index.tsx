@@ -32,7 +32,7 @@ export default defineComponent({
         class={bem()}
         v-slots={{
           prevArrow: () => (
-            <div class="z-10 !text-white !text-opacity-30 hover:!text-gray-400 !text-3xl !w-auto !h-auto !-mt-3 !left-6 max-xl:!text-2xl max-xl:!left-3 before:!content-none">
+            <div class="z-10 !text-white !text-opacity-30 hover:!text-white/50 !text-3xl !w-auto !h-auto !-mt-3 !left-6 max-xl:!text-2xl max-xl:!left-3 before:!content-none">
               <Icon
                 type="LeftC"
                 theme="filled"
@@ -42,7 +42,7 @@ export default defineComponent({
             </div>
           ),
           nextArrow: () => (
-            <div class="z-10 !text-white !text-opacity-30 hover:!text-gray-400 !text-3xl !w-auto !h-auto !-mt-3 !right-6 max-xl:!text-2xl max-xl:!right-3 before:!content-none">
+            <div class="z-10 !text-white !text-opacity-30 hover:!text-white/50 !text-3xl !w-auto !h-auto !-mt-3 !right-6 max-xl:!text-2xl max-xl:!right-3 before:!content-none">
               <Icon
                 type="RightC"
                 theme="filled"
@@ -59,8 +59,8 @@ export default defineComponent({
             class="h-full"
           >
             <div class="h-full flex flex-col items-center justify-center">
-              <div class="text-gray-50 text-xl max-xl:text-base font-medium whitespace-nowrap">{item.title}</div>
-              <div class="text-gray-300 text-sm xl:text-xs mt-2 whitespace-nowrap">{item.subtitle}</div>
+              <div class="text-white/90 text-xl max-xl:text-base font-medium whitespace-nowrap">{item.title}</div>
+              <div class="text-white/75 text-sm xl:text-xs mt-2 whitespace-nowrap">{item.subtitle}</div>
             </div>
           </div>
         ))}

@@ -1,10 +1,8 @@
 // Vue
 import {
   defineComponent,
-  ref,
   computed,
   watch,
-  onMounted,
   type CSSProperties
 } from 'vue'
 
@@ -21,6 +19,7 @@ import LayoutHeader from './components/header'
 import LayoutMenu from './components/menu'
 import LayoutBreadcrumb from './components/breadcrumb'
 import LayoutPage from './components/page'
+import LayoutFooter from './components/footer'
 
 // Component utils
 import { addUnit } from '@/components/_utils/style'
@@ -33,8 +32,6 @@ export default defineComponent({
     const permission = usePermission()
     const route = useRoute()
     const router = useRouter()
-
-    const ready = ref(false)
 
     const hasHeader = computed(() => appStore.header)
     const hasMenu = computed(() => appStore.menu && !appStore.topMenu)
@@ -57,7 +54,6 @@ export default defineComponent({
     })
 
     const onCollapsed = () => {
-      if (!ready.value) return
       appStore.updateSettings({
         menuCollapse: !collapsed.value
       })
@@ -71,10 +67,6 @@ export default defineComponent({
         }
       }
     )
-
-    onMounted(() => {
-      ready.value = true
-    })
 
     return () => (
       <Layout class="w-full h-full">
@@ -117,7 +109,7 @@ export default defineComponent({
             </Layout.Content>
             {appStore.footer ? (
               <Layout.Footer class="!py-4 !px-0">
-                <p class="text-quaternary text-sm text-center">{$t('page.copyright')}</p>
+                <LayoutFooter />
               </Layout.Footer>
             ) : null}
           </Layout>

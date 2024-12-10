@@ -49,7 +49,7 @@ export default defineConfig(({ mode, command }) => {
           javascriptEnabled: true,
           charset: false,
           modifyVars: {
-            '@prefix': env.VITE_PREFIX || 'x'
+            '@prefix': 'x'
           }
         }
       },

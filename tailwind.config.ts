@@ -1,17 +1,12 @@
 import type { Config } from 'tailwindcss'
-import extend from 'extend'
-import colors from 'tailwindcss/colors'
 import plugin from 'tailwindcss/plugin'
+import tailwindColors from 'tailwindcss/colors'
 import tailwindScrollbar from 'tailwind-scrollbar'
 import { camelToKebab } from '@txjs/shared'
 import { theme } from 'ant-design-vue'
 import type { SeedToken } from 'ant-design-vue/es/theme/interface'
 
-/** 品牌色 */
-const colorPrimary = colors.blue[500]
-
-/** 默认颜色 */
-const defaultPresetColors = {
+const DEFAULT_PRESET_COLORS = {
   blue: '#1677ff',
   purple: '#722ED1',
   cyan: '#13C2C2',
@@ -27,42 +22,60 @@ const defaultPresetColors = {
   lime: '#A0D911'
 } as const
 
-const presetColors = {
+const PRESET_COLORS = {
   /** 品牌色 */
-  colorPrimary: colorPrimary,
+  colorPrimary: tailwindColors.blue['500'],
   /** 成功色 */
-  colorSuccess: colors.green['500'],
+  colorSuccess: tailwindColors.green['500'],
   /** 警戒色 */
-  colorWarning: colors.yellow['500'],
+  colorWarning: tailwindColors.yellow['500'],
   /** 错误色 */
-  colorError: colors.red['500'],
+  colorError: tailwindColors.red['500'],
   /** 信息色 */
-  colorInfo: colors.blue['500']
+  colorInfo: tailwindColors.blue['500']
 } as const
 
 export const seedToken = {
-  ...defaultPresetColors,
-  ...presetColors
+  ...DEFAULT_PRESET_COLORS,
+  ...PRESET_COLORS
 }
 
-const defaultSeed = extend(true, {}, theme.defaultSeed, seedToken)
+const defaultSeed = {
+  ...theme.defaultSeed,
+  ...seedToken
+}
+
 const light = theme.defaultAlgorithm(defaultSeed)
 const dark = theme.darkAlgorithm(defaultSeed)
+
+const whiteList = [
+  'motionUnit',
+  'lineType',
+  'motionBase',
+  'sizeUnit',
+  'sizeStep',
+  'colorWhite',
+  'opacityImage',
+  'colorTextBase',
+  'colorBgBase',
+]
 
 const genCssVariable = (seedToken: SeedToken) => {
   return Object
     .keys(seedToken)
     .reduce(
       (ret, key) => {
-        const name = camelToKebab(key)
-        ret[`--${name}`] = seedToken[key]
+        if (!whiteList.includes(key)) {
+          const name = camelToKebab(key)
+          ret[`--${name}`] = seedToken[key]
+        }
         return ret
       }, {} as Record<string, string>
     )
 }
 
 const genDefaultColorMapToken = (seedToken: SeedToken) => {
-  const presetColorKeys = Object.keys(defaultPresetColors)
+  const presetColorKeys = Object.keys(DEFAULT_PRESET_COLORS)
   return Object
     .keys(seedToken)
     .reduce(
@@ -71,7 +84,7 @@ const genDefaultColorMapToken = (seedToken: SeedToken) => {
         if (resultKey) {
           const colorMap = ret[resultKey] || {}
           const index = key.indexOf('-')
-          const value = `var(--color-${key}) /* ${seedToken[key]} */`
+          const value = `var(--${key}) /* ${seedToken[key]} */`
           if (index !== -1) {
             const num = parseInt(key.slice(index + 1))
             if (num === 1) {
@@ -90,7 +103,7 @@ const genDefaultColorMapToken = (seedToken: SeedToken) => {
 }
 
 const genPresetColorMapToken = (seedToken: SeedToken) => {
-  const presetColorKeys = Object.keys(presetColors)
+  const presetColorKeys = Object.keys(PRESET_COLORS)
   const aliasMaps = {
     'bg': 'backgroundColor',
     'border': 'borderColor',
@@ -125,7 +138,6 @@ const genPresetColorMapToken = (seedToken: SeedToken) => {
           }
           ret[alias][name] = colorMap
         }
-        console.log(ret)
         return ret
       }, {
         colors: {},
@@ -142,16 +154,12 @@ const config: Config = {
   content: ["./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     colors: {
-      ...genDefaultColorMapToken(light),
-      inherit: colors.inherit,
-      transparent: colors.transparent,
-      current: colors.current,
-      white: colors.white,
-      black: colors.black,
-      gray: colors.gray
-    },
-    borderWidth: {
-      DEFAULT: `var(--line-width) /* ${light.lineWidth} */`
+      inherit: tailwindColors.inherit,
+      transparent: tailwindColors.transparent,
+      current: tailwindColors.current,
+      white: tailwindColors.white,
+      black: tailwindColors.black,
+      ...genDefaultColorMapToken(light)
     },
     extend: {
       ...genPresetColorMapToken(light),
@@ -177,6 +185,10 @@ const config: Config = {
         main: `var(--color-border) /* ${light.colorBorder} */`,
         secondary: `var(--color-border-secondary) /* ${light.colorBorderSecondary} */`
       },
+      borderWidth: {
+        DEFAULT: `var(--line-width) /* ${light.lineWidth} */`,
+        bold: `var(--line-width-bold) /* ${light.lineWidthBold} */`
+      },
       fontFamily: {
         main: `var(--font-family) /* ${light.fontFamily} */`
       }
@@ -186,11 +198,24 @@ const config: Config = {
     tailwindScrollbar,
     plugin(function({ addBase }) {
       addBase({
+        ':root': genCssVariable(light),
+        '.dark': genCssVariable(dark),
         '*,*:before,*:after': {
           'border-color': 'var(--color-border-secondary)',
         },
-        ':root': genCssVariable(light),
-        '.dark': genCssVariable(dark)
+        'html,:host': {
+          'font-family': 'var(--font-family)'
+        },
+        'html,body': {
+          'background-color': 'var(--color-bg-container)',
+        },
+        '#nprogress > .bar': {
+          'background': 'var(--color-primary)'
+        },
+        '#nprogress > .spinner-icon': {
+          'border-top-color': 'var(--color-primary)',
+          'border-left-color': 'var(--color-primary)'
+        }
       })
     })
   ]

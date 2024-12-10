@@ -26,7 +26,7 @@ export default defineComponent({
               alt={$t('page.title')}
               class="w-8"
             />
-            <div class="text-gray-50 max-md:text-main text-xl font-semibold ml-2 mr-1">{$t('page.title')}</div>
+            <div class="text-white/90 max-md:text-main text-xl font-semibold ml-2 mr-1">{$t('page.title')}</div>
           </div>
           <Dropdown
             placement="bottom"

@@ -10,13 +10,7 @@ import { useRedirect } from '@/hooks/redirect'
 // Components
 import { Icon } from '@/components/icon'
 import { LogoutOutlined } from '@ant-design/icons-vue'
-import {
-  Avatar,
-  Button,
-  Tooltip,
-  Dropdown,
-  Menu
-} from 'ant-design-vue'
+import { TypographyTitle, Avatar, Button, Tooltip, Dropdown, Menu } from 'ant-design-vue'
 
 export default defineComponent({
   name: 'LayoutHeader',
@@ -50,9 +44,9 @@ export default defineComponent({
             class="w-8"
             alt={$t('page.title')}
           />
-          <h5 class="text-main text-xl font-bold ml-2">
+          <h1 class="text-main text-xl font-bold ml-2">
             <span>{$t('page.title')}</span>
-          </h5>
+          </h1>
         </div>
         <ul class="flex items-center pr-8 space-x-3">
           <li>

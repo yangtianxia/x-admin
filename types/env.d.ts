@@ -1,8 +1,6 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  /** 全局前缀 */
-  VITE_PREFIX?: string
   /**
    * MOCK
    * - disable - 禁用
