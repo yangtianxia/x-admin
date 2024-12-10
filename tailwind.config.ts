@@ -49,17 +49,29 @@ const defaultSeed = extend(true, {}, theme.defaultSeed, seedToken)
 const light = theme.defaultAlgorithm(defaultSeed)
 const dark = theme.darkAlgorithm(defaultSeed)
 
-const defaultPresetColorKeys = Object.keys(defaultPresetColors)
-const genDefaultColorMapToken = (seedToken: SeedToken) => {
+const genCssVariable = (seedToken: SeedToken) => {
   return Object
     .keys(seedToken)
     .reduce(
       (ret, key) => {
-        const value = seedToken[key]
-        const resultKey = defaultPresetColorKeys.find((item) => key.startsWith(item))
+        const name = camelToKebab(key)
+        ret[`--${name}`] = seedToken[key]
+        return ret
+      }, {} as Record<string, string>
+    )
+}
+
+const genDefaultColorMapToken = (seedToken: SeedToken) => {
+  const presetColorKeys = Object.keys(defaultPresetColors)
+  return Object
+    .keys(seedToken)
+    .reduce(
+      (ret, key) => {
+        const resultKey = presetColorKeys.find((item) => key.startsWith(item))
         if (resultKey) {
           const colorMap = ret[resultKey] || {}
           const index = key.indexOf('-')
+          const value = `var(--color-${key}) /* ${seedToken[key]} */`
           if (index !== -1) {
             const num = parseInt(key.slice(index + 1))
             if (num === 1) {
@@ -73,35 +85,61 @@ const genDefaultColorMapToken = (seedToken: SeedToken) => {
           ret[resultKey] = colorMap
         }
         return ret
-      }, {} as Record<string, Record<string, any>>
+      }, {} as Record<string, Record<string, string>>
     )
 }
 
-const presetColorKeys = Object.keys(presetColors)
-const genColorMapToken = (seedToken: SeedToken) => {
-  return Object
-    .keys(seedToken)
-}
-
-const genCssVariable = (seedToken: SeedToken) => {
+const genPresetColorMapToken = (seedToken: SeedToken) => {
+  const presetColorKeys = Object.keys(presetColors)
+  const aliasMaps = {
+    'bg': 'backgroundColor',
+    'border': 'borderColor',
+    'text': 'textColor'
+  }
   return Object
     .keys(seedToken)
     .reduce(
       (ret, key) => {
-        const name = camelToKebab(key)
-        ret[`--${name}`] = seedToken[key]
+        const resultKey = presetColorKeys.find((item) => key.startsWith(item))
+        if (resultKey) {
+          const name = resultKey.slice(5).toLowerCase()
+          const trimKey = key.slice(resultKey.length)
+          const value = `var(--${camelToKebab(key)}) /* ${seedToken[key]} */`
+          // ''
+          // ['bg', 'hover']
+          // ['hover']
+          // ['active']
+          const [a1, a2] = camelToKebab(trimKey).split('-')
+          const alias = aliasMaps[a1] || 'colors'
+          const colorMap = ret[alias][name] ??= {}
+          if (a2) {
+            colorMap[a2] = value
+          } else if (alias === 'colors') {
+            if (a1) {
+              colorMap[a1] = value
+            } else {
+              colorMap['DEFAULT'] = value
+            }
+          } else {
+            colorMap['DEFAULT'] = value
+          }
+          ret[alias][name] = colorMap
+        }
+        console.log(ret)
         return ret
-      }, {} as Record<string, string>
+      }, {
+        colors: {},
+        textColor: {},
+        backgroundColor: {},
+        borderColor: {}
+      } as Record<string, Record<string, any>>
     )
 }
 
 const config: Config = {
   mode: 'jit',
-  darkMode: ['selector', '[data-mode="dark"]'],
-  content: [
-    "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}"
-  ],
+  darkMode: ['class'],
+  content: ["./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     colors: {
       ...genDefaultColorMapToken(light),
@@ -110,34 +148,37 @@ const config: Config = {
       current: colors.current,
       white: colors.white,
       black: colors.black,
-      gray: colors.gray,
-      primary: presetColors.colorPrimary
+      gray: colors.gray
+    },
+    borderWidth: {
+      DEFAULT: `var(--line-width) /* ${light.lineWidth} */`
     },
     extend: {
+      ...genPresetColorMapToken(light),
       textColor: {
-        main: 'var(--color-text)',
-        secondary: 'var(--color-text-secondary)',
-        tertiary: 'var(--color-text-tertiary)',
-        quaternary: 'var(--color-text-quaternary)'
+        main: `var(--color-text) /* ${light.colorText} */`,
+        secondary: `var(--color-text-secondary) /* ${light.colorTextSecondary} */`,
+        tertiary: `var(--color-text-tertiary) /* ${light.colorTextTertiary} */`,
+        quaternary: `var(--color-text-quaternary) /* ${light.colorTextQuaternary} */`
       },
       backgroundColor: {
-        container: 'var(--color-bg-container)',
-        elevated: 'var(--color-bg-elevated)',
-        layout: 'var(--color-bg-layout)',
-        spotlight: 'var(--color-bg-spotlight)',
+        container: `var(--color-bg-container) /* ${light.colorBgContainer} */`,
+        elevated: `var(--color-bg-elevated) /* ${light.colorBgElevated} */`,
+        layout: `var(--color-bg-layout) /* ${light.colorBgLayout} */`,
+        spotlight: `var(--color-bg-spotlight) /* ${light.colorBgSpotlight} */`,
         fill: {
-          DEFAULT: 'var(--color-fill)',
-          secondary: 'var(--color-fill-secondary)',
-          tertiary: 'var(--color-fill-tertiary)',
-          quaternary: 'var(--color-fill-quaternary)'
+          DEFAULT: `var(--color-fill) /* ${light.colorFill} */`,
+          secondary: `var(--color-fill-secondary) /* ${light.colorFillSecondary} */`,
+          tertiary: `var(--color-fill-tertiary) /* ${light.colorFillTertiary} */`,
+          quaternary: `var(--color-fill-quaternary) /* ${light.colorFillQuaternary} */`
         }
       },
       borderColor: {
-        main: 'var(--color-border)',
-        secondary: 'var(--color-border-secondary)'
+        main: `var(--color-border) /* ${light.colorBorder} */`,
+        secondary: `var(--color-border-secondary) /* ${light.colorBorderSecondary} */`
       },
       fontFamily: {
-        main: 'var(--font-family)'
+        main: `var(--font-family) /* ${light.fontFamily} */`
       }
     }
   },

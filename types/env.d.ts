@@ -3,8 +3,6 @@
 interface ImportMetaEnv {
   /** 全局前缀 */
   VITE_PREFIX?: string
-  /** 网站标题 */
-  VITE_TITLE?: string
   /**
    * MOCK
    * - disable - 禁用

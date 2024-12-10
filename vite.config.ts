@@ -87,10 +87,7 @@ export default defineConfig(({ mode, command }) => {
       createHtmlPlugin({
         minify: true,
         inject: {
-          data: {
-            version,
-            title: env.VITE_TITLE || 'x-admin'
-          },
+          data: { version },
           tags: [
             {
               injectTo: 'head-prepend',
