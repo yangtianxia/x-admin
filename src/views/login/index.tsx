@@ -26,7 +26,7 @@ export default defineComponent({
               alt={$t('page.title')}
               class="w-8"
             />
-            <div class="text-gray-100 max-md:text-gray-900 text-xl font-semibold ml-2 mr-1">{$t('page.title')}</div>
+            <div class="text-gray-50 max-md:text-main text-xl font-semibold ml-2 mr-1">{$t('page.title')}</div>
           </div>
           <Dropdown
             placement="bottom"
@@ -48,10 +48,10 @@ export default defineComponent({
             </div>
           </Dropdown>
         </div>
-        <div class="h-full w-[540px] flex-shrink-0 transition-all max-xl:w-[380px] max-md:hidden bg-gradient-to-r from-slate-900 to-slate-700">
+        <div class="h-full w-[540px] flex-shrink-0 transition-all max-xl:w-[380px] max-md:hidden bg-gradient-to-r from-blue-900 to-blue-800">
           <LoginBanner />
         </div>
-        <div class="relative flex-1 min-w-0 max-xl:min-w-[420px] max-md:min-w-full flex justify-center items-center px-6 pb-10 bg-white">
+        <div class="relative flex-1 min-w-0 max-xl:min-w-[420px] max-md:min-w-full flex justify-center items-center px-6 pb-10 bg-container">
           <LoginForm />
           <div class="absolute left-0 bottom-0 w-full h-10 flex items-center justify-center">
             <div class="text-quaternary text-sm">©{$t('page.copyright')}</div>

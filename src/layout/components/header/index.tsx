@@ -8,8 +8,8 @@ import { useLocale } from '@/hooks/locale'
 import { useRedirect } from '@/hooks/redirect'
 
 // Components
-import { LogoutOutlined } from '@ant-design/icons-vue'
 import { Icon } from '@/components/icon'
+import { LogoutOutlined } from '@ant-design/icons-vue'
 import {
   Avatar,
   Button,
@@ -43,14 +43,14 @@ export default defineComponent({
     }
 
     return () => (
-      <div class="z-50 fixed top-0 left-0 w-full h-[60px] flex justify-between border-b late-200">
+      <div class="z-50 fixed top-0 left-0 w-full h-[60px] flex justify-between border-b bg-container">
         <div class="flex items-center pl-5">
           <img
             src="/logo.png"
             class="w-8"
             alt={$t('page.title')}
           />
-          <h5 class="text-gray-900 text-xl font-bold ml-2">
+          <h5 class="text-main text-xl font-bold ml-2">
             <span>{$t('page.title')}</span>
           </h5>
         </div>
@@ -93,7 +93,7 @@ export default defineComponent({
             >
               <div
                 ref={localeTriggerRef}
-                class="absolute bottom-[14px] left-[50%]"
+                class="absolute bottom-0 left-[50%]"
               />
             </Dropdown>
           </li>
@@ -112,7 +112,7 @@ export default defineComponent({
               )}
             >
               <Avatar
-                class="cursor-pointer border-gray-300"
+                class="cursor-pointer border-main"
                 src={userStore.avatar}
               >
                 <Icon type="User" />

@@ -1,4 +1,4 @@
-const createKey = <T extends string>(key: T) => `${import.meta.env.VITE_PREFIX}_admin_${key}` as const
+const createKey = <T extends string>(key: T) => `${import.meta.env.VITE_PREFIX || 'x'}_admin_${key}` as const
 
 /** 认证方式 */
 export const REQUEST_TOKEN_KEY = 'Authorization'

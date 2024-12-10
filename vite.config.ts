@@ -15,8 +15,8 @@ import Inject from '@rollup/plugin-inject'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import { viteMockServe } from 'vite-plugin-mock'
 
-// Tailwind
-import { seedToken } from './tailwindcss/seeds'
+// Tailwindcss
+import { seedToken } from './tailwind.config'
 
 // Package
 import { version } from './package.json'
@@ -26,8 +26,8 @@ const resolve = (path: string) => {
 }
 
 export default defineConfig(({ mode, command }) => {
-  const isServer = command === 'serve'
   const env = loadEnv(mode, process.cwd())
+  const isServer = command === 'serve'
   const isMock = env.VITE_MOCK === 'enable'
 
   const config = {
@@ -62,9 +62,7 @@ export default defineConfig(({ mode, command }) => {
         plugins: [
           PostcssImport,
           Autoprefixer,
-          Tailwindcss({
-            config: resolve('./tailwind/tailwind.base.ts')
-          })
+          Tailwindcss
         ]
       }
     },

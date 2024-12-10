@@ -20,7 +20,3 @@ export const toIOSDate = (value: string) => {
   }
   return value
 }
-
-export const camelToKebab = (input?: string) => {
-  return input?.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()
-}

@@ -37,7 +37,7 @@
     "@txjs/bem": "^1.0.0",
     "@txjs/bool": "^1.0.0",
     "@txjs/make": "^1.0.0",
-    "@txjs/shared": "^1.0.0",
+    "@txjs/shared": "^1.0.1",
     "@txjs/types": "^1.0.0",
     "@txjs/validator": "^0.1.0",
     "@vant/use": "^1.6.0",
