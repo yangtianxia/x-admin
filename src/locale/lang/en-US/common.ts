@@ -15,6 +15,7 @@ export default {
     502: 'Bad Gateway',
     503: 'Service Unavailable',
     504: 'Gateway Timeout',
-    505: 'HTTP Version Not Supported'
+    505: 'HTTP Version Not Supported',
+    1000: 'Network Error'
   }
 }

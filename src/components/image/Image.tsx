@@ -153,9 +153,9 @@ export default defineComponent({
             <div class={bem('loading-icon')}>
               {slots.loading?.() || (
                 <Icon
-                  type="Picture"
                   size="100%"
-                  strokeWidth={2}
+                  type="Picture"
+                  strokeWidth={3}
                 />
               )}
             </div>
@@ -168,9 +168,9 @@ export default defineComponent({
             <div class={bem('error-icon')}>
               {slots.error?.() || (
                 <Icon
+                  size="100%"
                   type="DamageMap"
-                  size="50%"
-                  strokeWidth={2}
+                  strokeWidth={3}
                 />
               )}
             </div>

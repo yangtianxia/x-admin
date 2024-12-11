@@ -1,6 +1,6 @@
 import type { Router } from 'vue-router'
 import { isValidString } from '@txjs/bool'
-import { camelToKebab } from '@/shared/utils'
+import { camelToKebab } from '@txjs/shared'
 
 const bodyElement = document.body ?? document.getElementsByName('body')[0]
 

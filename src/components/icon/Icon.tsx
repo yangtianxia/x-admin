@@ -48,7 +48,7 @@ export default defineComponent({
   setup(props) {
     IconProvider({
       ...DEFAULT_ICON_CONFIGS,
-      prefix: import.meta.env.VITE_PREFIX
+      prefix: 'x'
     })
 
     return () => {

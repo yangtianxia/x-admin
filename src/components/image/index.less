@@ -3,7 +3,7 @@
 :root {
   --image-width: 200px;
   --image-height: 120px;
-  --image-fail-bg: theme('colors.white');
+  --image-fill: var(--color-fill-secondary);
 }
 
 .@{image-cls} {
@@ -44,14 +44,14 @@
   &__loading,
   &__error {
     @apply absolute top-0 left-0;
-    background-color: var(--image-fail-bg);
+    background-color: var(--image-fill);
 
     &-icon {
-      @apply absolute top-2/4 left-2/4 w-1/2 h-1/2 flex flex-col items-center justify-center;
+      @apply absolute top-2/4 left-2/4 w-2/3 h-2/3 flex flex-col items-center justify-center;
       transform: translate(-50%, -50%);
 
       & > span {
-        @apply w-1/2 h-1/2 text-gray-300;
+        @apply w-1/2 h-1/2 text-quaternary;
       }
     }
   }

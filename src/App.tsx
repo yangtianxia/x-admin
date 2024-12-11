@@ -1,32 +1,35 @@
 // Vue
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, computed } from 'vue'
 
 // Common
 import { RouterView } from 'vue-router'
+import { useLocale } from '@/hooks/locale'
+import { useTheme } from '@/hooks/theme'
 
 // Components
 import { ConfigProvider } from 'ant-design-vue'
-import type { ThemeConfig } from 'ant-design-vue/es/config-provider/context'
 import zhCN from 'ant-design-vue/es/locale/zh_CN'
+import enUS from 'ant-design-vue/es/locale/en_US'
 
 export default defineComponent({
   setup () {
-    const colors = 'themeColors' in window ? themeColors : {}
-    const theme = reactive<ThemeConfig>({
-      token: {
-        wireframe: true,
-        colorBgLayout: colors.gray['50'],
-        colorPrimary: colors.primary,
-        colorSuccess: colors.green['500'],
-        colorWarning: colors.yellow['500'],
-        colorError: colors.red['500'],
-        colorInfo: colors.blue['500'],
+    const { currentLocale } = useLocale()
+    const { currentTheme } = useTheme()
+
+    const locale = computed(() => {
+      switch (currentLocale.value) {
+        case 'zh-CN':
+          return zhCN
+        default:
+        case 'en-US':
+          return enUS
       }
     })
+
     return () => (
       <ConfigProvider
-        locale={zhCN}
-        theme={theme}
+        locale={locale.value}
+        theme={{token: currentTheme.value}}
       >
         <RouterView />
       </ConfigProvider>

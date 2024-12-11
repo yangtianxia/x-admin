@@ -1,10 +1,8 @@
 // Vue
 import {
   defineComponent,
-  ref,
   computed,
   watch,
-  onMounted,
   type CSSProperties
 } from 'vue'
 
@@ -21,6 +19,7 @@ import LayoutHeader from './components/header'
 import LayoutMenu from './components/menu'
 import LayoutBreadcrumb from './components/breadcrumb'
 import LayoutPage from './components/page'
+import LayoutFooter from './components/footer'
 
 // Component utils
 import { addUnit } from '@/components/_utils/style'
@@ -33,8 +32,6 @@ export default defineComponent({
     const permission = usePermission()
     const route = useRoute()
     const router = useRouter()
-
-    const ready = ref(false)
 
     const hasHeader = computed(() => appStore.header)
     const hasMenu = computed(() => appStore.menu && !appStore.topMenu)
@@ -57,7 +54,6 @@ export default defineComponent({
     })
 
     const onCollapsed = () => {
-      if (!ready.value) return
       appStore.updateSettings({
         menuCollapse: !collapsed.value
       })
@@ -72,16 +68,10 @@ export default defineComponent({
       }
     )
 
-    onMounted(() => {
-      ready.value = true
-    })
-
     return () => (
       <Layout class="w-full h-full">
         {hasHeader.value ? (
-          <Layout.Header class="z-50 fixed top-0 left-0 !p-0 w-full !h-[60px] !leading-[60px]">
-            <LayoutHeader />
-          </Layout.Header>
+          <LayoutHeader />
         ) : null}
         <Layout>
           {hasMenu.value ? (
@@ -89,17 +79,16 @@ export default defineComponent({
               v-show={!hideMenu.value}
               collapsible
               breakpoint="xl"
-              theme="light"
               trigger={null}
               width={appStore.menuWidth}
               collapsedWidth={appStore.menuCollapseWidth}
               collapsed={collapsed.value}
               style={{ paddingTop: headerHeight.value }}
-              class="!fixed left-0 top-0 h-full bg-white shadow-[0_2px_8px_-2px_rgba(0,0,0,.1)] after:absolute after:top-0 after:right-0 after:block after:h-full after:border-r"
+              class="!fixed left-0 top-0 h-full !bg-container shadow-[0_2px_8px_-2px_rgba(0,0,0,.1)] after:absolute after:top-0 after:right-0 after:block after:h-full after:border-r"
             >
               <LayoutMenu />
               <div
-                class={['cursor-pointer absolute bottom-3 flex items-center justify-center text-secondary text-lg w-6 h-6 rounded-[3px] bg-200 transition-all hover:bg-gray-200', collapsed.value ? 'left-2/4 translate-x-[-50%]' : 'right-3']}
+                class={['cursor-pointer absolute bottom-3 flex items-center justify-center text-secondary text-lg w-6 h-6 rounded-[3px] bg-fill-tertiary transition-all hover:bg-fill-secondary', collapsed.value ? 'left-2/4 translate-x-[-50%]' : 'right-3']}
                 onClick={onCollapsed}
               >
                 <Icon
@@ -120,7 +109,7 @@ export default defineComponent({
             </Layout.Content>
             {appStore.footer ? (
               <Layout.Footer class="!py-4 !px-0">
-                <p class="text-quaternary text-sm text-center">{$t('page.copyright')}</p>
+                <LayoutFooter />
               </Layout.Footer>
             ) : null}
           </Layout>

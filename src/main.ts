@@ -15,7 +15,7 @@ import { Lazyload } from '@/components/lazy-load'
 // bem配置
 $bem.config({
   mode: import.meta.env.DEV ? 'always' : 'match',
-  prefix: import.meta.env.VITE_PREFIX
+  prefix: 'x'
 })
 
 // dayjs语言配置

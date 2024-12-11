@@ -166,7 +166,6 @@ export default defineComponent({
       <div class="h-full overflow-y-auto overflow-x-hidden scrollbar-thin">
         <Menu
           v-model:openKeys={openKeys.value}
-          theme="light"
           class={bem()}
           mode={topMenu.value ? 'horizontal' : 'inline'}
           selectedKeys={selectedKey.value}
