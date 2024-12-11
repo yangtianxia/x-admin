@@ -16,7 +16,7 @@ export function listenerRouteChange(
   handler: (route: RouteLocationNormalized) => void,
   immediate = true
 ) {
-  emitter.on(key, handler as Handler);
+  emitter.on(key, handler as Handler)
   if (immediate && lastedRoute) {
     handler(lastedRoute)
   }

@@ -2,6 +2,7 @@ import type { Config } from 'tailwindcss'
 import plugin from 'tailwindcss/plugin'
 import tailwindColors from 'tailwindcss/colors'
 import tailwindScrollbar from 'tailwind-scrollbar'
+import tinycolor from 'tinycolor2'
 import { camelToKebab } from '@txjs/shared'
 import { theme } from 'ant-design-vue'
 import type { SeedToken } from 'ant-design-vue/es/theme/interface'
@@ -48,6 +49,7 @@ const defaultSeed = {
 const light = theme.defaultAlgorithm(defaultSeed)
 const dark = theme.darkAlgorithm(defaultSeed)
 
+/** 转CSS Variable白名单 */
 const whiteList = [
   'motionUnit',
   'lineType',
@@ -60,14 +62,39 @@ const whiteList = [
   'colorBgBase',
 ]
 
-const genCssVariable = (seedToken: SeedToken) => {
+/** 转Hex颜色 */
+const hexList = [
+  'colorText',
+  'colorTextSecondary',
+  'colorTextTertiary',
+  'colorTextQuaternary'
+]
+
+const toHex = (input: string) => {
+  const color = tinycolor(input)
+  if (color.isValid()) {
+    const rgba = color.toRgb()
+    const aplha = parseFloat(rgba.a.toString())
+    const c = Math.floor(aplha * parseInt(rgba.r.toString()) + 255 * (1 - aplha))
+    const g = Math.floor(aplha * parseInt(rgba.g.toString()) + 255 * (1 - aplha))
+    const b = Math.floor(aplha * parseInt(rgba.b.toString()) + 255 * (1 - aplha))
+    return '#'
+      .concat(`0${c.toString(16).toUpperCase()}`.slice(-2))
+      .concat(`0${g.toString(16).toUpperCase()}`.slice(-2))
+      .concat(`0${b.toString(16).toUpperCase()}`.slice(-2))
+  }
+  return input
+}
+
+const genCSSVariable = (seedToken: SeedToken) => {
   return Object
     .keys(seedToken)
     .reduce(
       (ret, key) => {
         if (!whiteList.includes(key)) {
           const name = camelToKebab(key)
-          ret[`--${name}`] = seedToken[key]
+          const value = hexList.includes(key) ? toHex(seedToken[key]) : seedToken[key]
+          ret[`--${name}`] = value
         }
         return ret
       }, {} as Record<string, string>
@@ -182,8 +209,8 @@ const config: Config = {
         }
       },
       borderColor: {
-        main: `var(--color-border) /* ${light.colorBorder} */`,
-        secondary: `var(--color-border-secondary) /* ${light.colorBorderSecondary} */`
+        DEFAULT: `var(--color-border-secondary) /* ${light.colorBorderSecondary} */`,
+        100: `var(--color-border) /* ${light.colorBorder} */`
       },
       borderWidth: {
         DEFAULT: `var(--line-width) /* ${light.lineWidth} */`,
@@ -198,11 +225,8 @@ const config: Config = {
     tailwindScrollbar,
     plugin(function({ addBase }) {
       addBase({
-        ':root': genCssVariable(light),
-        '.dark': genCssVariable(dark),
-        '*,*:before,*:after': {
-          'border-color': 'var(--color-border-secondary)',
-        },
+        ':root': genCSSVariable(light),
+        '.dark': genCSSVariable(dark),
         'html,:host': {
           'font-family': 'var(--font-family)'
         },

@@ -1,12 +1,19 @@
 import type { RouteRecordNormalized } from 'vue-router'
-import type { AppState } from './types'
 import { defineStore } from 'pinia'
+import { THEME_LIGHT_KEY, THEME_DARK_KEY } from '@/shared/constant'
 import { getMenuList } from '@/api/app/menu'
 import defaultSettings from '@/config/settings'
+import type { AppState } from './types'
 
 const useAppStore = defineStore('app', {
   state: (): AppState => ({ ...defaultSettings }),
   getters: {
+    isDark(state: AppState) {
+      return state.colorScheme === THEME_DARK_KEY
+    },
+    isLight(state: AppState) {
+      return state.colorScheme === THEME_LIGHT_KEY
+    },
     appCurrentSettings(state: AppState) {
       return { ...state }
     },

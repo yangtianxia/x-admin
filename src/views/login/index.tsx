@@ -4,10 +4,11 @@ import { defineComponent } from 'vue'
 // Common
 import { LOCALE_OPTIONS } from '@/locale'
 import { useLocale } from '@/hooks/locale'
+import { THEME_OPTIONS, useThemes } from '@/hooks/themes'
 
 // Components
 import { Icon } from '@/components/icon'
-import { Dropdown, Menu } from 'ant-design-vue'
+import { Dropdown, Menu, Divider } from 'ant-design-vue'
 import LoginBanner from './components/banner'
 import LoginForm from './components/form'
 
@@ -16,6 +17,7 @@ export default defineComponent({
   setup() {
     const locales = [...LOCALE_OPTIONS]
     const { changeLocale } = useLocale()
+    const { currentTheme, changeTheme } = useThemes()
 
     return () => (
       <div class="flex h-screen min-h-[640px] relative">
@@ -28,27 +30,66 @@ export default defineComponent({
             />
             <div class="text-white/90 max-md:text-main text-xl font-semibold ml-2 mr-1">{$t('page.title')}</div>
           </div>
-          <Dropdown
-            placement="bottom"
-            trigger="click"
-            overlayStyle={{ zIndex: 1070 }}
-            overlay={(
-              <Menu onClick={({ key }) => changeLocale(key as string)}>
-                {locales.map((item) => (
-                  <Menu.Item key={item.value}>
-                    {item.label}
-                  </Menu.Item>
-                ))}
-              </Menu>
-            )}
-          >
-            <div class="cursor-pointer inline-flex text-main hover:text-tertiary items-center space-x-1">
-              <Icon type="Translate" />
-              <span class="text-sm">{$t('login.locale')}</span>
-            </div>
-          </Dropdown>
+          <div class="flex items-center">
+            <Dropdown
+              placement="bottom"
+              trigger="click"
+              overlayStyle={{zIndex: 1070}}
+              overlay={(
+                <Menu onClick={({ key }) => changeLocale(key as string)}>
+                  {locales.map((item) => (
+                    <Menu.Item key={item.value}>
+                      {item.label}
+                    </Menu.Item>
+                  ))}
+                </Menu>
+              )}
+            >
+              <div class="cursor-pointer inline-flex items-center text-main hover:text-tertiary">
+                <Icon type="Translate" />
+                <span class="text-sm ml-1">{$t('login.locale')}</span>
+              </div>
+            </Dropdown>
+            <Divider
+              class="border-100 mx-3"
+              type="vertical"
+            />
+            <Dropdown
+              placement="bottomRight"
+              trigger="click"
+              overlayStyle={{zIndex: 1070}}
+              overlay={(
+                <Menu onClick={({ key }) => changeTheme(key as string)}>
+                  {THEME_OPTIONS.value.map((item) => (
+                    <Menu.Item
+                      key={item.value}
+                      class={currentTheme.value === item.value ? '!text-primary' : null}
+                    >
+                      <Icon
+                        class="mr-1"
+                        type={item.icon}
+                      />
+                      <span>{item.label}</span>
+                    </Menu.Item>
+                  ))}
+                </Menu>
+              )}
+            >
+              <div class="cursor-pointer inline-flex items-center space-x-1 text-main hover:text-tertiary">
+                <Icon
+                  class="dark:hidden"
+                  type="SunOne"
+                />
+                <Icon
+                  class="!hidden dark:!inline-block"
+                  type="Moon"
+                />
+                <span class="text-sm ml-1">{$t('login.theme')}</span>
+              </div>
+            </Dropdown>
+          </div>
         </div>
-        <div class="h-full w-[540px] flex-shrink-0 transition-all max-xl:w-[380px] max-md:hidden bg-gradient-to-r from-blue-900 to-blue-800">
+        <div class="h-full w-[540px] flex-shrink-0 transition-all max-xl:w-[380px] max-md:hidden bg-gradient-to-br from-black/80 to-primary-active">
           <LoginBanner />
         </div>
         <div class="relative flex-1 min-w-0 max-xl:min-w-[420px] max-md:min-w-full flex justify-center items-center px-6 pb-10 bg-container">

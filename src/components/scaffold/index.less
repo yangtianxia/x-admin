@@ -5,7 +5,7 @@
 :host {
   --scaffold-body-pt: theme('padding.5');
   --scaffold-body-px: theme('padding.5');
-  --scaffold-body-bg: var(--color-bg-layout);
+  --scaffold-body-bg: theme('backgroundColor.transparent');
 }
 
 .@{scaffold-cls} {
@@ -15,7 +15,7 @@
     @apply flex-1 min-h-0 flex flex-col;
 
     & > .ant-spin-container {
-      @apply flex-1 min-h-0 flex flex-col;
+      @apply flex-1 min-h-0 flex flex-col after:bg-layout;
     }
   }
 }

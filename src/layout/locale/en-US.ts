@@ -3,6 +3,7 @@ export default {
     action: {
       search: 'Search',
       language: 'Language',
+      theme: 'Theme',
       locale: 'Switch to English'
     }
   },

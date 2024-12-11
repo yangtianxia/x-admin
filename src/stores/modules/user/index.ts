@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { isLogin, setToken, clearToken } from '@/shared/auth'
 import { removeRouteListener } from '@/shared/route-listener'
-import { TOKEN_HEAD, REQUEST_TOKEN_KEY } from '@/shared/constant'
+import { TOKEN_HEAD_KEY, REQUEST_TOKEN_KEY } from '@/shared/constant'
 
 import {
   postLoginByPwd,
@@ -76,10 +76,10 @@ const useUserStore = defineStore('user', {
     },
     loginAfter(data: LoginReturn) {
       if (REQUEST_TOKEN_KEY === 'Authorization') {
-        const token = [data.tokenHead || TOKEN_HEAD, data.token].join('')
+        const token = [data.tokenHead || TOKEN_HEAD_KEY, data.token].join('')
         setToken(token)
       }
-      // TODO 其他TOKEN认证方式
+      // TODO 业务需要替换TOKEN认证方式
     },
     logoutCallback() {
       const appStore = useAppStore()

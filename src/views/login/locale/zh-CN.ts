@@ -1,7 +1,8 @@
 export default {
   'menu.login': '登录',
   login: {
-    locale: '切换语言',
+    locale: '语言',
+    theme: '主题',
     slide: {
       title: {
         1: '开箱即用的高质量模板',

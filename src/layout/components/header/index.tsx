@@ -1,39 +1,46 @@
 // Vue
-import { defineComponent, ref } from 'vue'
+import {
+  defineComponent,
+  ref,
+  type Ref
+} from 'vue'
 
 // Common
 import { useUserStore } from '@/stores'
 import { LOCALE_OPTIONS } from '@/locale'
 import { useLocale } from '@/hooks/locale'
+import { THEME_OPTIONS, useThemes } from '@/hooks/themes'
 import { useRedirect } from '@/hooks/redirect'
 
 // Components
 import { Icon } from '@/components/icon'
 import { LogoutOutlined } from '@ant-design/icons-vue'
-import { TypographyTitle, Avatar, Button, Tooltip, Dropdown, Menu } from 'ant-design-vue'
+import { Avatar, Button, Tooltip, Dropdown, Menu } from 'ant-design-vue'
 
 export default defineComponent({
   name: 'LayoutHeader',
   setup() {
     const locales = [...LOCALE_OPTIONS]
     const { changeLocale } = useLocale()
+    const { currentTheme, changeTheme } = useThemes()
     const userStore = useUserStore()
-    const redirect = useRedirect()
+    const { goto } = useRedirect()
 
     const localeTriggerRef = ref<HTMLElement>()
+    const themeTriggerRef = ref<HTMLElement>()
 
-    const onLocaleDropdownShow = () => {
+    const onDropdownClick = (elRef: Ref<HTMLElement | undefined>) => {
       const event = new MouseEvent('click', {
         view: window,
         bubbles: true,
         cancelable: true
       })
-      localeTriggerRef.value?.dispatchEvent(event)
+      elRef.value?.dispatchEvent(event)
     }
 
     const onLogout = async () => {
       userStore.logout()
-      redirect.goto()
+      goto()
     }
 
     return () => (
@@ -66,7 +73,7 @@ export default defineComponent({
             >
               <Button
                 shape="circle"
-                onClick={onLocaleDropdownShow}
+                onClick={() => onDropdownClick(localeTriggerRef)}
               >
                 <Icon type="Translate" />
               </Button>
@@ -74,20 +81,64 @@ export default defineComponent({
             <Dropdown
               placement="bottom"
               trigger="click"
-              overlayStyle={{ zIndex: 1070 }}
+              overlayStyle={{zIndex: 1070}}
               overlay={(
                 <Menu onClick={({ key }) => changeLocale(key as string)}>
                   {locales.map((item) => (
-                    <Menu.Item key={item.value}>
-                      {item.label}
-                    </Menu.Item>
+                    <Menu.Item key={item.value}>{item.label}</Menu.Item>
                   ))}
                 </Menu>
               )}
             >
               <div
                 ref={localeTriggerRef}
-                class="absolute bottom-0 left-[50%]"
+                class="absolute bottom-0 left-1/2"
+              />
+            </Dropdown>
+          </li>
+          <li class="relative">
+            <Tooltip
+              placement="bottom"
+              title={$t('header.action.theme')}
+            >
+              <Button
+                shape="circle"
+                onClick={() => onDropdownClick(themeTriggerRef)}
+              >
+                <Icon
+                  class="dark:hidden"
+                  type="SunOne"
+                />
+                <Icon
+                  class="!hidden dark:!inline-block"
+                  type="Moon"
+                />
+              </Button>
+            </Tooltip>
+            <Dropdown
+              placement="bottom"
+              trigger="click"
+              overlayStyle={{zIndex: 1070}}
+              overlay={(
+                <Menu onClick={({ key }) => changeTheme(key as string)}>
+                  {THEME_OPTIONS.value.map((item) => (
+                    <Menu.Item
+                      key={item.value}
+                      class={currentTheme.value === item.value ? '!text-primary' : ''}
+                    >
+                      <Icon
+                        class="mr-1"
+                        type={item.icon}
+                      />
+                      <span>{item.label}</span>
+                    </Menu.Item>
+                  ))}
+                </Menu>
+              )}
+            >
+              <div
+                ref={themeTriggerRef}
+                class="absolute bottom-0 left-1/2"
               />
             </Dropdown>
           </li>

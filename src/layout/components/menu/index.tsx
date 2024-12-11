@@ -29,11 +29,8 @@ import { addUnit } from '@/components/_utils/style'
 // Style
 import style from './index.module.less'
 
-const [name, bem] = $bem('menu', style)
-
 export default defineComponent({
-  name,
-
+  name: 'LayoutMenu',
   setup() {
     const appStore = useAppStore()
     const route = useRoute()
@@ -166,7 +163,7 @@ export default defineComponent({
       <div class="h-full overflow-y-auto overflow-x-hidden scrollbar-thin">
         <Menu
           v-model:openKeys={openKeys.value}
-          class={bem()}
+          class={style.menu}
           mode={topMenu.value ? 'horizontal' : 'inline'}
           selectedKeys={selectedKey.value}
           inlineIndent={inlineIndent.value}

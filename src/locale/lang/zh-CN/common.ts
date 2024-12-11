@@ -4,6 +4,12 @@ export default {
     description: '基于Ant-design-vue组件库开箱即用的中台解决方案',
     copyright: 'github.com/yangtianxia'
   },
+  theme: {
+    light: '明亮',
+    dark: '暗黑',
+    system: '系统',
+    switch: '切换{0}模式'
+  },
   fetch: {
     400: '请求错误',
     403: '拒绝访问',
