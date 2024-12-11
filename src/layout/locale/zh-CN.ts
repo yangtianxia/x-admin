@@ -3,6 +3,7 @@ export default {
     action: {
       search: '搜索',
       language: '语言',
+      theme: '主题',
       locale: '切换为中文'
     }
   },

@@ -1,7 +1,8 @@
 export default {
   'menu.login': 'Login',
   login: {
-    locale: 'Switch language',
+    locale: 'Language',
+    theme: 'Theme',
     slide: {
       title: {
         1: 'High-quality templates ready to use',

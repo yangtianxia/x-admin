@@ -8,28 +8,27 @@ import { Carousel } from 'ant-design-vue'
 // Style
 import style from './index.module.less'
 
-const [name, bem] = $bem('banner', style)
+const slides = computed(() => [
+  {
+    id: 1,
+    title: $t('login.slide.title.1'),
+    subtitle: $t('login.slide.subtitle.1')
+  },
+  {
+    id: 2,
+    title: $t('login.slide.title.2'),
+    subtitle: $t('login.slide.subtitle.2')
+  }
+])
 
 export default defineComponent({
-  name,
+  name: 'LoginBanner',
   setup() {
-    const slides = computed(() => [
-      {
-        id: 1,
-        title: $t('login.slide.title.1'),
-        subtitle: $t('login.slide.subtitle.1')
-      },
-      {
-        id: 2,
-        title: $t('login.slide.title.2'),
-        subtitle: $t('login.slide.subtitle.2')
-      }
-    ])
     return () => (
       <Carousel
         arrows
         effect="fade"
-        class={bem()}
+        class={style.banner}
         v-slots={{
           prevArrow: () => (
             <div class="z-10 !text-white !text-opacity-30 hover:!text-white/50 !text-3xl !w-auto !h-auto !-mt-3 !left-6 max-xl:!text-2xl max-xl:!left-3 before:!content-none">

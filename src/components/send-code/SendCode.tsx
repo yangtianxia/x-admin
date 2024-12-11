@@ -1,6 +1,7 @@
 // Vue
 import {
   defineComponent,
+  toRef,
   reactive,
   computed,
   type PropType,
@@ -33,15 +34,9 @@ const sendCodeProps = shallowMerge({}, {
   interval: makeNumberProp(60),
   size: makeStringProp<ButtonProps['size']>('small'),
   type: makeStringProp<ButtonProps['type']>('text'),
-  beforeText: makeStringProp($t('send-code.text.before')),
-  text: {
-    type: VNodeProp,
-    default: $t('send-code.text.default')
-  },
-  afterText: {
-    type: VNodeProp,
-    default: $t('send-code.text.after')
-  },
+  beforeText: String,
+  text: VNodeProp,
+  afterText: VNodeProp,
   beforeChange: Function as PropType<Interceptor>
 })
 
@@ -60,6 +55,9 @@ export default defineComponent({
   name,
   props: sendCodeProps,
   setup(props, { slots }) {
+    const beforeText = toRef(() => props.beforeText || $t('send-code.text.before'))
+    const text = toRef(() => props.text || $t('send-code.text.default'))
+    const afterText = toRef(() => props.afterText || $t('send-code.text.after'))
     const state = reactive({
       interval: props.interval,
       disabled: false,
@@ -80,9 +78,7 @@ export default defineComponent({
       }
     })
 
-    const formatTpl = computed(() =>
-      props.beforeText.replace(/^\[S\](.*)?$/g, `${state.interval}$1`)
-    )
+    const formatTpl = computed(() => beforeText.value.replace(/^\[S\](.*)?$/g, `${state.interval}$1`))
 
     const onClick = () => {
       state.loading = true
@@ -100,12 +96,12 @@ export default defineComponent({
     }
 
     const renderText = () => {
-      const text = state.disabled
+      const node = state.disabled
         ? formatTpl.value
         : state.finish
-          ? props.afterText
-          : slots.default || props.text
-      return createVNode(text)
+          ? afterText.value
+          : slots.default || text.value
+      return createVNode(node)
     }
 
     return () => (

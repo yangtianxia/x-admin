@@ -4,12 +4,14 @@ import 'dayjs/locale/zh-cn'
 
 import { createApp } from 'vue'
 import dayjs from 'dayjs'
+import { message, notification } from 'ant-design-vue'
+import { useThemes } from '@/hooks/themes'
+
 import app from '@/App'
 import router from '@/router'
 import store from '@/stores'
 import directive from '@/directive'
 import i18n from '@/locale'
-import { message, notification } from 'ant-design-vue'
 import { Lazyload } from '@/components/lazy-load'
 
 // bem配置
@@ -40,3 +42,6 @@ createApp(app)
   .use(directive)
   .use(i18n)
   .mount('#app')
+  .$nextTick(() => {
+    useThemes().loadTheme()
+  })

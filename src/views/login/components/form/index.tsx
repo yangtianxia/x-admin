@@ -33,8 +33,6 @@ import style from './index.module.less'
 
 type LoginMethod = 'pwd' | 'sms'
 
-const [name, bem] = $bem('form', style)
-
 const getDefaultFormModel = () => ({
   /** 登录方式 */
   method: makeString<LoginMethod>('pwd'),
@@ -51,7 +49,7 @@ const getDefaultFormModel = () => ({
 })
 
 export default defineComponent({
-  name,
+  name: 'LoginForm',
   setup() {
     const userStore = useUserStore()
     const redirect = useRedirect()
@@ -185,7 +183,7 @@ export default defineComponent({
     )
 
     return () => (
-      <div class={[bem(), 'md:min-w-[300px] max-w-[300px] max-sm:flex-auto']}>
+      <div class={[style.form, 'md:min-w-[300px] max-w-[300px] max-sm:flex-auto']}>
         <div class="text-main text-lg font-semibold max-sm:hidden">{$t('login.form.title')} {$t('page.title')}</div>
         <div class="text-tertiary text-sm mt-1 max-sm:hidden">{$t('page.description')}</div>
         <Form

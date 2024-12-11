@@ -1,7 +1,7 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { message } from 'ant-design-vue'
-import { LOCALE } from '@/shared/constant'
+import { LOCALE_KEY } from '@/shared/constant'
 
 export const useLocale = () => {
   const i18n = useI18n()
@@ -11,7 +11,7 @@ export const useLocale = () => {
   const changeLocale = (value: string) => {
     if (i18n.locale.value === value) return
     i18n.locale.value = value
-    localStorage.setItem(LOCALE, value)
+    localStorage.setItem(LOCALE_KEY, value)
     message.success(i18n.t('header.action.locale'))
   }
   return {
