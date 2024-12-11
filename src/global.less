@@ -8,13 +8,14 @@ textarea {
   &:autofill,
   &:focus:autofill,
   &[class*="input"]:focus:autofill {
+    -webkit-text-fill-color: var(--color-text);
     box-shadow: inset 0 0 0 1000px var(--color-bg-container) !important;
   }
 }
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition: opacity,transform 0.5s var(--motion-ease-out-back);
 }
 
 .fade-enter,

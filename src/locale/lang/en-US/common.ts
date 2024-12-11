@@ -1,8 +1,7 @@
 export default {
   page: {
     title: 'x-admin',
-    description: 'A ready-to-use admin solution based on Ant-design-vue',
-    copyright: 'github.com/yangtianxia'
+    description: 'A ready-to-use admin solution based on Ant-design-vue'
   },
   theme: {
     light: 'Light',

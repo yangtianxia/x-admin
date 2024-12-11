@@ -9,6 +9,7 @@ import { THEME_OPTIONS, useThemes } from '@/hooks/themes'
 // Components
 import { Icon } from '@/components/icon'
 import { Dropdown, Menu, Divider } from 'ant-design-vue'
+import LayoutFooter from '@/layout/components/footer'
 import LoginBanner from './components/banner'
 import LoginForm from './components/form'
 
@@ -95,7 +96,7 @@ export default defineComponent({
         <div class="relative flex-1 min-w-0 max-xl:min-w-[420px] max-md:min-w-full flex justify-center items-center px-6 pb-10 bg-container">
           <LoginForm />
           <div class="absolute left-0 bottom-0 w-full h-10 flex items-center justify-center">
-            <div class="text-quaternary text-sm">©{$t('page.copyright')}</div>
+            <LayoutFooter />
           </div>
         </div>
       </div>
