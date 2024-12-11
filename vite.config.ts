@@ -33,7 +33,8 @@ export default defineConfig(({ mode, command }) => {
   const config = {
     server: {
       hmr: true,
-      open: true
+      open: true,
+      host: true
     },
     resolve: {
       alias: {

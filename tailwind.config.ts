@@ -70,18 +70,26 @@ const hexList = [
   'colorTextQuaternary'
 ]
 
+const mixColorWithAlpha = (value: number, aplha: number) => {
+  return Math.floor(aplha * parseInt(value.toString()) + 255 * (1 - aplha))
+}
+
+const toHex2 = (input: number) => {
+  return `0${input.toString(16).toUpperCase()}`.slice(-2)
+}
+
 const toHex = (input: string) => {
   const color = tinycolor(input)
   if (color.isValid()) {
     const rgba = color.toRgb()
     const aplha = parseFloat(rgba.a.toString())
-    const c = Math.floor(aplha * parseInt(rgba.r.toString()) + 255 * (1 - aplha))
-    const g = Math.floor(aplha * parseInt(rgba.g.toString()) + 255 * (1 - aplha))
-    const b = Math.floor(aplha * parseInt(rgba.b.toString()) + 255 * (1 - aplha))
+    const c = mixColorWithAlpha(rgba.r, aplha)
+    const g = mixColorWithAlpha(rgba.g, aplha)
+    const b = mixColorWithAlpha(rgba.b, aplha)
     return '#'
-      .concat(`0${c.toString(16).toUpperCase()}`.slice(-2))
-      .concat(`0${g.toString(16).toUpperCase()}`.slice(-2))
-      .concat(`0${b.toString(16).toUpperCase()}`.slice(-2))
+      .concat(toHex2(c))
+      .concat(toHex2(g))
+      .concat(toHex2(b))
   }
   return input
 }
