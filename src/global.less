@@ -13,6 +13,16 @@ textarea {
   }
 }
 
+#nprogress {
+  & > .bar {
+    @apply !bg-primary;
+  }
+
+  & > .spinner-icon {
+    @apply !border-t-primary !border-b-primary;
+  }
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity,transform 0.5s var(--motion-ease-out-back);

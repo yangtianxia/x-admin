@@ -1,4 +1,5 @@
 import 'ant-design-vue/dist/reset.css'
+import 'nprogress/nprogress.css'
 import '@/global.less'
 import 'dayjs/locale/zh-cn'
 

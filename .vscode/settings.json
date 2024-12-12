@@ -2,7 +2,6 @@
   "css.customData": [
     ".vscode/tailwindcss.json"
   ],
-  "cssvar.ignore": [],
   "cssvar.disableSort": true,
   "cssvar.extensions": [
     "css",

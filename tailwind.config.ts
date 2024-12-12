@@ -3,7 +3,7 @@ import plugin from 'tailwindcss/plugin'
 import tailwindColors from 'tailwindcss/colors'
 import tailwindScrollbar from 'tailwind-scrollbar'
 import tinycolor from 'tinycolor2'
-import { camelToKebab } from '@txjs/shared'
+import { camelToKebab, shallowMerge } from '@txjs/shared'
 import { theme } from 'ant-design-vue'
 import type { SeedToken } from 'ant-design-vue/es/theme/interface'
 
@@ -46,8 +46,9 @@ const defaultSeed = {
   ...seedToken
 }
 
-const light = theme.defaultAlgorithm(defaultSeed)
-const dark = theme.darkAlgorithm(defaultSeed)
+export const light = theme.defaultAlgorithm(defaultSeed)
+
+export const dark = theme.darkAlgorithm(defaultSeed)
 
 /** 转CSS Variable白名单 */
 const whiteList = [
@@ -183,6 +184,10 @@ const genPresetColorMapToken = (seedToken: SeedToken) => {
     )
 }
 
+const presetColors = genPresetColorMapToken(light)
+
+shallowMerge(presetColors.colors, genDefaultColorMapToken(light))
+
 const config: Config = {
   mode: 'jit',
   darkMode: ['class'],
@@ -193,11 +198,10 @@ const config: Config = {
       transparent: tailwindColors.transparent,
       current: tailwindColors.current,
       white: tailwindColors.white,
-      black: tailwindColors.black,
-      ...genDefaultColorMapToken(light)
+      black: tailwindColors.black
     },
     extend: {
-      ...genPresetColorMapToken(light),
+      ...presetColors,
       textColor: {
         main: `var(--color-text) /* ${light.colorText} */`,
         secondary: `var(--color-text-secondary) /* ${light.colorTextSecondary} */`,
@@ -239,14 +243,7 @@ const config: Config = {
           'font-family': 'var(--font-family)'
         },
         'html,body': {
-          'background-color': 'var(--color-bg-container)',
-        },
-        '#nprogress > .bar': {
-          'background': 'var(--color-primary)'
-        },
-        '#nprogress > .spinner-icon': {
-          'border-top-color': 'var(--color-primary)',
-          'border-left-color': 'var(--color-primary)'
+          'background-color': 'var(--color-bg-container)'
         }
       })
     })
