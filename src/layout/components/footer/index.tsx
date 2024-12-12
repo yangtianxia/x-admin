@@ -1,12 +1,15 @@
 // Vue
 import { defineComponent } from 'vue'
 
+// Components
+import { Icon } from '@/components/icon'
+
 export default defineComponent({
   name: 'LayoutFooter',
   setup() {
     return () => (
       <p class="text-quaternary text-sm text-center">
-        ©2023-2024 <a href="https://github.com/yangtianxia" target="_blank">yangtianxia</a> All Rights
+        <a href="https://github.com/yangtianxia/x-admin" target="_blank"><Icon type="GithubOne" /> x-admin</a>
       </p>
     )
   }

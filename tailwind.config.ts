@@ -3,7 +3,7 @@ import plugin from 'tailwindcss/plugin'
 import tailwindColors from 'tailwindcss/colors'
 import tailwindScrollbar from 'tailwind-scrollbar'
 import tinycolor from 'tinycolor2'
-import { camelToKebab } from '@txjs/shared'
+import { camelToKebab, shallowMerge } from '@txjs/shared'
 import { theme } from 'ant-design-vue'
 import type { SeedToken } from 'ant-design-vue/es/theme/interface'
 
@@ -46,8 +46,9 @@ const defaultSeed = {
   ...seedToken
 }
 
-const light = theme.defaultAlgorithm(defaultSeed)
-const dark = theme.darkAlgorithm(defaultSeed)
+export const light = theme.defaultAlgorithm(defaultSeed)
+
+export const dark = theme.darkAlgorithm(defaultSeed)
 
 /** 转CSS Variable白名单 */
 const whiteList = [
@@ -70,18 +71,26 @@ const hexList = [
   'colorTextQuaternary'
 ]
 
+const mixColorWithAlpha = (value: number, aplha: number) => {
+  return Math.floor(aplha * parseInt(value.toString()) + 255 * (1 - aplha))
+}
+
+const toHex2 = (input: number) => {
+  return `0${input.toString(16).toUpperCase()}`.slice(-2)
+}
+
 const toHex = (input: string) => {
   const color = tinycolor(input)
   if (color.isValid()) {
     const rgba = color.toRgb()
     const aplha = parseFloat(rgba.a.toString())
-    const c = Math.floor(aplha * parseInt(rgba.r.toString()) + 255 * (1 - aplha))
-    const g = Math.floor(aplha * parseInt(rgba.g.toString()) + 255 * (1 - aplha))
-    const b = Math.floor(aplha * parseInt(rgba.b.toString()) + 255 * (1 - aplha))
+    const c = mixColorWithAlpha(rgba.r, aplha)
+    const g = mixColorWithAlpha(rgba.g, aplha)
+    const b = mixColorWithAlpha(rgba.b, aplha)
     return '#'
-      .concat(`0${c.toString(16).toUpperCase()}`.slice(-2))
-      .concat(`0${g.toString(16).toUpperCase()}`.slice(-2))
-      .concat(`0${b.toString(16).toUpperCase()}`.slice(-2))
+      .concat(toHex2(c))
+      .concat(toHex2(g))
+      .concat(toHex2(b))
   }
   return input
 }
@@ -175,6 +184,10 @@ const genPresetColorMapToken = (seedToken: SeedToken) => {
     )
 }
 
+const presetColors = genPresetColorMapToken(light)
+
+shallowMerge(presetColors.colors, genDefaultColorMapToken(light))
+
 const config: Config = {
   mode: 'jit',
   darkMode: ['class'],
@@ -185,11 +198,10 @@ const config: Config = {
       transparent: tailwindColors.transparent,
       current: tailwindColors.current,
       white: tailwindColors.white,
-      black: tailwindColors.black,
-      ...genDefaultColorMapToken(light)
+      black: tailwindColors.black
     },
     extend: {
-      ...genPresetColorMapToken(light),
+      ...presetColors,
       textColor: {
         main: `var(--color-text) /* ${light.colorText} */`,
         secondary: `var(--color-text-secondary) /* ${light.colorTextSecondary} */`,
@@ -231,14 +243,7 @@ const config: Config = {
           'font-family': 'var(--font-family)'
         },
         'html,body': {
-          'background-color': 'var(--color-bg-container)',
-        },
-        '#nprogress > .bar': {
-          'background': 'var(--color-primary)'
-        },
-        '#nprogress > .spinner-icon': {
-          'border-top-color': 'var(--color-primary)',
-          'border-left-color': 'var(--color-primary)'
+          'background-color': 'var(--color-bg-container)'
         }
       })
     })

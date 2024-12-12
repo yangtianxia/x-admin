@@ -1,3 +1,7 @@
 {
-  "recommendations": ["Vue.official"]
+  "recommendations": [
+    "vue.volar",
+    "bradlc.vscode-tailwindcss",
+    "vunguyentuan.vscode-css-variables"
+  ]
 }
