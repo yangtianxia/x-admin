@@ -1,19 +1,11 @@
 @icon-cls: ~'@{prefix}-icon';
 
 .@{icon-cls} {
-  display: inline-block;
-  color: inherit;
-  font-style: normal;
-  line-height: 0;
-  text-align: center;
-  text-transform: none;
-  vertical-align: -0.125em;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  @apply inline-block text-center;
+  vertical-align: -0.15em;
 
   &-spin svg {
-    animation: icon-spin 1s infinite linear;
+    animation: iconSpin 1s infinite linear;
   }
 
   &-rtl {
@@ -21,16 +13,8 @@
   }
 }
 
-@keyframes icon-spin {
+@keyframes iconSpin {
   100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-
-@-webkit-keyframes icon-spin {
-  100% {
-    -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
 }

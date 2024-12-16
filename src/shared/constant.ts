@@ -1,13 +1,28 @@
-const createKey = <T extends string>(key: T) => `${import.meta.env.VITE_PREFIX}_${key}` as const
+const createKey = <T extends string>(key: T) => `x_admin_${key}` as const
 
-/** 用户凭证 */
+/** 认证方式 */
+export const REQUEST_TOKEN_KEY = 'Authorization'
+
+/** 登录凭证 */
 export const TOKEN_KEY = createKey('token')
 
-/** 用户role */
-export const USER_ROLE_KEY = createKey('user_role')
+/** 登录凭证前缀 */
+export const TOKEN_HEAD_KEY = 'Bearer '
 
 /** 网站语言 */
 export const LOCALE_KEY = createKey('locale')
+
+/** 网站主题 */
+export const THEME_KEY = createKey('theme')
+
+/** 明亮模式 */
+export const THEME_LIGHT_KEY = 'light'
+
+/** 暗黑模式 */
+export const THEME_DARK_KEY = 'dark'
+
+/** 跟随系统模式 */
+export const THEME_SYSTEM_KEY = 'system'
 
 /** 重定向URL */
 export const REDIRECT_URI = createKey('redirect_uri')

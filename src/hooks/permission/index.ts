@@ -1,5 +1,5 @@
 import type { RouteLocationNormalized, RouteRecordRaw } from 'vue-router'
-import { useUserStore } from '@/store'
+import { useUserStore } from '@/stores'
 import { isLogin } from '@/shared/auth'
 
 export const usePermission = () => {

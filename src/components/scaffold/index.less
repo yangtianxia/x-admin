@@ -1,0 +1,43 @@
+@scaffold-cls: ~'@{prefix}-scaffold';
+@scaffold-body-cls: ~'@{prefix}-scaffold-body';
+
+:root,
+:host {
+  --scaffold-body-pt: theme('padding.5');
+  --scaffold-body-px: theme('padding.5');
+  --scaffold-body-bg: theme('backgroundColor.transparent');
+}
+
+.@{scaffold-cls} {
+  @apply flex-1 relative flex flex-nowrap flex-col box-border;
+
+  & > .ant-spin-nested-loading {
+    @apply flex-1 min-h-0 flex flex-col;
+
+    & > .ant-spin-container {
+      @apply flex-1 min-h-0 flex flex-col after:bg-layout;
+    }
+  }
+}
+
+.@{scaffold-body-cls} {
+  @apply flex-1 relative box-border;
+
+  &--flex {
+    @apply flex flex-col;
+  }
+
+  &--shrink {
+    padding: var(--scaffold-body-pt) var(--scaffold-body-px) 0;
+  }
+
+  &--empty {
+    @apply p-0;
+    background-color: var(--scaffold-body-bg);
+
+    .@{prefix}-result {
+      @apply absolute top-0 bottom-0 w-full box-border;
+      height: 82%;
+    }
+  }
+}

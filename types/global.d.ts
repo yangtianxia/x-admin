@@ -14,20 +14,12 @@ declare module '*.styl'
 declare module '*.json'
 
 declare global {
-  const THEME: {
-    token?: import('ant-design-vue/es/theme/interface').AliasToken
-    components?: import ('ant-design-vue/es/theme/interface').OverrideToken
-  }
+  type SeedToken = typeof import('ant-design-vue')['theme']['defaultSeed']
 
-  const BEM: typeof import('@txjs/bem')['default']
-
-  const $t: typeof import('../src/locale/t')['default']
-
-  type ScrollElement = Element | Window
-
-  type SetTimeout = ReturnType<typeof setTimeout> | null
-
-  type SetInterval = ReturnType<typeof setInterval> | null
+  const $t: typeof import('../src/locale')['default']['global']['t']
+  const $bem: typeof import('@txjs/bem')['default']
+  const $request: typeof import('../src/shared/request')['default']
+  const seedToken: Partial<SeedToken & Record<string, Partial<SeedToken>>>
 }
 
 export {}

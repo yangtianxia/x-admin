@@ -11,13 +11,16 @@
       "node"
     ],
     "paths": {
+      "~/*": ["./"],
       "@/*": ["src/*"]
     }
   },
   "include": [
     "src/**/*.tsx",
     "src/**/*.ts",
-    "types/**/*.d.ts"
+    "types/**/*.d.ts",
+    "mock/**/*.ts",
+    "build/**/*.ts",
   ],
   "exclude": [
     "node_modules",

@@ -1,39 +1,40 @@
 import { fileURLToPath, URL } from 'node:url'
-import { defineConfig, loadEnv } from 'vite'
+import extend from 'extend'
+import { defineConfig, loadEnv, type UserConfig } from 'vite'
+
+// PostCSS 插件
+import PostcssImport from 'postcss-import'
+import Tailwindcss from 'tailwindcss'
 import Autoprefixer from 'autoprefixer'
+
+// Vite 插件
 import Vue from '@vitejs/plugin-vue'
 import VueJSX from '@vitejs/plugin-vue-jsx'
 import Legacy from '@vitejs/plugin-legacy'
 import Inject from '@rollup/plugin-inject'
 import { createHtmlPlugin } from 'vite-plugin-html'
-import ejs from 'ejs'
+import { viteMockServe } from 'vite-plugin-mock'
+
+// Theme
+import { LightTheme, DarkTheme, seedToken, genCSSVariable, withCSSVariable } from './build/theme'
+
+// Package
 import { version } from './package.json'
-import { token } from './theme.mjs'
 
 const resolve = (path: string) => {
   return fileURLToPath(new URL(path, import.meta.url))
 }
 
-export default defineConfig(({ mode }) => {
-  const isDev = mode === 'development'
+export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd())
-  const theme = { token }
+  const isServer = command === 'serve'
+  const isMock = env.VITE_MOCK === 'enable'
 
-  return {
+  const config = {
     server: {
       hmr: true,
       open: true,
-      proxy: {
-        [env.VITE_PROXY_API]: {
-          target: env.VITE_API,
-          changeOrigin: true,
-          ws: true,
-          rewrite: (path: string) => path.replace(
-            new RegExp(`^${env.VITE_PROXY_API}`),
-            ''
-          )
-        }
-      }
+      host: true
     },
     resolve: {
       alias: {
@@ -48,65 +49,63 @@ export default defineConfig(({ mode }) => {
           relativeUrls: true,
           javascriptEnabled: true,
           charset: false,
-          additionalData: `@import "./src/variables.less";`,
           modifyVars: {
-            '@prefix': env.VITE_PREFIX
+            '@prefix': 'x'
           }
         }
       },
       modules: {
         auto: true,
-        generateScopedName: `${isDev ? '[local]_' : ''}[hash:base64:8]`,
+        generateScopedName: `${isServer ? '[local]_' : ''}[hash:base64:8]`,
         globalModulePaths: [/\.module\.[sc|sa|le|c]ss$/i]
       },
       postcss: {
-        plugins: [Autoprefixer()]
+        plugins: [
+          PostcssImport,
+          Autoprefixer,
+          Tailwindcss
+        ]
       }
     },
     build: {
-      minify: 'terser'
+      minify: 'terser' as const
     },
     plugins: [
       Vue(),
+      viteMockServe({
+        enable: isMock,
+        logger: true
+      }),
       VueJSX({
         isCustomElement: (tag) => tag.startsWith('custom')
       }),
       Legacy(),
       Inject({
         $t: resolve('./src/locale/t.ts'),
-        BEM: '@txjs/bem'
+        $bem: '@txjs/bem',
+        $request: resolve('./src/shared/request.ts')
       }),
       createHtmlPlugin({
         minify: true,
         inject: {
+          data: { version },
           tags: [
             {
               injectTo: 'head',
               tag: 'meta',
               attrs: {
-                name: 'version',
-                content: `${version},${Date.now()}`
-              }
-            },
-            {
-              injectTo: 'head',
-              tag: 'title',
-              children: env['VITE_TITLE']
-            },
-            {
-              injectTo: 'head',
-              tag: 'meta',
-              attrs: {
-                name: 'keyword',
-                content: env['VITE_KEYWORD']
+                name: 'theme-color',
+                content: LightTheme.colorBgContainer,
+                media: '(prefers-color-scheme: light)'
               }
             },
             {
               injectTo: 'head',
               tag: 'meta',
               attrs: {
-                name: 'description',
-                content: env['VITE_DESCRIPTION']
+                name: 'theme-color',
+                content: DarkTheme.colorBgContainer,
+                media: '(prefers-color-scheme: dark)'
               }
             },
             {
@@ -115,26 +114,52 @@ export default defineConfig(({ mode }) => {
               attrs: {
                 type: 'text/css'
               },
-              children: ejs.render(
-                ejs
-                .fileLoader(resolve('node_modules/pollen-css/dist/pollen.css'))
-                .toString()
-                // 删除头部注释内容
-                .replace(/\/\*([\s\S]*?)\*\//g, ''),
-                {},
-                { cache: false }
-              )
-            }, {
+              children: `:root { ${genCSSVariable(LightTheme)} }`
+            },
+            {
+              injectTo: 'head',
+              tag: 'style',
+              attrs: {
+                type: 'text/css'
+              },
+              children: `.dark { ${genCSSVariable(DarkTheme, false)} }`
+            },
+            {
               injectTo: 'body',
               tag: 'script',
               attrs: {
                 type: 'text/javascript'
               },
-              children: `window.THEME = ${JSON.stringify(theme)}`
+              children: `window.seedToken = ${JSON.stringify(seedToken)}`
             }
           ]
         }
       })
     ]
+  } as UserConfig
+
+  if (env.VITE_PORT) {
+    extend(true, config, {
+      server: {
+        port: env.VITE_PORT
+      }
+    })
   }
+
+  if (env.VITE_PROXY_API && env.VITE_API) {
+    extend(true, config, {
+      server: {
+        proxy: {
+          [env.VITE_PROXY_API]: {
+            target: env.VITE_API,
+            changeOrigin: true,
+            ws: true,
+            rewrite: (path: string) => path.replace(new RegExp(`^${env.VITE_PROXY_API}`), '')
+          }
+        }
+      }
+    })
+  }
+
+  return config
 })

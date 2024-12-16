@@ -1,42 +1,61 @@
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
+import type { LocationQueryRaw, RouteLocationNormalizedLoaded } from 'vue-router'
 import { isValidString } from '@txjs/bool'
-import router from '@/router'
-import { LOGIN_ROUTE_NAME, DEFAULT_ROUTE } from '@/router/constant'
+import router, { goBack } from '@/router'
+import { LOGIN_ROUTE_NAME } from '@/router/constant'
 import { REDIRECT_URI, REDIRECT_PARAMS } from '@/shared/constant'
 
-export const useRedirect = () => {
-  const { query, fullPath } = router.currentRoute.value
+interface GoToOption {
+  name?: string
+  replace?: boolean
+}
 
-  let redirect_uri = query[REDIRECT_URI] as string
+const whiteList: string[] = [LOGIN_ROUTE_NAME]
 
+const getRedirectUri = (route: RouteLocationNormalizedLoaded) => {
+  const { query } = route
+  const redirect_uri = query[REDIRECT_URI] as string
   if (isValidString(redirect_uri)) {
-    redirect_uri = decodeURIComponent(redirect_uri)
+    return decodeURIComponent(redirect_uri)
   }
+}
 
-  const from = reactive({
-    [REDIRECT_PARAMS]: redirect_uri
+export const useRedirectUri = (route: RouteLocationNormalizedLoaded) => {
+  if (route.meta.authNoAccessAfter) {
+    return getRedirectUri(route)
+  }
+}
+
+export const useRedirect = () => {
+  const { name, fullPath } = router.currentRoute.value
+  const redirectUri = getRedirectUri(router.currentRoute.value)
+  const ignore = whiteList.includes(name as string)
+
+  const state = reactive({
+    [REDIRECT_PARAMS]: redirectUri
   })
 
-  const go = () => {
-    router.replace({
-      name: LOGIN_ROUTE_NAME,
-      query: {
-        [REDIRECT_URI]: fullPath
-      }
-    })
+  const currentRedirectUri = computed(() => state[REDIRECT_PARAMS])
+
+  const goto = (options?: GoToOption) => {
+    const { name = LOGIN_ROUTE_NAME, replace = true } = options || {}
+    const query = {} as LocationQueryRaw
+    if (replace) {
+      query[REDIRECT_URI] = ignore ? redirectUri : fullPath
+    }
+    router[replace ? 'replace' : 'push']({ name, query })
   }
 
-  const to = (callback?: UnknownCallback) => {
-    const redirectURL = from[REDIRECT_PARAMS]
-
-    if (!redirectURL) {
-      router.replace(DEFAULT_ROUTE)
-    } else if (callback) {
+  const back = (callback?: UnknownCallback) => {
+    const redirectURL = state[REDIRECT_PARAMS]
+    if (callback) {
       callback(redirectURL)
-    } else {
+    } else if (redirectURL) {
       router.replace(redirectURL)
+    } else {
+      goBack()
     }
   }
 
-  return { from, query, go, to }
+  return { currentRedirectUri, goto, back }
 }

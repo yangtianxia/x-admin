@@ -8,20 +8,18 @@ import {
 // Common
 import { RouterView, type RouteLocationNormalized } from 'vue-router'
 
-interface RouterViewSlot  {
+interface RouterViewEvent  {
   Component: any
   route: RouteLocationNormalized
 }
 
-const [name] = BEM('page')
-
 export default defineComponent({
-  name,
+  name: 'LayoutPage',
   setup() {
     return () => (
       <RouterView
         v-slots={{
-          default: ({ Component, route }: RouterViewSlot) => (
+          default: ({ Component, route }: RouterViewEvent) => (
             <Transition
               appear
               name="fade"

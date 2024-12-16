@@ -5,73 +5,72 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="%BASE_URL%favicon.ico">
-    <style type="text/css">
-      body {
-        background-color: var(--color-bgcolor);
-      }
-      .loader-wrapper {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 32px;
-        height: 32px;
-        transform: translate(-50%, -50%);
-      }
-      .loader {
-        width: 32px;
-        height: 32px;
-        transform: rotate(45deg);
-        position: relative;
-        display: inline-block;
-        animation: loader-rotate 1.2s infinite linear;
-      }
-      .loader > div {
-        width: 14px;
-        height: 14px;
-        position: absolute;
-        display: inline-block;
-        border-radius: 100%;
-        transform: scale(.75);
-        transform-origin: 50% 50%;
-        opacity: .3;
-        background-color: var(--color-primary);
-        overflow: hidden;
-        animation: loader-move 1s linear infinite alternate;
-      }
-      .loader > div:nth-child(1) {
-        top: 0;
-        left: 0;
-      }
-      .loader > div:nth-child(2) {
-        top: 0;
-        right: 0;
-        animation-delay: 0.4s;
-      }
-      .loader > div:nth-child(3) {
-        right: 0;
-        bottom: 0;
-        animation-delay: 0.8s;
-      }
-      .loader > div:nth-child(4) {
-        bottom: 0;
-        left: 0;
-        animation-delay: 1.2s;
-      }
-      @keyframes loader-move {
-        to {
-          opacity: 1;
-        }
-      }
-      @keyframes loader-rotate {
-        to {
-          transform: rotate(405deg);
-        }
-      }
-    </style>
+    <meta name="version" content="<%- version %>">
+    <link rel="icon" type="image/png" href="%BASE_URL%logo.png">
+    <title>x-admin</title>
   </head>
   <body>
     <div id="app">
+      <style type="text/css">
+        .loader-wrapper {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 32px;
+          height: 32px;
+          transform: translate(-50%, -50%);
+        }
+        .loader {
+          width: 32px;
+          height: 32px;
+          transform: rotate(45deg);
+          position: relative;
+          display: inline-block;
+          animation: loader-rotate 1.2s infinite linear;
+        }
+        .loader > div {
+          width: 14px;
+          height: 14px;
+          position: absolute;
+          display: inline-block;
+          border-radius: 100%;
+          transform: scale(.75);
+          transform-origin: 50% 50%;
+          opacity: .3;
+          background-color: var(--color-primary, #000);
+          overflow: hidden;
+          animation: loader-move 1s linear infinite alternate;
+        }
+        .loader > div:nth-child(1) {
+          top: 0;
+          left: 0;
+        }
+        .loader > div:nth-child(2) {
+          top: 0;
+          right: 0;
+          animation-delay: 0.4s;
+        }
+        .loader > div:nth-child(3) {
+          right: 0;
+          bottom: 0;
+          animation-delay: 0.8s;
+        }
+        .loader > div:nth-child(4) {
+          bottom: 0;
+          left: 0;
+          animation-delay: 1.2s;
+        }
+        @keyframes loader-move {
+          to {
+            opacity: 1;
+          }
+        }
+        @keyframes loader-rotate {
+          to {
+            transform: rotate(405deg);
+          }
+        }
+      </style>
       <div class="loader-wrapper">
         <div class="loader">
           <div></div>
@@ -81,10 +80,10 @@
         </div>
       </div>
     </div>
-    <script type="module" src="/src/main.ts"></script>
     <noscript>
       This website requires JavaScript to function properly.
       Please enable JavaScript to continue.
     </noscript>
+    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

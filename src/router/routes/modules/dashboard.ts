@@ -3,7 +3,7 @@ import { DEFAULT_LAYOUT } from '../base'
 
 const DASHBOARD: AppRouteRecordRaw = {
   path: '/dashboard',
-  name: 'Dashboard',
+  name: 'dashboardWrapper',
   component: DEFAULT_LAYOUT,
   redirect: '/dashboard/workplace',
   meta: {
@@ -16,7 +16,7 @@ const DASHBOARD: AppRouteRecordRaw = {
     {
       path: 'workplace',
       name: 'Workplace',
-      component: () => import('@/views/v1/dashboard/workplace'),
+      component: () => import('@/views/dashboard/workplace'),
       meta: {
         locale: 'menu.server.workplace',
         requiresAuth: true,

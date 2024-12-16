@@ -24,7 +24,7 @@ import {
   type IconMapCamel
 } from './map'
 
-const [name] = BEM('icon')
+const [name] = $bem('icon')
 
 const iconProps = {
   type: {
@@ -48,7 +48,7 @@ export default defineComponent({
   setup(props) {
     IconProvider({
       ...DEFAULT_ICON_CONFIGS,
-      prefix: import.meta.env.VITE_PREFIX
+      prefix: 'x'
     })
 
     return () => {

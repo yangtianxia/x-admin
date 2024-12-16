@@ -1,6 +1,6 @@
 const settings = {
   theme: 'light',
-  device: 'desktop',
+  colorScheme: 'light',
   header: true,
   menu: true,
   topMenu: false,
@@ -8,6 +8,8 @@ const settings = {
   menuCollapse: false,
   footer: true,
   menuWidth: 220,
+  menuCollapseWidth: 60,
+  headerHeight: 60,
   menuFromServer: true,
   serverMenu: []
 }

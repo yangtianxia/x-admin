@@ -3,18 +3,17 @@ import { setRouteEmitter } from '@/shared/route-listener'
 
 import setupUserLoginInfoGuard from './userLoginInfo'
 import setupPermissionGuard from './permission'
-import setupWindowGuard from './window'
+import setupPageGuard from './page'
 
-function setupPageGuard(router: Router) {
+function setupEmitterGuard(router: Router) {
   router.beforeEach(async (to) => {
-    // emit route change
     setRouteEmitter(to)
   })
 }
 
 export default function createRouteGuard(router: Router) {
-  setupPageGuard(router)
+  setupEmitterGuard(router)
   setupUserLoginInfoGuard(router)
   setupPermissionGuard(router)
-  setupWindowGuard(router)
+  setupPageGuard(router)
 }

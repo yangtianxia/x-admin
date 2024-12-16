@@ -1,6 +1,6 @@
 import { type DirectiveBinding } from 'vue'
 import { isArray } from '@txjs/bool'
-import { useUserStore } from '@/store'
+import { useUserStore } from '@/stores'
 
 const checkPermission = (el: HTMLElement, binding: DirectiveBinding) => {
   const userStore = useUserStore()

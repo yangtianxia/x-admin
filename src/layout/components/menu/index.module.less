@@ -1,20 +1,14 @@
 .menu {
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
+  @apply w-full h-full;
 
   :global {
     @submenu-cls: ~'.ant-menu-submenu';
 
     @{submenu-cls} {
-      clear: both;
-      overflow: hidden;
+      @apply overflow-hidden;
 
       &-arrow {
-        &:before,
-        &:after {
-          height: 1px;
-        }
+        @apply before:h-px after:h-px;
 
         &:before {
           transform: rotate(-45deg) translateX(3px) translateZ(0px);

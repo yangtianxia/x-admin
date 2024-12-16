@@ -1,5 +1,5 @@
 // Vue
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 
 // Components
 import { Icon } from '@/components/icon'
@@ -8,32 +8,30 @@ import { Carousel } from 'ant-design-vue'
 // Style
 import style from './index.module.less'
 
-const [name, bem] = BEM('login-banner', style)
-
-const slides = [
+const slides = computed(() => [
   {
     id: 1,
-    title: '开箱即用的高质量模板',
-    subtitle: '丰富的的页面模板，覆盖大多数典型业务场景'
+    title: $t('login.slide.title.1'),
+    subtitle: $t('login.slide.subtitle.1')
   },
   {
     id: 2,
-    title: '内置了常见问题的解决方案',
-    subtitle: '路由配置，状态管理应有尽有'
+    title: $t('login.slide.title.2'),
+    subtitle: $t('login.slide.subtitle.2')
   }
-] as const
+])
 
 export default defineComponent({
-  name,
+  name: 'LoginBanner',
   setup() {
     return () => (
       <Carousel
         arrows
         effect="fade"
-        class={bem()}
+        class={style.banner}
         v-slots={{
           prevArrow: () => (
-            <div class={bem('arrow', 'left')}>
+            <div class="z-10 !text-white !text-opacity-30 hover:!text-white/50 !text-3xl !w-auto !h-auto !-mt-3 !left-6 max-xl:!text-2xl max-xl:!left-3 before:!content-none">
               <Icon
                 type="LeftC"
                 theme="filled"
@@ -43,7 +41,7 @@ export default defineComponent({
             </div>
           ),
           nextArrow: () => (
-            <div class={bem('arrow', 'right')}>
+            <div class="z-10 !text-white !text-opacity-30 hover:!text-white/50 !text-3xl !w-auto !h-auto !-mt-3 !right-6 max-xl:!text-2xl max-xl:!right-3 before:!content-none">
               <Icon
                 type="RightC"
                 theme="filled"
@@ -54,14 +52,14 @@ export default defineComponent({
           )
         }}
       >
-        {slides.map((item) => (
+        {slides.value.map((item) => (
           <div
             key={item.id}
-            class={bem('slide')}
+            class="h-full"
           >
-            <div class={bem('slide-inner')}>
-              <div class={bem('slide-title')}>{item.title}</div>
-              <div class={bem('slide-subtitle')}>{item.subtitle}</div>
+            <div class="h-full flex flex-col items-center justify-center">
+              <h4 class="text-white/90 text-h4 max-xl:text whitespace-nowrap">{item.title}</h4>
+              <p class="text-white/75 text-md xl:text-sm mt-2 whitespace-nowrap">{item.subtitle}</p>
             </div>
           </div>
         ))}

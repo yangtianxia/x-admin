@@ -1,16 +1,7 @@
-.login-form {
-  &__title {
-    color: var(--color-text);
-    font-size: var(--size-xl);
-    font-weight: var(--weight-semibold);
-    line-height: var(--line-md);
-  }
-
-  &__subtitle {
-    color: var(--color-text-light);
-    font-size: var(--size-md);
-    line-height: var(--line-md);
-    margin-top: var(--size-1);
-    margin-bottom: var(--size-9);
+.form {
+  :global {
+    .ant-input-prefix {
+      @apply mr-2;
+    }
   }
 }
