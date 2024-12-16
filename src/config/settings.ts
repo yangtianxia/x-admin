@@ -1,7 +1,6 @@
 const settings = {
   theme: 'light',
   colorScheme: 'light',
-  device: 'desktop',
   header: true,
   menu: true,
   topMenu: false,

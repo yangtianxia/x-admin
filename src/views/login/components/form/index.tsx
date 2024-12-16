@@ -184,8 +184,8 @@ export default defineComponent({
 
     return () => (
       <div class={[style.form, 'md:min-w-[300px] max-w-[300px] max-sm:flex-auto']}>
-        <div class="text-main text-lg font-semibold max-sm:hidden">{$t('login.form.title')} {$t('page.title')}</div>
-        <div class="text-tertiary text-sm mt-1 max-sm:hidden">{$t('page.description')}</div>
+        <h5 class="text text-h5 max-sm:hidden">{$t('login.form.title')} {$t('page.title')}</h5>
+        <p class="text-tertiary text-sm mt-1 max-sm:hidden">{$t('page.description')}</p>
         <Form
           scrollToFirstError
           ref={formRef}

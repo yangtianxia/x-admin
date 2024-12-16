@@ -1,7 +1,7 @@
 import { reactive, onBeforeMount } from 'vue'
 import { useChildren } from '@vant/use'
 import { isPlainObject, isPromise } from '@txjs/bool'
-import { msgWrap } from '@/shared/fetch'
+import { msgWrap } from '@/shared/request'
 import { createInjectionKey } from '@/components/_utils/basic'
 import type { ResultOptions, ResultStatus } from '@/components/result'
 import { hasStatusConfig } from '@/components/result/utils'

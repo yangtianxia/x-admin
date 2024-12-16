@@ -15,7 +15,7 @@ import {
   THEME_SYSTEM_KEY
 } from '@/shared/constant'
 
-const SEED_TOKEN = cloneDeep('$seedToken' in window ? $seedToken : {} as typeof $seedToken)
+const SEED_TOKEN = cloneDeep('seedToken' in window ? seedToken : {} as typeof seedToken)
 
 export const THEME_OPTIONS = computed(() => [
   { label: $t('theme.light'), value: THEME_LIGHT_KEY, icon: 'SunOne' as const },

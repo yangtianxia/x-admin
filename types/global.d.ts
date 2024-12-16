@@ -18,8 +18,8 @@ declare global {
 
   const $t: typeof import('../src/locale')['default']['global']['t']
   const $bem: typeof import('@txjs/bem')['default']
-  const $fetch: typeof import('../src/shared/fetch')['default']
-  const $seedToken: Partial<SeedToken & Record<string, Partial<SeedToken>>>
+  const $request: typeof import('../src/shared/request')['default']
+  const seedToken: Partial<SeedToken & Record<string, Partial<SeedToken>>>
 }
 
 export {}

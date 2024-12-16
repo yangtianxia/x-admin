@@ -20,12 +20,12 @@ import { Avatar, Button, Tooltip, Dropdown, Menu } from 'ant-design-vue'
 export default defineComponent({
   name: 'LayoutHeader',
   setup() {
-    const locales = [...LOCALE_OPTIONS]
+    const userStore = useUserStore()
     const { changeLocale } = useLocale()
     const { currentTheme, changeTheme } = useThemes()
-    const userStore = useUserStore()
     const { goto } = useRedirect()
 
+    const locales = [...LOCALE_OPTIONS]
     const localeTriggerRef = ref<HTMLElement>()
     const themeTriggerRef = ref<HTMLElement>()
 
@@ -51,9 +51,7 @@ export default defineComponent({
             class="w-8"
             alt={$t('page.title')}
           />
-          <h1 class="text-main text-xl font-bold ml-2">
-            <span>{$t('page.title')}</span>
-          </h1>
+          <h4 class="text text-h4 ml-2">{$t('page.title')}</h4>
         </div>
         <ul class="flex items-center pr-8 space-x-3">
           <li>

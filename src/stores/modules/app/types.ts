@@ -3,7 +3,6 @@ import type { RouteRecordNormalized } from 'vue-router'
 export interface AppState {
   theme: string
   colorScheme: string
-  device: string
   header: boolean
   menu: boolean
   topMenu: boolean

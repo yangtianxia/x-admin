@@ -9,7 +9,8 @@ export default {
     system: 'System',
     switch: 'Switch To {0} Mode'
   },
-  fetch: {
+  request: {
+    default: 'Response Failed',
     400: 'Bad Request',
     403: 'Forbidden',
     404: 'Not Found',

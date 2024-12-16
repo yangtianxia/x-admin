@@ -25,7 +25,8 @@ textarea {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity,transform 0.5s var(--motion-ease-out-back);
+  @apply ease-in-out duration-slow;
+  transition: opacity, transform;
 }
 
 .fade-enter,

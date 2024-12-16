@@ -97,40 +97,40 @@ const errorHandler = (error: AxiosError<any>): Promise<any> => {
 
   switch (status) {
     case 400:
-      fail.message($t('fetch.400'))
+      fail.message($t('request.400'))
       break
     case 403:
-      fail.message($t('fetch.403'))
+      fail.message($t('request.403'))
       break
     case 404:
-      fail.message($t('fetch.404'))
+      fail.message($t('request.404'))
       break
     case 405:
-      fail.message($t('fetch.405'))
+      fail.message($t('request.405'))
       break
     case 408:
-      fail.message($t('fetch.408'))
+      fail.message($t('request.408'))
       break
     case 500:
-      fail.message($t('fetch.500'))
+      fail.message($t('request.500'))
       break
     case 501:
-      fail.message($t('fetch.501'))
+      fail.message($t('request.501'))
       break
     case 502:
-      fail.message($t('fetch.502'))
+      fail.message($t('request.502'))
       break
     case 503:
-      fail.message($t('fetch.503'))
+      fail.message($t('request.503'))
       break
     case 504:
-      fail.message($t('fetch.504'))
+      fail.message($t('request.504'))
       break
     case 505:
-      fail.message($t('fetch.505'))
+      fail.message($t('request.505'))
       break
     case 1000:
-      fail.message($t('fetch.1000'))
+      fail.message($t('request.1000'))
       break
   }
 
@@ -144,7 +144,7 @@ const errorHandler = (error: AxiosError<any>): Promise<any> => {
     useRedirect().goto()
   } else {
     notification.error({
-      message: fail.data.msg || 'Response failed'
+      message: fail.data.msg || $t('request.default')
     })
   }
   return Promise.reject(fail.data)
@@ -176,17 +176,17 @@ const responseHandler = (response: AxiosResponse) => {
     useRedirect().goto()
   } else {
     notification.error({
-      message: msgWrap(data) || 'Response failed'
+      message: msgWrap(data) || $t('request.default')
     })
   }
   return Promise.reject(data)
 }
 
-class Fetch {
+class CreateRequest {
   // 储存终止令牌
   #abortTokens: Map<string, CancelTokenSource> = new Map()
 
-  #fetch = axios.create({
+  #instance = axios.create({
     baseURL: currentAPI(),
     timeout: 1000 * 20
   })
@@ -218,11 +218,11 @@ class Fetch {
   }
 
   #requestInterceptor() {
-    this.#fetch.interceptors.request.use(requestHandler, errorHandler)
+    this.#instance.interceptors.request.use(requestHandler, errorHandler)
   }
 
   #responseInterceptor() {
-    this.#fetch.interceptors.response.use(
+    this.#instance.interceptors.response.use(
       (response) => {
         this.#deleteAbortToken(response.config.abortToken)
         return response
@@ -232,7 +232,7 @@ class Fetch {
         return Promise.reject(error)
       }
     )
-    this.#fetch.interceptors.response.use(responseHandler, errorHandler)
+    this.#instance.interceptors.response.use(responseHandler, errorHandler)
   }
 
   #setConfig(config: AxiosRequestConfig) {
@@ -264,7 +264,7 @@ class Fetch {
         }
       }
       config.params ??= data
-      return this.#fetch[method]<T>(url, config)
+      return this.#instance[method]<T>(url, config)
     }
   }
 
@@ -281,7 +281,7 @@ class Fetch {
           ? JSON.stringify(data)
           : qs.stringify(data)
         )
-      return this.#fetch[method]<T>(url, data, config)
+      return this.#instance[method]<T>(url, data, config)
     }
   }
 
@@ -292,7 +292,7 @@ class Fetch {
       }
       config.transformRequest = toArray(config.transformRequest ?? [])
         .concat(normalizeUndefined)
-      return this.#fetch[method]<T>(url, data, {
+      return this.#instance[method]<T>(url, data, {
         ...config,
         type: 'FORM_DATA'
       })
@@ -329,17 +329,17 @@ class Fetch {
     if (!config.cancelToken) {
       this.#abortTokenProvide('head', url, {}, config)
     }
-    return this.#fetch.head<T>(url, config)
+    return this.#instance.head<T>(url, config)
   }
 
   options<T = any>(url: string, config: AxiosRequestConfig = {}) {
     if (!config.cancelToken) {
       this.#abortTokenProvide('options', url, {}, config)
     }
-    return this.#fetch.options<T>(url, config)
+    return this.#instance.options<T>(url, config)
   }
 }
 
-export { Fetch }
+export { CreateRequest }
 
-export default new Fetch()
+export default new CreateRequest()
