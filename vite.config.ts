@@ -15,8 +15,8 @@ import Inject from '@rollup/plugin-inject'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import { viteMockServe } from 'vite-plugin-mock'
 
-// Tailwindcss
-import { seedToken } from './tailwind.config'
+// Theme
+import { LightTheme, DarkTheme, seedToken, genCSSVariable, withCSSVariable } from './build/theme'
 
 // Package
 import { version } from './package.json'
@@ -82,8 +82,8 @@ export default defineConfig(({ mode, command }) => {
       Legacy(),
       Inject({
         $t: resolve('./src/locale/t.ts'),
-        $fetch: resolve('./src/shared/fetch.ts'),
-        $bem: '@txjs/bem'
+        $bem: '@txjs/bem',
+        $request: resolve('./src/shared/request.ts')
       }),
       createHtmlPlugin({
         minify: true,
@@ -91,12 +91,38 @@ export default defineConfig(({ mode, command }) => {
           data: { version },
           tags: [
             {
-              injectTo: 'head-prepend',
+              injectTo: 'head',
+              tag: 'meta',
+              attrs: {
+                name: 'theme-color',
+                content: LightTheme.colorBgContainer,
+                media: '(prefers-color-scheme: light)'
+              }
+            },
+            {
+              injectTo: 'head',
+              tag: 'meta',
+              attrs: {
+                name: 'theme-color',
+                content: DarkTheme.colorBgContainer,
+                media: '(prefers-color-scheme: dark)'
+              }
+            },
+            {
+              injectTo: 'head',
               tag: 'style',
               attrs: {
                 type: 'text/css'
               },
-              children: `:root { --color-primary: ${seedToken.colorPrimary} }`
+              children: `:root { ${genCSSVariable(LightTheme)} }`
+            },
+            {
+              injectTo: 'head',
+              tag: 'style',
+              attrs: {
+                type: 'text/css'
+              },
+              children: `.dark { ${genCSSVariable(DarkTheme, false)} }`
             },
             {
               injectTo: 'body',
@@ -104,7 +130,7 @@ export default defineConfig(({ mode, command }) => {
               attrs: {
                 type: 'text/javascript'
               },
-              children: `window.$seedToken = ${JSON.stringify(seedToken)}`
+              children: `window.seedToken = ${JSON.stringify(seedToken)}`
             }
           ]
         }

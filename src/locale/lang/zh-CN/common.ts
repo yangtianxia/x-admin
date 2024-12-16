@@ -9,7 +9,8 @@ export default {
     system: '系统',
     switch: '切换{0}模式'
   },
-  fetch: {
+  request: {
+    default: '响应失败',
     400: '请求错误',
     403: '拒绝访问',
     404: '请求地址错误',

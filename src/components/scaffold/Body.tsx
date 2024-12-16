@@ -13,9 +13,13 @@ import { Spin } from 'ant-design-vue'
 import { Result } from '../result'
 import { SCAFFOLD_KEY } from './Scaffold'
 
+// Component utils
+import { truthProp } from '../_utils/props'
+
 const [name, bem] = $bem('scaffold-body')
 
 const scaffoldBodyProps = {
+  flex: truthProp,
   shrink: Boolean
 }
 
@@ -35,7 +39,7 @@ export default defineComponent({
     const { status, loading } = scaffold
 
     return () => {
-      const { shrink } = props
+      const { flex, shrink } = props
       const empty = notNil(status.value)
       return (
         <Spin
@@ -45,7 +49,7 @@ export default defineComponent({
           {status.value ? <Result status={status.value} /> : (
             <div
               {...attrs}
-              class={bem({ empty, shrink })}
+              class={bem({ flex, shrink, empty })}
             >
               {slots.default?.()}
             </div>

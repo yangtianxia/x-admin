@@ -1,15 +1,15 @@
 @image-cls: ~'@{prefix}-image';
 
 :root {
-  --image-width: 200px;
-  --image-height: 120px;
+  --image-w: 200px;
+  --image-h: 120px;
   --image-fill: var(--color-fill-secondary);
 }
 
 .@{image-cls} {
   @apply relative inline-block align-top;
-  width: var(--image-width);
-  height: var(--image-height);
+  width: var(--image-w);
+  height: var(--image-h);
 
   &--block {
     @apply block;

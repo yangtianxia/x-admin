@@ -5,74 +5,72 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
-    <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
     <meta name="version" content="<%- version %>">
     <link rel="icon" type="image/png" href="%BASE_URL%logo.png">
     <title>x-admin</title>
-    <style type="text/css">
-      .loader-wrapper {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 32px;
-        height: 32px;
-        transform: translate(-50%, -50%);
-      }
-      .loader {
-        width: 32px;
-        height: 32px;
-        transform: rotate(45deg);
-        position: relative;
-        display: inline-block;
-        animation: loader-rotate 1.2s infinite linear;
-      }
-      .loader > div {
-        width: 14px;
-        height: 14px;
-        position: absolute;
-        display: inline-block;
-        border-radius: 100%;
-        transform: scale(.75);
-        transform-origin: 50% 50%;
-        opacity: .3;
-        background-color: var(--color-primary, #000);
-        overflow: hidden;
-        animation: loader-move 1s linear infinite alternate;
-      }
-      .loader > div:nth-child(1) {
-        top: 0;
-        left: 0;
-      }
-      .loader > div:nth-child(2) {
-        top: 0;
-        right: 0;
-        animation-delay: 0.4s;
-      }
-      .loader > div:nth-child(3) {
-        right: 0;
-        bottom: 0;
-        animation-delay: 0.8s;
-      }
-      .loader > div:nth-child(4) {
-        bottom: 0;
-        left: 0;
-        animation-delay: 1.2s;
-      }
-      @keyframes loader-move {
-        to {
-          opacity: 1;
-        }
-      }
-      @keyframes loader-rotate {
-        to {
-          transform: rotate(405deg);
-        }
-      }
-    </style>
   </head>
   <body>
     <div id="app">
+      <style type="text/css">
+        .loader-wrapper {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 32px;
+          height: 32px;
+          transform: translate(-50%, -50%);
+        }
+        .loader {
+          width: 32px;
+          height: 32px;
+          transform: rotate(45deg);
+          position: relative;
+          display: inline-block;
+          animation: loader-rotate 1.2s infinite linear;
+        }
+        .loader > div {
+          width: 14px;
+          height: 14px;
+          position: absolute;
+          display: inline-block;
+          border-radius: 100%;
+          transform: scale(.75);
+          transform-origin: 50% 50%;
+          opacity: .3;
+          background-color: var(--color-primary, #000);
+          overflow: hidden;
+          animation: loader-move 1s linear infinite alternate;
+        }
+        .loader > div:nth-child(1) {
+          top: 0;
+          left: 0;
+        }
+        .loader > div:nth-child(2) {
+          top: 0;
+          right: 0;
+          animation-delay: 0.4s;
+        }
+        .loader > div:nth-child(3) {
+          right: 0;
+          bottom: 0;
+          animation-delay: 0.8s;
+        }
+        .loader > div:nth-child(4) {
+          bottom: 0;
+          left: 0;
+          animation-delay: 1.2s;
+        }
+        @keyframes loader-move {
+          to {
+            opacity: 1;
+          }
+        }
+        @keyframes loader-rotate {
+          to {
+            transform: rotate(405deg);
+          }
+        }
+      </style>
       <div class="loader-wrapper">
         <div class="loader">
           <div></div>

@@ -19,15 +19,15 @@ export interface LoginBySmsQuery {
 
 /** 密码登录 */
 export function postLoginByPwd(data: Partial<LoginByPwdQuery>) {
-  return $fetch.post<LoginReturn>('/login/pwd', data)
+  return $request.post<LoginReturn>('/login/pwd', data)
 }
 
 /** 验证码登录 */
 export function postLoginBySms(data: Partial<LoginBySmsQuery>) {
-  return $fetch.post<LoginReturn>('/login/sms', data)
+  return $request.post<LoginReturn>('/login/sms', data)
 }
 
 /** 短信验证码 - 登录 */
 export function postLoginCode(telephone?: string) {
-  return $fetch.post<LoginCodeReturn>('/login/code', { telephone })
+  return $request.post<LoginCodeReturn>('/login/code', { telephone })
 }

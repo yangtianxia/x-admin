@@ -29,7 +29,7 @@ export default defineComponent({
               alt={$t('page.title')}
               class="w-8"
             />
-            <div class="text-white/90 max-md:text-main text-xl font-semibold ml-2 mr-1">{$t('page.title')}</div>
+            <h4 class="text-white/90 max-md:text text-h4 ml-2 mr-1">{$t('page.title')}</h4>
           </div>
           <div class="flex items-center">
             <Dropdown
@@ -46,7 +46,7 @@ export default defineComponent({
                 </Menu>
               )}
             >
-              <div class="cursor-pointer inline-flex items-center text-main hover:text-tertiary">
+              <div class="cursor-pointer inline-flex items-center text hover:text-tertiary">
                 <Icon type="Translate" />
                 <span class="text-sm ml-1">{$t('login.locale')}</span>
               </div>
@@ -76,7 +76,7 @@ export default defineComponent({
                 </Menu>
               )}
             >
-              <div class="cursor-pointer inline-flex items-center space-x-1 text-main hover:text-tertiary">
+              <div class="cursor-pointer inline-flex items-center space-x-1 text hover:text-tertiary">
                 <Icon
                   class="dark:hidden"
                   type="SunOne"

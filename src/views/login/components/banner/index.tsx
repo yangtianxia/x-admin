@@ -58,8 +58,8 @@ export default defineComponent({
             class="h-full"
           >
             <div class="h-full flex flex-col items-center justify-center">
-              <div class="text-white/90 text-xl max-xl:text-base font-medium whitespace-nowrap">{item.title}</div>
-              <div class="text-white/75 text-sm xl:text-xs mt-2 whitespace-nowrap">{item.subtitle}</div>
+              <h4 class="text-white/90 text-h4 max-xl:text whitespace-nowrap">{item.title}</h4>
+              <p class="text-white/75 text-md xl:text-sm mt-2 whitespace-nowrap">{item.subtitle}</p>
             </div>
           </div>
         ))}
