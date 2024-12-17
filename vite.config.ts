@@ -13,10 +13,10 @@ import VueJSX from '@vitejs/plugin-vue-jsx'
 import Legacy from '@vitejs/plugin-legacy'
 import Inject from '@rollup/plugin-inject'
 import { createHtmlPlugin } from 'vite-plugin-html'
-import { viteMockServe } from 'vite-plugin-mock'
+import { vitePluginFakeServer } from 'vite-plugin-fake-server'
 
 // Theme
-import { LightTheme, DarkTheme, seedToken, genCSSVariable, withCSSVariable } from './build/theme'
+import { LightTheme, DarkTheme, seedToken, genCSSVariable } from './build/theme'
 
 // Package
 import { version } from './package.json'
@@ -28,7 +28,7 @@ const resolve = (path: string) => {
 export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd())
   const isServer = command === 'serve'
-  const isMock = env.VITE_MOCK === 'enable'
+  const isMockEnabled = env.VITE_MOCK === 'true'
 
   const config = {
     server: {
@@ -68,14 +68,18 @@ export default defineConfig(({ mode, command }) => {
       }
     },
     build: {
-      minify: 'terser' as const
+      minify: 'terser' as const,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            txjs: ['@txjs/bem', '@txjs/bool', '@txjs/make', '@txjs/shared', '@txjs/validator'],
+            vue: ['vue', 'vue-router', 'pinia', 'vue-i18n']
+          }
+        }
+      }
     },
     plugins: [
       Vue(),
-      viteMockServe({
-        enable: isMock,
-        logger: true
-      }),
       VueJSX({
         isCustomElement: (tag) => tag.startsWith('custom')
       }),
@@ -84,6 +88,13 @@ export default defineConfig(({ mode, command }) => {
         $t: resolve('./src/locale/t.ts'),
         $bem: '@txjs/bem',
         $request: resolve('./src/shared/request.ts')
+      }),
+      vitePluginFakeServer({
+        logger: false,
+        include: 'mock',
+        infixName: false,
+        enableDev: isMockEnabled,
+        enableProd: isMockEnabled
       }),
       createHtmlPlugin({
         minify: true,
