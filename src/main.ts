@@ -6,7 +6,7 @@ import 'dayjs/locale/zh-cn'
 import { createApp } from 'vue'
 import dayjs from 'dayjs'
 import { message, notification } from 'ant-design-vue'
-import { useThemes } from '@/hooks/themes'
+import { useTheme } from '@/hooks/theme'
 
 import app from '@/App'
 import router from '@/router'
@@ -44,5 +44,5 @@ createApp(app)
   .use(i18n)
   .mount('#app')
   .$nextTick(() => {
-    useThemes().loadTheme()
+    useTheme().loadTheme()
   })
