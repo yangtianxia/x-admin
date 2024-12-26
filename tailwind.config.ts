@@ -130,10 +130,13 @@ const config: Config = {
     plugin(function({ addBase }) {
       addBase({
         'html,:host': {
-          fontFamily: 'var(--font-family)'
+          fontFamily: withCSSVariable('fontFamily')
         },
         'html,body': {
-          backgroundColor: 'var(--color-bg-container)'
+          backgroundColor: withCSSVariable('colorBgContainer')
+        },
+        'a:hover': {
+          color: withCSSVariable('colorPrimaryHover')
         }
       })
     })
