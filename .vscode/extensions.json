@@ -1,7 +1,6 @@
 {
   "recommendations": [
     "vue.volar",
-    "bradlc.vscode-tailwindcss",
-    "vunguyentuan.vscode-css-variables"
+    "bradlc.vscode-tailwindcss"
   ]
 }

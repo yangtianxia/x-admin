@@ -9,7 +9,7 @@ import {
 import { useUserStore } from '@/stores'
 import { LOCALE_OPTIONS } from '@/locale'
 import { useLocale } from '@/hooks/locale'
-import { THEME_OPTIONS, useThemes } from '@/hooks/themes'
+import { THEME_OPTIONS, useTheme } from '@/hooks/theme'
 import { useRedirect } from '@/hooks/redirect'
 
 // Components
@@ -22,7 +22,7 @@ export default defineComponent({
   setup() {
     const userStore = useUserStore()
     const { changeLocale } = useLocale()
-    const { currentTheme, changeTheme } = useThemes()
+    const { currentTheme, changeTheme } = useTheme()
     const { goto } = useRedirect()
 
     const locales = [...LOCALE_OPTIONS]

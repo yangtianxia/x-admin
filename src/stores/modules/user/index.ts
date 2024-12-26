@@ -75,11 +75,11 @@ const useUserStore = defineStore('user', {
       }
     },
     loginAfter(data: LoginReturn) {
+      // TODO 根据业务需要替换TOKEN认证方式
       if (REQUEST_TOKEN_KEY === 'Authorization') {
         const token = [data.tokenHead || TOKEN_HEAD_KEY, data.token].join('')
         setToken(token)
       }
-      // TODO 业务需要替换TOKEN认证方式
     },
     logoutCallback() {
       const appStore = useAppStore()

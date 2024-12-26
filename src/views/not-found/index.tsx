@@ -8,7 +8,7 @@ export default defineComponent({
   name: 'NotFound',
   setup() {
     return () => (
-      <div class="h-full flex flex-col items-center justify-center">
+      <div class="h-screen flex flex-col items-center justify-center">
         <Result status={404} />
       </div>
     )

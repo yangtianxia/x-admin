@@ -10,7 +10,7 @@ const settings = {
   menuWidth: 220,
   menuCollapseWidth: 60,
   headerHeight: 60,
-  menuFromServer: true,
+  menuFromServer: false,
   serverMenu: []
 }
 
