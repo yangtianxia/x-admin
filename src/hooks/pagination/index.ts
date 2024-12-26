@@ -1,5 +1,4 @@
 import { ref, reactive } from 'vue'
-import { shallowMerge } from '@txjs/shared'
 import type { PaginationProps } from 'ant-design-vue'
 
 type Pagination = Pick<PaginationProps,
@@ -25,16 +24,17 @@ const defaultPagination = () => ({
   current: 1,
   pageSize: 10,
   pageSizeOptions: ['10', '20', '30'],
+  showTotal: (total: number) => `共 ${total} 条数据`
 })
 
-export const usePagination = (options?: Pagination) => {
-  options ??= {}
-  return reactive(shallowMerge(defaultPagination(), options))
+export const usePagination = (options: Pagination = {}) => {
+  return reactive({
+    ...defaultPagination(),
+    ...options
+  })
 }
 
-export const useCurrentPage = (page?: number) => {
-  page ??= 1
-
+export const useCurrentPage = (page = 1) => {
   const current = ref(page)
   const oldValue = ref<number>(page)
 
