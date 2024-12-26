@@ -4,7 +4,7 @@ import { defineComponent, computed } from 'vue'
 // Common
 import { RouterView } from 'vue-router'
 import { useLocale } from '@/hooks/locale'
-import { useThemes } from '@/hooks/themes'
+import { useTheme } from '@/hooks/theme'
 
 // Components
 import { ConfigProvider } from 'ant-design-vue'
@@ -14,7 +14,7 @@ import enUS from 'ant-design-vue/es/locale/en_US'
 export default defineComponent({
   setup () {
     const { currentLocale } = useLocale()
-    const { currentMapToken } = useThemes()
+    const { currentMapToken } = useTheme()
 
     const locale = computed(() => {
       switch (currentLocale.value) {
