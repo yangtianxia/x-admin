@@ -31,7 +31,7 @@ const removeDark = () => {
   document.documentElement.classList.remove('dark')
 }
 
-export const useThemes = () => {
+export const useTheme = () => {
   const appStore = useAppStore()
 
   const currentTheme = computed(() => appStore.theme)
@@ -48,7 +48,6 @@ export const useThemes = () => {
 
   const switchTheme = (value: string) => {
     if (appStore.colorScheme === value) return
-
     appStore.updateSettings({ colorScheme: value })
     appStore.isDark ? useDark() : removeDark()
   }
