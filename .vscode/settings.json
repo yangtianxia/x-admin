@@ -2,20 +2,5 @@
   "css.customData": [
     ".vscode/tailwindcss.json"
   ],
-  "cssvar.disableSort": true,
-  "cssvar.extensions": [
-    "css",
-    "less",
-    "sass",
-    "scss",
-    "vue",
-    "html",
-    "jsx",
-    "tsx"
-  ],
-  "cssVariables.lookupFiles": [
-    "**/*.css",
-    "**/*.less"
-  ],
   "less.format.spaceAroundSelectorSeparator": true
 }
