@@ -9,9 +9,9 @@ import {
 // Common
 import { pick } from '@txjs/shared'
 import { makeString } from '@txjs/make'
-import { validator } from '@txjs/validator'
 import { useUserStore } from '@/stores'
 import { useRedirect } from '@/hooks/redirect'
+import { validator } from '@/shared/validator'
 
 // Components
 import { Icon } from '@/components/icon'
@@ -66,7 +66,7 @@ export default defineComponent({
     /** 登录方式文本 */
     const loginMethodLabel = computed(() => formModel.method === 'pwd' ? $t('login.form.method.sms') : $t('login.form.method.pwd'))
 
-    const formRules = validator<typeof formModel>({
+    const formRules = validator.schema<typeof formModel>({
       username: {
         label: $t('login.form.label.username'),
         required: true
@@ -83,7 +83,6 @@ export default defineComponent({
       code: {
         label: $t('login.form.label.code'),
         required: true,
-        digits: true,
         maxlength: 6
       }
     })
