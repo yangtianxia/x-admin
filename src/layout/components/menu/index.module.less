@@ -1,6 +1,13 @@
 .menu {
   @apply w-full h-full;
 
+  &:global.ant-menu-light.ant-menu-inline {
+    .ant-menu-sub.ant-menu-inline {
+      @apply bg-container;
+      transition-property: padding;
+    }
+  }
+
   :global {
     @submenu-cls: ~'.ant-menu-submenu';
 
