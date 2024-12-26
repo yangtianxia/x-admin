@@ -1,4 +1,5 @@
 import { createI18n } from 'vue-i18n'
+import { changeValidatorLocale } from '@/shared/validator'
 import { LOCALE_KEY } from '@/shared/constant'
 
 import en from './lang/en-US'
@@ -21,5 +22,7 @@ const i18n = createI18n({
     'zh-CN': cn
   }
 })
+
+changeValidatorLocale(defaultLocale as any)
 
 export default i18n
