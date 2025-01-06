@@ -13,16 +13,14 @@ export default function setupPermissionGuard(router: Router) {
     const appStore = useAppStore()
     const userStore = useUserStore()
     const menuTree = useMenuTree()
-    const Permission = usePermission()
-    const permissionsAllow = Permission.accessRouter(to)
+    const permission = usePermission()
+    const permissionsAllow = permission.accessRouter(to)
     const redirectUri = useRedirectUri(to)
 
     if (appStore.menuFromServer) {
-      // 针对来自服务端的菜单配置进行处理
-      // 根据需要自行完善来源于服务端的菜单配置的permission逻辑
       if (
         !appStore.appAsyncMenus.length &&
-        (!WHITE_LIST.find((el) => el.name === to.name) || !Permission.accessRightsAfterAuth(to))
+        (!WHITE_LIST.find((el) => el.name === to.name) || !permission.accessRightsAfterAuth(to))
       ) {
         await appStore.fetchServerMenuConfig()
       }
@@ -57,7 +55,7 @@ export default function setupPermissionGuard(router: Router) {
       } else if (redirectUri) {
         next({ path: redirectUri })
       } else {
-        const destination = Permission.findFirstPermissionRoute(appRoutes, userStore.role) || NOT_FOUND_ROUTE
+        const destination = permission.findFirstPermissionRoute(appRoutes, userStore.roles) || NOT_FOUND_ROUTE
         next(destination)
       }
     }
