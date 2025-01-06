@@ -12,7 +12,7 @@ export const useLocale = () => {
   const changeLocale = (value: string) => {
     if (i18n.locale.value === value) return
     i18n.locale.value = value
-    changeValidatorLocale(value as any)
+    changeValidatorLocale(value)
     localStorage.setItem(LOCALE_KEY, value)
     message.success(i18n.t('header.action.locale'))
   }

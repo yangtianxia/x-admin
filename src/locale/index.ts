@@ -23,6 +23,6 @@ const i18n = createI18n({
   }
 })
 
-changeValidatorLocale(defaultLocale as any)
+changeValidatorLocale(defaultLocale)
 
 export default i18n
