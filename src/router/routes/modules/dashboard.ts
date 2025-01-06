@@ -8,7 +8,7 @@ const DASHBOARD: AppRouteRecordRaw = {
   redirect: '/dashboard/workplace',
   meta: {
     icon: 'DashboardOne',
-    locale: 'menu.server.dashboard',
+    locale: 'menu.dashboard',
     requiresAuth: true,
     order: 0
   },
@@ -18,7 +18,7 @@ const DASHBOARD: AppRouteRecordRaw = {
       name: 'Workplace',
       component: () => import('@/views/dashboard/workplace'),
       meta: {
-        locale: 'menu.server.workplace',
+        locale: 'menu.dashboard.workplace',
         requiresAuth: true,
         roles: ['*']
       }
