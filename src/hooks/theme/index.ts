@@ -18,9 +18,9 @@ import {
 const SEED_TOKEN = cloneDeep('seedToken' in window ? seedToken : {} as typeof seedToken)
 
 export const THEME_OPTIONS = computed(() => [
-  { label: $t('theme.light'), value: THEME_LIGHT_KEY, icon: 'SunOne' as const },
-  { label: $t('theme.dark'), value: THEME_DARK_KEY, icon: 'Moon' as const },
-  { label: $t('theme.system'), value: THEME_SYSTEM_KEY, icon: 'Computer' as const }
+  { label: $t('global.theme.light'), value: THEME_LIGHT_KEY, icon: 'SunOne' as const },
+  { label: $t('global.theme.dark'), value: THEME_DARK_KEY, icon: 'Moon' as const },
+  { label: $t('global.theme.system'), value: THEME_SYSTEM_KEY, icon: 'Computer' as const }
 ])
 
 const useDark = () => {
@@ -70,7 +70,7 @@ export const useTheme = () => {
 
     // 切换成功提示
     if (prompt) {
-      message.success($t('theme.switch', [$t(`theme.${value}`)]))
+      message.success($t('global.theme.switch', [$t(`theme.${value}`)]))
     }
   }
 

@@ -50,7 +50,7 @@ export const msgWrap = (error: any) => {
 
 const notifyHandler = (message?: string) => {
   notification.error({
-    message: message || $t('request.default')
+    message: message || $t('global.http.default')
   })
 }
 
@@ -103,40 +103,40 @@ const errorHandler = (error: AxiosError<any>): Promise<any> => {
 
   switch (status) {
     case 400:
-      fail.message($t('request.400'))
+      fail.message($t('global.http.400'))
       break
     case 403:
-      fail.message($t('request.403'))
+      fail.message($t('global.http.403'))
       break
     case 404:
-      fail.message($t('request.404'))
+      fail.message($t('global.http.404'))
       break
     case 405:
-      fail.message($t('request.405'))
+      fail.message($t('global.http.405'))
       break
     case 408:
-      fail.message($t('request.408'))
+      fail.message($t('global.http.408'))
       break
     case 500:
-      fail.message($t('request.500'))
+      fail.message($t('global.http.500'))
       break
     case 501:
-      fail.message($t('request.501'))
+      fail.message($t('global.http.501'))
       break
     case 502:
-      fail.message($t('request.502'))
+      fail.message($t('global.http.502'))
       break
     case 503:
-      fail.message($t('request.503'))
+      fail.message($t('global.http.503'))
       break
     case 504:
-      fail.message($t('request.504'))
+      fail.message($t('global.http.504'))
       break
     case 505:
-      fail.message($t('request.505'))
+      fail.message($t('global.http.505'))
       break
     case 1000:
-      fail.message($t('request.1000'))
+      fail.message($t('global.http.1000'))
       break
   }
 
