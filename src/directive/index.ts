@@ -1,8 +1,10 @@
 import { type App } from 'vue'
-import permission from './permission'
+import hasPerm from './permission/hasPerm'
+import hasRole from './permission/hasRole'
 
 export default {
   install(app: App) {
-    app.directive('permission', permission)
+    app.directive('hasPerm', hasPerm)
+    app.directive('hasRole', hasRole)
   }
 }
