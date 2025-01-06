@@ -1,4 +1,4 @@
 /** 退出登录 */
 export function postLogout() {
-  return $request.post('/logout')
+  return $http.post('/logout')
 }
