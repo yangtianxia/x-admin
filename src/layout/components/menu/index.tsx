@@ -12,7 +12,7 @@ import {
   type RouteRecordRaw,
   type RouteMeta
 } from 'vue-router'
-import { isURL } from '@txjs/bool'
+import { isAbsoluteUrl } from '@txjs/bool'
 import { makeArray } from '@txjs/make'
 import { useAppStore } from '@/stores'
 import { useMenuTree } from '@/hooks/menu-tree'
@@ -38,31 +38,22 @@ export default defineComponent({
     const menuTree = useMenuTree()
 
     const inlineIndent = ref(16)
-    const openKeys = ref(
-      makeArray<string>([])
-    )
-    const selectedKey = ref(
-      makeArray<string>([])
-    )
-    const topMenu = computed(() =>
-      appStore.topMenu
-    )
+    const openKeys = ref<string[]>([])
+    const selectedKey = ref<string[]>([])
+
+    const topMenu = computed(() => appStore.topMenu)
 
     const goto = (item: RouteRecordRaw) => {
       // 打开外部网站
-      if (isURL(item.path)) {
+      if (isAbsoluteUrl(item.path)) {
         useOpenWindow(item.path)
-        // 打开外部网站后不需要高亮
-        // selectedKey.value = [item.name as string]
         return
       }
-
       const { hideInMenu, activeMenu } = item.meta as RouteMeta
       if (route.name === item.name && !hideInMenu && !activeMenu) {
         selectedKey.value = [item.name as string]
         return
       }
-
       router.push({ name: item.name })
     }
 
