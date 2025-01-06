@@ -48,6 +48,12 @@ export const msgWrap = (error: any) => {
   return error.msg || error.message || error.errMsg
 }
 
+const notifyHandler = (message?: string) => {
+  notification.error({
+    message: message || $t('request.default')
+  })
+}
+
 const failWrap = (msg?: string) => {
   const CODE = 500
   // TODO 根据业务，自行修改字段
@@ -142,10 +148,8 @@ const errorHandler = (error: AxiosError<any>): Promise<any> => {
 
   if (status === 401) {
     useRedirect().goto()
-  } else {
-    notification.error({
-      message: fail.data.msg || $t('request.default')
-    })
+  } else if (error.config?.errorNotify !== false) {
+    notifyHandler(fail.data.msg)
   }
   return Promise.reject(fail.data)
 }
@@ -158,7 +162,7 @@ const requestHandler = (config: InternalAxiosRequestConfig): InternalAxiosReques
 }
 
 const responseHandler = (response: AxiosResponse) => {
-  const { data } = response
+  const { data, config } = response
 
   // 二进制数据
   const responseType = response.request?.responseType
@@ -174,15 +178,13 @@ const responseHandler = (response: AxiosResponse) => {
   // Token过期
   if (data.code === 401) {
     useRedirect().goto()
-  } else {
-    notification.error({
-      message: msgWrap(data) || $t('request.default')
-    })
+  } else if (config?.errorNotify !== false) {
+    notifyHandler(msgWrap(data))
   }
   return Promise.reject(data)
 }
 
-class CreateRequest {
+class CreateHttp {
   // 储存终止令牌
   #abortTokens: Map<string, CancelTokenSource> = new Map()
 
@@ -196,6 +198,8 @@ class CreateRequest {
     this.#responseInterceptor()
   }
 
+  static CancelToken = axios.CancelToken // eslint-disable-line import/no-named-as-default-member
+
   #abortTokenProvide(method: string, url: string, params: any, config: any) {
     const serializedParams = qs.stringify(params, {
       arrayFormat: 'brackets'
@@ -204,7 +208,7 @@ class CreateRequest {
     // 取消相同请求
     this.abort(token)
     // 创建新的取消令牌
-    const source = axios.CancelToken.source()
+    const source = axios.CancelToken.source() // eslint-disable-line import/no-named-as-default-member
     this.#abortTokens.set(token, source)
     // 绑定取消令牌
     config.abortToken = token
@@ -340,6 +344,6 @@ class CreateRequest {
   }
 }
 
-export { CreateRequest }
+export { CreateHttp }
 
-export default new CreateRequest()
+export default new CreateHttp()
