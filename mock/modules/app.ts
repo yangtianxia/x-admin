@@ -11,7 +11,7 @@ export default defineFakeRoute([
           path: '/dashboard',
           name: 'dashboardWrapper',
           meta: {
-            locale: 'menu.server.dashboard',
+            locale: 'menu.dashboard',
             requiresAuth: true,
             icon: 'DashboardOne',
             order: 1
@@ -21,7 +21,7 @@ export default defineFakeRoute([
               path: 'workplace',
               name: 'Workplace',
               meta: {
-                locale: 'menu.server.workplace',
+                locale: 'menu.dashboard.workplace',
                 requiresAuth: true
               }
             },
