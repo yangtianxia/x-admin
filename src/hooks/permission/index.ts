@@ -13,16 +13,16 @@ export const usePermission = () => {
       const canAccess = !route.meta?.requiresAuth ||
         !route.meta?.roles ||
         route.meta?.roles?.includes('*') ||
-        route.meta?.roles?.includes(userStore.role)
+        route.meta?.roles?.some((role) => userStore.roles.includes(role))
       return this.accessRightsAfterAuth(route) && canAccess
     },
-    findFirstPermissionRoute(_routers: any, role = 'admin') {
+    findFirstPermissionRoute(_routers: any, roles: string[]) {
       const cloneRouters = [..._routers]
       while (cloneRouters.length) {
         const firstElement = cloneRouters.shift()
         if (
-          firstElement?.meta?.roles?.find((el: string) => {
-            return el.includes('*') || el.includes(role)
+          firstElement?.meta?.roles?.find((role: string) => {
+            return role.includes('*') || roles.includes(role)
           })
         ) {
           return { name: firstElement.name }
