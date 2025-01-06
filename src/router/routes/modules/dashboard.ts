@@ -19,8 +19,7 @@ const DASHBOARD: AppRouteRecordRaw = {
       component: () => import('@/views/dashboard/workplace'),
       meta: {
         locale: 'menu.dashboard.workplace',
-        requiresAuth: true,
-        roles: ['*']
+        requiresAuth: true
       }
     }
   ]
