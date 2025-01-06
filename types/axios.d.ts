@@ -6,6 +6,8 @@ declare module 'axios' {
     abortToken?: string
     /** 响应类型 */
     type?: RequestContentType
+    /** 错误提示 */
+    errorNotify?: boolean
   }
 
   interface AxiosInstance {
