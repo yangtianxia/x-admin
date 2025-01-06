@@ -66,7 +66,7 @@ export default defineComponent({
     /** 登录方式文本 */
     const loginMethodLabel = computed(() => formModel.method === 'pwd' ? $t('login.form.method.sms') : $t('login.form.method.pwd'))
 
-    const formRules = validator.schema<typeof formModel>({
+    const formRules = validator.schema({
       username: {
         label: $t('login.form.label.username'),
         required: true
@@ -183,8 +183,8 @@ export default defineComponent({
 
     return () => (
       <div class={[style.form, 'md:min-w-[300px] max-w-[300px] max-sm:flex-auto']}>
-        <h5 class="text text-h5 max-sm:hidden">{$t('login.form.title')} {$t('page.title')}</h5>
-        <p class="text-tertiary text-sm mt-1 max-sm:hidden">{$t('page.description')}</p>
+        <h5 class="text text-h5 max-sm:hidden">{$t('login.form.title')} {$t('x.title')}</h5>
+        <p class="text-tertiary text-sm mt-1 max-sm:hidden">{$t('x.description')}</p>
         <Form
           scrollToFirstError
           ref={formRef}
