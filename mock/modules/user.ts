@@ -1,5 +1,6 @@
 import { defineFakeRoute } from 'vite-plugin-fake-server/client'
-import { isPhoneNumber } from '@txjs/bool'
+import { isPhone } from '@txjs/bool'
+import { toArray } from '@txjs/shared'
 import { successResponseWrap, failResponseWrap } from '../setup'
 
 export default defineFakeRoute([
@@ -40,7 +41,7 @@ export default defineFakeRoute([
       if (!code) {
         return failResponseWrap(null, '验证码不能为空', 400)
       }
-      if (!isPhoneNumber(telephone)) {
+      if (!isPhone(telephone)) {
         return failResponseWrap(null, '手机号格式错误', 400)
       }
       if (telephone === '13166668888' && code === '123456') {
@@ -65,7 +66,7 @@ export default defineFakeRoute([
       if (!telephone) {
         return failResponseWrap(null, '手机号不能为空', 400)
       }
-      if (!isPhoneNumber(telephone)) {
+      if (!isPhone(telephone)) {
         return failResponseWrap(null, '手机号格式错误', 400)
       }
       return successResponseWrap(null)
@@ -86,7 +87,7 @@ export default defineFakeRoute([
     response: (params) => {
       const authorization = params.headers['authorization']
       if (authorization?.startsWith('Bearer')) {
-        const role = authorization.endsWith('12345') ? 'admin' : 'user'
+        const roles = authorization.endsWith('12345') ? 'admin' : 'user'
         return successResponseWrap({
           name: 'admin',
           avatar: 'https://avatars.githubusercontent.com/yangtianxia',
@@ -103,7 +104,8 @@ export default defineFakeRoute([
           registrationDate: '2013-05-10 12:10:00',
           accountId: '13100000612',
           certification: 1,
-          role
+          roles: toArray(roles),
+          perms: []
         })
       }
       return failResponseWrap(null, '未登录', 401)
