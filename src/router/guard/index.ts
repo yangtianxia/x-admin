@@ -1,7 +1,7 @@
 import type { Router } from 'vue-router'
 import { setRouteEmitter } from '@/shared/route-listener'
 
-import setupUserLoginInfoGuard from './userLoginInfo'
+import setupLoginAuthorizeGuard from './loginAuthorize'
 import setupPermissionGuard from './permission'
 import setupPageGuard from './page'
 
@@ -13,7 +13,7 @@ function setupEmitterGuard(router: Router) {
 
 export default function createRouteGuard(router: Router) {
   setupEmitterGuard(router)
-  setupUserLoginInfoGuard(router)
+  setupLoginAuthorizeGuard(router)
   setupPermissionGuard(router)
   setupPageGuard(router)
 }
