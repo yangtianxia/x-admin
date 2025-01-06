@@ -1,5 +1,6 @@
 import type { AppRouteRecordRaw } from '../types'
 import { DEFAULT_LAYOUT } from '../base'
+import { DEFAULT_ROUTE_NAME } from '../../constant'
 
 const DASHBOARD: AppRouteRecordRaw = {
   path: '/dashboard',
@@ -15,7 +16,7 @@ const DASHBOARD: AppRouteRecordRaw = {
   children: [
     {
       path: 'workplace',
-      name: 'Workplace',
+      name: DEFAULT_ROUTE_NAME,
       component: () => import('@/views/dashboard/workplace'),
       meta: {
         locale: 'menu.dashboard.workplace',
