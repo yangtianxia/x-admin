@@ -8,10 +8,7 @@ export default {
     }
   },
   menu: {
-    server: {
-      dashboard: 'Dashboard',
-      workplace: 'Workplace'
-    },
+    dashboard: 'Dashboard',
     baiduWebsite: 'Baidu'
   }
 }

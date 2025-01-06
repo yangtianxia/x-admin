@@ -2,10 +2,12 @@ declare module 'axios' {
   type RequestContentType = 'JSON' | 'FORM_DATA' | 'MULTIPART' | 'OCTET_STREAM'
 
   interface AxiosRequestConfig {
-    /** 取消请求token */
+    /** 取消token */
     abortToken?: string
-    /** 请求内容类型 */
+    /** 响应类型 */
     type?: RequestContentType
+    /** 错误提示 */
+    errorNotify?: boolean
   }
 
   interface AxiosInstance {

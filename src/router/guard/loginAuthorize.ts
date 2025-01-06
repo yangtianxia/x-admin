@@ -1,4 +1,4 @@
-import type { Router, LocationQueryRaw } from 'vue-router'
+import type { Router } from 'vue-router'
 import NProgress from 'nprogress'
 import { h } from 'vue'
 import { Modal } from 'ant-design-vue'
@@ -7,12 +7,13 @@ import { isLogin } from '@/shared/auth'
 import { REDIRECT_URI } from '@/shared/constant'
 import { LOGIN_ROUTE_PATH } from '../constant'
 
-export default function setupUserLoginInfoGuard(router: Router) {
+export default function setupLoginAuthorizeGuard(router: Router) {
   router.beforeEach(async (to, from, next) => {
     NProgress.start()
     const userStore = useUserStore()
+
     if (isLogin()) {
-      if (userStore.id) {
+      if (userStore.hasUserInfo) {
         next()
       } else {
         try {
@@ -25,12 +26,12 @@ export default function setupUserLoginInfoGuard(router: Router) {
               path: LOGIN_ROUTE_PATH,
               query: {
                 [REDIRECT_URI]: to.fullPath
-              } as LocationQueryRaw
+              }
             })
           } else {
             Modal.error({
               centered: true,
-              title: `登录错误`,
+              title: '登录错误',
               content: h('div', [
                 h('p', `状态：${error.code}`),
                 h('p', `原因：${error.msg || error.message}`)
@@ -48,7 +49,7 @@ export default function setupUserLoginInfoGuard(router: Router) {
         path: LOGIN_ROUTE_PATH,
         query: {
           [REDIRECT_URI]: to.fullPath
-        } as LocationQueryRaw
+        }
       })
     } else {
       next()

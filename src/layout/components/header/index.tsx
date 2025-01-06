@@ -49,9 +49,9 @@ export default defineComponent({
           <img
             src="/logo.png"
             class="w-8"
-            alt={$t('page.title')}
+            alt={$t('global.title')}
           />
-          <h4 class="text text-h4 ml-2">{$t('page.title')}</h4>
+          <h4 class="text text-h4 ml-2">{$t('global.title')}</h4>
         </div>
         <ul class="flex items-center pr-8 space-x-3">
           <li>

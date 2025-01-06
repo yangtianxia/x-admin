@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { isLogin, setToken, clearToken } from '@/shared/auth'
+import { setToken, clearToken } from '@/shared/auth'
 import { removeRouteListener } from '@/shared/route-listener'
 import { TOKEN_HEAD_KEY, REQUEST_TOKEN_KEY } from '@/shared/constant'
 
@@ -29,23 +29,18 @@ const useUserStore = defineStore('user', {
     location: undefined,
     jobName: undefined,
     certification: undefined,
-    role: ''
+    roles: [],
+    perms: []
   }),
   getters: {
-    isLogin(state: UserState) {
-      return !!state.id && isLogin()
+    hasUserInfo(state: UserState) {
+      return !!state.id
     },
     userInfo(state: UserState): UserState {
       return { ...state }
     }
   },
   actions: {
-    switchRoles() {
-      return new Promise((resolve) => {
-        this.role = this.role === 'user' ? 'admin' : 'user'
-        resolve(this.role)
-      })
-    },
     setInfo(partial: Partial<UserState>) {
       this.$patch(partial)
     },

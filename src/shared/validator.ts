@@ -1,8 +1,8 @@
 import { Validator } from '@txjs/validator'
 
 export const validator = new Validator({
-  message: Validator.message,
-  validation: Validator.validation
+  messageSchema: Validator.messageSchema,
+  validationSchema: Validator.validationSchema
 })
 
 export const changeValidatorLocale = (value: string) => {

@@ -1,9 +1,3 @@
-export type RoleType =
-  | ''
-  | '*'
-  | 'admin'
-  | 'user'
-
 export interface UserState {
   id?: number
   name?: string
@@ -16,5 +10,6 @@ export interface UserState {
   location?: string
   jobName?: string
   certification?: number
-  role: RoleType
+  roles: string[]
+  perms: string[]
 }

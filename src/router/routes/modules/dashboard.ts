@@ -1,5 +1,6 @@
 import type { AppRouteRecordRaw } from '../types'
 import { DEFAULT_LAYOUT } from '../base'
+import { DEFAULT_ROUTE_NAME } from '../../constant'
 
 const DASHBOARD: AppRouteRecordRaw = {
   path: '/dashboard',
@@ -8,19 +9,18 @@ const DASHBOARD: AppRouteRecordRaw = {
   redirect: '/dashboard/workplace',
   meta: {
     icon: 'DashboardOne',
-    locale: 'menu.server.dashboard',
+    locale: 'menu.dashboard',
     requiresAuth: true,
     order: 0
   },
   children: [
     {
       path: 'workplace',
-      name: 'Workplace',
+      name: DEFAULT_ROUTE_NAME,
       component: () => import('@/views/dashboard/workplace'),
       meta: {
-        locale: 'menu.server.workplace',
-        requiresAuth: true,
-        roles: ['*']
+        locale: 'menu.dashboard.workplace',
+        requiresAuth: true
       }
     }
   ]

@@ -53,7 +53,7 @@
   "globals": {
     "$t": "readonly",
     "$bem": "readonly",
-    "$request": "readonly",
+    "$http": "readonly",
     "seedToken": "readonly"
   }
 }

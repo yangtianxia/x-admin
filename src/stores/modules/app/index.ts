@@ -30,11 +30,8 @@ const useAppStore = defineStore('app', {
       this.hideMenu = value
     },
     async fetchServerMenuConfig() {
-      try {
-        this.serverMenu = await getMenuList()
-      } catch {
-        // TODO: notify
-      }
+      const result = await getMenuList()
+      this.serverMenu = result
     },
     clearServerMenu() {
       this.serverMenu = []

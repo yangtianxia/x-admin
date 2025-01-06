@@ -1,11 +1,11 @@
 import type { Router } from 'vue-router'
-import { isValidString } from '@txjs/bool'
+import { isNonEmptyString } from '@txjs/bool'
 import { camelToKebab } from '@txjs/shared'
 
 const bodyElement = document.body ?? document.getElementsByName('body')[0]
 
 const setPageTitle = (...args: string[]) => {
-  document.title = [...args, $t('page.title')].filter(isValidString).join(' - ')
+  document.title = [...args, $t('global.title')].filter(isNonEmptyString).join(' - ')
 }
 
 export default function setupPageGuard(router: Router) {
@@ -24,7 +24,7 @@ export default function setupPageGuard(router: Router) {
     }
     const titleList = to.matched
       .map((route) => route.meta.locale)
-      .filter(isValidString)
+      .filter(isNonEmptyString)
       .map($t)
       .reverse()
     setPageTitle(...titleList)

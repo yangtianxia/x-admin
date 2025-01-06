@@ -85,9 +85,9 @@ export default defineConfig(({ mode, command }) => {
       }),
       Legacy(),
       Inject({
-        $t: resolve('./src/locale/t.ts'),
         $bem: '@txjs/bem',
-        $request: resolve('./src/shared/request.ts')
+        $t: resolve('./src/locale/t.ts'),
+        $http: resolve('./src/shared/http.ts')
       }),
       vitePluginFakeServer({
         logger: false,

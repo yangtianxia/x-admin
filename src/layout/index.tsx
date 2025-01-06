@@ -60,9 +60,9 @@ export default defineComponent({
     }
 
     watch(
-      () => userStore.role,
+      () => userStore.roles,
       (roleValue) => {
-        if (roleValue && !permission.accessRouter(route)) {
+        if (roleValue.length && !permission.accessRouter(route)) {
           router.push(NOT_FOUND_ROUTE)
         }
       }

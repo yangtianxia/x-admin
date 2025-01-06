@@ -25,10 +25,10 @@ export default defineComponent({
         <div class="z-10 absolute top-6 left-6 max-xl:left-4 flex items-center">
           <img
             src="/logo.png"
-            alt={$t('page.title')}
+            alt={$t('global.title')}
             class="w-8"
           />
-          <h4 class="text-white/90 max-md:text text-h4 ml-2 mr-1">{$t('page.title')}</h4>
+          <h4 class="text-white/90 max-md:text text-h4 ml-2 mr-1">{$t('global.title')}</h4>
         </div>
         <div class="z-10 absolute top-6 right-6 max-xl:right-6 flex items-center">
           <Dropdown
