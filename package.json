@@ -1,7 +1,7 @@
 {
   "name": "x-admin",
   "description": "一个基于Vue3生态打造的后台应用模版",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "type": "module",
   "private": true,
   "scripts": {
