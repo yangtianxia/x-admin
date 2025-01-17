@@ -1,12 +1,5 @@
-@scaffold-cls: ~'@{prefix}-scaffold';
-@scaffold-body-cls: ~'@{prefix}-scaffold-body';
-
-:root,
-:host {
-  --scaffold-body-pt: theme('padding.5');
-  --scaffold-body-px: theme('padding.5');
-  --scaffold-body-bg: theme('backgroundColor.transparent');
-}
+@scaffold-cls: x-scaffold;
+@scaffold-body-cls: x-scaffold-body;
 
 .@{scaffold-cls} {
   @apply flex-1 relative flex flex-nowrap flex-col box-border;
@@ -21,23 +14,17 @@
 }
 
 .@{scaffold-body-cls} {
-  @apply flex-1 relative box-border;
+  @apply flex-1 relative box-border px-4;
 
   &--flex {
     @apply flex flex-col;
   }
 
-  &--shrink {
-    padding: var(--scaffold-body-pt) var(--scaffold-body-px) 0;
-  }
-
   &--empty {
-    @apply p-0;
-    background-color: var(--scaffold-body-bg);
+    @apply p-0 bg-transparent;
 
-    .@{prefix}-result {
-      @apply absolute top-0 bottom-0 w-full box-border;
-      height: 82%;
+    .x-result {
+      @apply absolute top-0 bottom-0 w-full h-4/5 box-border;
     }
   }
 }

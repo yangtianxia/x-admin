@@ -1,19 +1,10 @@
-export const isMockEnabled = import.meta.env.VITE_MOCK === 'true'
+import { isAbsoluteUrl } from '@txjs/bool'
+import { camelize } from '@txjs/shared'
 
 export const printWarn = (...args: any[]) => {
   if (import.meta.env.DEV) {
-    console.warn(...args)
+    console.warn('[x-admin]', ...args)
   }
-}
-
-export const currentAPI = () => {
-  if (isMockEnabled) {
-    return ''
-  }
-  if (import.meta.env.DEV) {
-    return import.meta.env.VITE_PROXY_API
-  }
-  return import.meta.env.VITE_API
 }
 
 export const toIOSDate = (value: string) => {
@@ -21,4 +12,18 @@ export const toIOSDate = (value: string) => {
     return value.replace(/-/g, '/')
   }
   return value
+}
+
+export const upperFirst = (value: string) => {
+  if (!value || !value.trim()) {
+    return ''
+  }
+  return value.charAt(0).toUpperCase() + value.slice(0)
+}
+
+export const transformPathToName = (value: string) => {
+  if (!value || isAbsoluteUrl(value)) {
+    return ''
+  }
+  return upperFirst(camelize(value))
 }

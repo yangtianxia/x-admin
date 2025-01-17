@@ -33,14 +33,12 @@
   },
   "homepage": "https://github.com/yangtianxia/x-admin#readme",
   "dependencies": {
-    "@ant-design/icons-vue": "^7.0.1",
     "@icon-park/vue-next": "^1.4.2",
     "@txjs/bem": "^1.0.2",
     "@txjs/bool": "^1.0.2",
     "@txjs/make": "^1.0.0",
     "@txjs/shared": "^1.0.4",
     "@txjs/types": "^1.0.0",
-    "@txjs/validator": "^1.0.1",
     "@vant/use": "^1.6.0",
     "ant-design-vue": "^4.2.6",
     "axios": "^1.7.9",
@@ -50,10 +48,7 @@
     "nprogress": "^0.2.0",
     "pinia": "^2.3.0",
     "qs": "^6.13.1",
-    "quill": "^2.0.3",
-    "ua-browser": "^0.1.7",
     "vue": "^3.5.13",
-    "vue-i18n": "^9.14.2",
     "vue-router": "^4.5.0"
   },
   "devDependencies": {

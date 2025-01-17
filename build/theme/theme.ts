@@ -1,5 +1,5 @@
 import { camelToKebab, shallowMerge } from '@txjs/shared'
-import { LightTheme, defaultPresetColorKeys, presetColorKeys } from './seed'
+import { lightTheme, defaultPresetColorKeys, presetColorKeys } from './seed'
 
 export const genDefaultColorMapToken = (seedToken: Record<string, any>) => {
   return Object
@@ -70,8 +70,8 @@ export const genPresetColorMapToken = (seedToken: Record<string, any>) => {
     )
 }
 
-const AntDesignThemeColor = genPresetColorMapToken(LightTheme)
+const AntDesignThemeColor = genPresetColorMapToken(lightTheme)
 
-shallowMerge(AntDesignThemeColor.colors, genDefaultColorMapToken(LightTheme))
+shallowMerge(AntDesignThemeColor.colors, genDefaultColorMapToken(lightTheme))
 
 export { AntDesignThemeColor }

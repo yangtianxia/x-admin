@@ -45,6 +45,6 @@ export const defaultPresetColorKeys = Object.keys(DEFAULT_PRESET_COLORS)
 
 export const presetColorKeys = Object.keys(PRESET_COLORS)
 
-export const LightTheme = theme.defaultAlgorithm(defaultSeed)
+export const lightTheme = theme.defaultAlgorithm(defaultSeed)
 
-export const DarkTheme = theme.darkAlgorithm(defaultSeed)
+export const darkTheme = theme.darkAlgorithm(defaultSeed)

@@ -1,13 +1,17 @@
 import { type DirectiveBinding } from 'vue'
 import { toArray } from '@txjs/shared'
-import { useUserStore } from '@/stores'
+import { useUserStore } from '@/store'
 
 const checkPermission = (el: HTMLElement, binding: DirectiveBinding) => {
   const userStore = useUserStore()
   const values = toArray(binding.value)
+  const permissions = userStore.permissions
+  const all_permission = '*:*:*'
 
-  if (values.length > 0) {
-    const hasPermission = values.some((perm) => userStore.perms.includes(perm))
+  if (values.length) {
+    const hasPermission = values.some((el) => {
+      return all_permission === el || permissions.includes(el)
+    })
     if (!hasPermission && el.parentNode) {
       el.parentNode.removeChild(el)
     }

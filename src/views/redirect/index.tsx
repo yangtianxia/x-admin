@@ -14,8 +14,6 @@ export default defineComponent({
 
     router.replace({ path: gotoPath })
 
-    return () => (
-      <div />
-    )
+    return () => <div />
   }
 })

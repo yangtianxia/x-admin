@@ -11,13 +11,13 @@ import style from './index.module.less'
 const slides = computed(() => [
   {
     id: 1,
-    title: $t('login.slide.title.1'),
-    subtitle: $t('login.slide.subtitle.1')
+    title: '开箱即用的高质量模板',
+    subtitle: '丰富的的页面模板，覆盖大多数典型业务场景'
   },
   {
     id: 2,
-    title: $t('login.slide.title.2'),
-    subtitle: $t('login.slide.subtitle.2')
+    title: '开箱即用的高质量模板',
+    subtitle: '路由配置，状态管理应有尽有'
   }
 ])
 

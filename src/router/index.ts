@@ -1,17 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
-import { REDIRECT_MAIN, NOT_FOUND_ROUTE } from './routes/base'
+import { useRouteStore } from '@/store'
+import { DEFAULT_ROUTE } from '@/constant/route'
+
+import { constantRoutes } from './routes/base'
 import createRouteGuard from './guard'
-import { appRoutes } from './routes'
-import {
-  LOGIN_ROUTE_NAME,
-  LOGIN_ROUTE_PATH,
-  DEFAULT_ROUTE
-} from './constant'
 
 NProgress.configure({
-  showSpinner: false
+  easing: 'ease',
+  showSpinner: false,
+  trickleSpeed: 150
 })
 
 const router = createRouter({
@@ -25,34 +25,40 @@ const router = createRouter({
       return { left: 0, top: 0 }
     }
   },
-  routes: [
-    {
-      path: '/',
-      redirect: LOGIN_ROUTE_PATH
-    },
-    {
-      path: LOGIN_ROUTE_PATH,
-      name: LOGIN_ROUTE_NAME,
-      component: () => import('@/views/login'),
-      meta: {
-        locale: 'menu.login',
-        requiresAuth: false,
-        authNoAccessAfter: true
-      }
-    },
-    ...appRoutes,
-    REDIRECT_MAIN,
-    NOT_FOUND_ROUTE
-  ]
+  routes: constantRoutes
 })
 
 createRouteGuard(router)
 
+router.onError(() => {
+  NProgress.done()
+})
+
+router.afterEach(() => {
+  NProgress.done()
+})
+
+/** 返回上一页 */
 export const goBack = () => {
   if (window.history.state.back) {
     history.back()
   } else {
     router.replace(DEFAULT_ROUTE)
+  }
+}
+
+/** 重置路由 */
+export const resetRouter = () => {
+  try {
+    const routeStore = useRouteStore()
+    routeStore.asyncRoutes.forEach((route) => {
+      const { name } = route
+      if (name && router.hasRoute(name)) {
+        router.removeRoute(name)
+      }
+    })
+  } catch {
+    window.location.reload()
   }
 }
 

@@ -1,17 +1,11 @@
-import { Validator } from '@txjs/validator'
+import { Validator, createValidation, createMessage } from '@txjs/validator'
+import defaults from '@txjs/validator/defaults'
+import zhCN from '@txjs/validator/locale/zhCN'
 
 export const validator = new Validator({
-  messageSchema: Validator.messageSchema,
-  validationSchema: Validator.validationSchema
-})
-
-export const changeValidatorLocale = (value: string) => {
-  switch (value) {
-    case 'zh-CN':
-      validator.setLocale('zhCN')
-      break
-    case 'en-US':
-      validator.setLocale('enUS')
-      break
+  locale: 'zhCN',
+  validation: createValidation(defaults),
+  messages: {
+    zhCN: createMessage(zhCN)
   }
-}
+})

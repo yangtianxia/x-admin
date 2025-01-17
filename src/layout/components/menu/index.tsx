@@ -14,14 +14,13 @@ import {
 } from 'vue-router'
 import { isAbsoluteUrl } from '@txjs/bool'
 import { makeArray } from '@txjs/make'
-import { useAppStore } from '@/stores'
 import { useMenuTree } from '@/hooks/menu-tree'
-import { useOpenWindow } from '@/hooks/open-window'
+import { openWindow } from '@/shared/open-window'
 import { listenerRouteChange } from '@/shared/route-listener'
 
 // Component
 import { Menu } from 'ant-design-vue'
-import { Icon } from '@/components/icon'
+import { Icon, type IconMap } from '@/components/icon'
 
 // Components utils
 import { addUnit } from '@/components/_utils/style'
@@ -32,7 +31,6 @@ import style from './index.module.less'
 export default defineComponent({
   name: 'LayoutMenu',
   setup() {
-    const appStore = useAppStore()
     const route = useRoute()
     const router = useRouter()
     const menuTree = useMenuTree()
@@ -41,12 +39,10 @@ export default defineComponent({
     const openKeys = ref<string[]>([])
     const selectedKey = ref<string[]>([])
 
-    const topMenu = computed(() => appStore.topMenu)
-
     const goto = (item: RouteRecordRaw) => {
       // 打开外部网站
       if (isAbsoluteUrl(item.path)) {
-        useOpenWindow(item.path)
+        openWindow(item.path)
         return
       }
       const { hideInMenu, activeMenu } = item.meta as RouteMeta
@@ -85,9 +81,9 @@ export default defineComponent({
 
     listenerRouteChange(
       (newRoute) => {
-        const { requiresAuth, activeMenu, hideInMenu } = newRoute.meta
+        const { activeMenu, hideInMenu } = newRoute.meta
 
-        if (requiresAuth && (!hideInMenu || activeMenu)) {
+        if (!hideInMenu || activeMenu) {
           const menuOpenKeys = findMenuOpenKeys(
             (activeMenu || newRoute.name) as string
           )
@@ -104,7 +100,7 @@ export default defineComponent({
       }, true
     )
 
-    const renderSubMenu = () => {
+    const renderMenuItem = () => {
       function travel(_route: RouteRecordRaw[], nodes = []) {
         if (_route) {
           _route.forEach((route) => {
@@ -112,7 +108,7 @@ export default defineComponent({
               ? () => (
                 <Icon
                   size={18}
-                  type={route.meta!.icon!}
+                  type={route.meta!.icon as IconMap}
                 />
               )
               : () => (
@@ -123,8 +119,8 @@ export default defineComponent({
                   }}
                 />
               )
-            const title = route?.meta?.locale
-              ? () => $t(route.meta!.locale!)
+            const title = route?.meta?.title
+              ? () => route.meta?.title
               : null
             const node = route?.children && route.children.length !== 0 ? (
               <Menu.SubMenu
@@ -153,13 +149,13 @@ export default defineComponent({
     return () => (
       <div class="h-full overflow-y-auto overflow-x-hidden scrollbar-thin">
         <Menu
-          v-model:openKeys={openKeys.value}
+          mode="inline"
           class={style.menu}
-          mode={topMenu.value ? 'horizontal' : 'inline'}
           selectedKeys={selectedKey.value}
           inlineIndent={inlineIndent.value}
+          v-model:openKeys={openKeys.value}
         >
-          {renderSubMenu()}
+          {renderMenuItem()}
         </Menu>
       </div>
     )

@@ -1,31 +1,89 @@
 import type { RouteRecordRaw } from 'vue-router'
-import { NOT_FOUND_ROUTE_NAME, REDIRECT_ROUTE_NAME } from '../constant'
+import {
+  LOGIN_NAME,
+  DEFAULT_NAME,
+  FORBIDDEN_NAME,
+  REDIRECT_NAME
+} from '@/constant/route'
 
 export const DEFAULT_LAYOUT = () => import('@/layout')
 
-export const REDIRECT_MAIN: RouteRecordRaw = {
-  path: '/redirect',
-  name: 'redirectWrapper',
-  component: DEFAULT_LAYOUT,
-  meta: {
-    requiresAuth: true,
-    hideInMenu: true
-  },
-  children: [
-    {
-      path: '/redirect/:path',
-      name: REDIRECT_ROUTE_NAME,
-      component: () => import('@/views/redirect'),
-      meta: {
-        requiresAuth: true,
-        hideInMenu: true
+/** 固定路由 */
+export const constantRoutes: RouteRecordRaw[] = [
+  {
+    path: '/',
+    name: 'Dashboard',
+    component: DEFAULT_LAYOUT,
+    redirect: '/dashboard/workplace',
+    meta: {
+      title: '仪表盘',
+      icon: 'DashboardOne'
+    },
+    children: [
+      {
+        path: '/dashboard/workplace',
+        name: DEFAULT_NAME,
+        component: () => import('@/views/dashboard/workplace'),
+        meta: {
+          title: '工作台'
+        }
+      },
+      {
+        path: '/dashboard/theme',
+        name: 'DashboardTheme',
+        component: () => import('@/views/dashboard/theme'),
+        meta: {
+          title: '主题'
+        }
       }
+    ]
+  },
+  {
+    path: '/login',
+    name: LOGIN_NAME,
+    component: () => import('@/views/login'),
+    meta: {
+      title: '登录',
+      authNoAccessAfter: true
     }
-  ]
-}
-
-export const NOT_FOUND_ROUTE: RouteRecordRaw = {
-  path: '/:pathMatch(.*)*',
-  name: NOT_FOUND_ROUTE_NAME,
-  component: () => import('@/views/not-found')
-}
+  },
+  {
+    path: '/redirect',
+    name: 'RedirectWrapper',
+    component: DEFAULT_LAYOUT,
+    meta: {
+      hideInMenu: true,
+      hideChildrenInMenu: true
+    },
+    children: [
+      {
+        path: '/redirect/:path(.*)',
+        name: REDIRECT_NAME,
+        component: () => import('@/views/redirect')
+      }
+    ]
+  },
+  {
+    path: '/forbidden',
+    name: 'ForbiddenWrapper',
+    component: DEFAULT_LAYOUT,
+    meta: {
+      hideInMenu: true,
+      hideChildrenInMenu: true
+    },
+    children: [
+      {
+        path: '/forbidden/:path(.*)',
+        name: FORBIDDEN_NAME,
+        component: () => import('@/views/forbidden')
+      }
+    ]
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    component: () => import('@/views/not-found'),
+    meta: {
+      hideInMenu: true
+    }
+  }
+]

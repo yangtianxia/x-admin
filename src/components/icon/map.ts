@@ -17,6 +17,8 @@ import { default as Home } from '@icon-park/vue-next/lib/icons/Home'
 import { default as DamageMap } from '@icon-park/vue-next/lib/icons/DamageMap'
 import { default as Picture } from '@icon-park/vue-next/lib/icons/Picture'
 import { default as GithubOne } from '@icon-park/vue-next/lib/icons/GithubOne'
+import { default as Logout } from '@icon-park/vue-next/lib/icons/Logout'
+import { default as Setting } from '@icon-park/vue-next/lib/icons/Setting'
 
 export const icons = {
   LeftC,
@@ -37,7 +39,9 @@ export const icons = {
   Home,
   DamageMap,
   Picture,
-  GithubOne
+  GithubOne,
+  Logout,
+  Setting
 } as const
 
 type IconMapTypeOf = typeof icons

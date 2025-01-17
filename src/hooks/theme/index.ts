@@ -6,29 +6,34 @@ import {
   shallowMerge,
   cloneDeep
 } from '@txjs/shared'
-import { useAppStore } from '@/stores'
-import { setThemeListener, listenerThemeChange, removeThemeListener } from '@/shared/theme-listener'
+
+import { useAppStore } from '@/store'
 import {
   THEME_KEY,
-  THEME_DARK_KEY,
-  THEME_LIGHT_KEY,
-  THEME_SYSTEM_KEY
-} from '@/shared/constant'
+  THEME_SYSTEM,
+  THEME_OPTIONS
+} from '@/constant/theme'
+import {
+  setThemeListener,
+  listenerThemeChange,
+  removeThemeListener
+} from '@/shared/theme-listener'
+import { rootElement } from '@/shared/element'
 
 const SEED_TOKEN = cloneDeep('seedToken' in window ? seedToken : {} as typeof seedToken)
 
-export const THEME_OPTIONS = computed(() => [
-  { label: $t('global.theme.light'), value: THEME_LIGHT_KEY, icon: 'SunOne' as const },
-  { label: $t('global.theme.dark'), value: THEME_DARK_KEY, icon: 'Moon' as const },
-  { label: $t('global.theme.system'), value: THEME_SYSTEM_KEY, icon: 'Computer' as const }
-])
-
 const useDark = () => {
-  document.documentElement.classList.add('dark')
+  rootElement.classList.add('dark')
 }
 
 const removeDark = () => {
-  document.documentElement.classList.remove('dark')
+  rootElement.classList.remove('dark')
+}
+
+const notifyHandler = (text?: string) => {
+  if (text) {
+    message.success(`切换${text}模式`)
+  }
 }
 
 export const useTheme = () => {
@@ -56,7 +61,7 @@ export const useTheme = () => {
     if (appStore.theme === value) return
 
     // 打开跟随系统主题
-    if (value === THEME_SYSTEM_KEY) {
+    if (value === THEME_SYSTEM) {
       setThemeListener()
       listenerThemeChange(switchTheme)
     } else {
@@ -70,7 +75,8 @@ export const useTheme = () => {
 
     // 切换成功提示
     if (prompt) {
-      message.success($t('global.theme.switch', [$t(`theme.${value}`)]))
+      const result = THEME_OPTIONS.find((el) => el.value === value)
+      notifyHandler(result?.label)
     }
   }
 

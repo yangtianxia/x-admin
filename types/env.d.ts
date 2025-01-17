@@ -1,9 +1,9 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  VITE_MOCK?: 'true' | 'false'
-  VITE_API: string
-  VITE_PROXY_API: string
+  API: string
+  REMOTE: string
+  VITE_TITLE: string
 }
 
 interface ImportMeta {

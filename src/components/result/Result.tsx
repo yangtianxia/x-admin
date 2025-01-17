@@ -24,7 +24,7 @@ import type { VNode } from '../_utils/types'
 // Types
 import type { ResultCode } from './types'
 
-const [name, bem] = $bem('result')
+const [name, bem] = $bem('x-result')
 
 const resultProps = shallowMerge({}, resultSharedProps, {
   image: VNodeProp,
@@ -51,7 +51,7 @@ export default defineComponent({
       const config = resultStatusConfig[status]
       if (config) {
         if (refresh) {
-          option.desc = $t('result.desc.500')
+          option.desc = '别紧张，试试看刷新页面'
         }
         shallowMerge(option, config)
       }

@@ -9,7 +9,7 @@ import {
 // Common
 import { pick } from '@txjs/shared'
 import { makeString } from '@txjs/make'
-import { useUserStore } from '@/stores'
+import { useUserStore } from '@/store'
 import { useRedirect } from '@/hooks/redirect'
 import { validator } from '@/shared/validator'
 
@@ -63,25 +63,22 @@ export default defineComponent({
     /** 是否密码登录 */
     const isPwd = computed(() => formModel.method === 'pwd')
 
-    /** 登录方式文本 */
-    const loginMethodLabel = computed(() => formModel.method === 'pwd' ? $t('login.form.method.sms') : $t('login.form.method.pwd'))
-
     const formRules = validator.schema({
       username: {
-        label: $t('login.form.label.username'),
+        label: '用户名',
         required: true
       },
       password: {
-        label: $t('login.form.label.password'),
+        label: '登录密码',
         required: true
       },
       telephone: {
-        label: $t('login.form.label.telephone'),
+        label: '手机号码',
         required: true,
         telephone: true
       },
       code: {
-        label: $t('login.form.label.code'),
+        label: '短信验证码',
         required: true,
         maxlength: 6
       }
@@ -113,16 +110,17 @@ export default defineComponent({
       formModel.loading = true
       try {
         if (isPwd.value) {
-          await userStore.loginByPwd(
-            pick(formModel, ['username', 'password'])
-          )
+          const params = pick(formModel, [
+            'username',
+            'password'
+          ])
+          await userStore.loginByPwd(params)
         } else {
-          await userStore.loginBySms(
-            pick(formModel, ['telephone', 'code'])
-          )
+          const params = pick(formModel, ['telephone', 'code'])
+          await userStore.loginBySms(params)
         }
         redirect.back()
-        message.success($t('login.form.welcome'))
+        message.success('欢迎回来!')
       } catch {
         formModel.loading = false
       }
@@ -135,9 +133,9 @@ export default defineComponent({
           name="username"
         >
           <Input
-            v-model:value={formModel.username}
-            placeholder={$t('login.form.placeholder.username')}
+            placeholder="用户名"
             prefix={<Icon type="People" />}
+            v-model:value={formModel.username}
           />
         </FormItem>
         <FormItem
@@ -145,10 +143,10 @@ export default defineComponent({
           name="password"
         >
           <Input.Password
-            v-model:value={formModel.password}
             visibilityToggle
-            placeholder={$t('login.form.placeholder.password')}
+            placeholder="登录密码"
             prefix={<Icon type="Lock" />}
+            v-model:value={formModel.password}
           />
         </FormItem>
       </div>
@@ -161,10 +159,10 @@ export default defineComponent({
           name="telephone"
         >
           <Input
-            v-model:value={formModel.telephone}
             type="tel"
-            placeholder={$t('login.form.placeholder.telephone')}
+            placeholder="手机号码"
             prefix={<Icon type="Phone" />}
+            v-model:value={formModel.telephone}
           />
         </FormItem>
         <FormItem
@@ -172,10 +170,10 @@ export default defineComponent({
           name="code"
         >
           <Input
-            v-model:value={formModel.code}
-            placeholder={$t('login.form.placeholder.code')}
+            placeholder="短信验证码"
             prefix={<Icon type="Message" />}
             suffix={<SendCode beforeChange={postLoginCodeReq} />}
+            v-model:value={formModel.code}
           />
         </FormItem>
       </div>
@@ -183,8 +181,8 @@ export default defineComponent({
 
     return () => (
       <div class={[style.form, 'md:min-w-[300px] max-w-[300px] max-sm:flex-auto']}>
-        <h5 class="text text-h5 max-sm:hidden">{$t('login.form.title')} {$t('global.title')}</h5>
-        <p class="text-tertiary text-sm mt-1 max-sm:hidden">{$t('global.description')}</p>
+        <h5 class="text text-h5 max-sm:hidden">登录 {import.meta.env.VITE_TITLE}</h5>
+        <p class="text-tertiary text-sm mt-1 max-sm:hidden">一个基于Vue3生态打造的后台应用模版</p>
         <Form
           scrollToFirstError
           ref={formRef}
@@ -201,13 +199,13 @@ export default defineComponent({
               htmlType="submit"
               loading={formModel.loading}
               disabled={formModel.loading}
-            >{$t('login.form.submit')}</Button>
+              >登录</Button>
             <Button
               block
               type="text"
               class="text-tertiary mt-2"
               onClick={onLoginMethodSwitch}
-            >{loginMethodLabel.value}</Button>
+              >{isPwd.value ? '验证码' : '密码'}登录</Button>
           </div>
         </Form>
       </div>

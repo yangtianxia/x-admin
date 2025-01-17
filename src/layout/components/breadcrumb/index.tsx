@@ -3,7 +3,6 @@ import { defineComponent, computed } from 'vue'
 
 // Common
 import { useRoute } from 'vue-router'
-import { useMenuTree } from '@/hooks/menu-tree'
 
 // Component
 import { Icon } from '@/components/icon'
@@ -13,23 +12,15 @@ export default defineComponent({
   name: 'LayoutBreadcrumb',
   setup() {
     const currentRoute = useRoute()
-    const menuTree = useMenuTree()
 
     const routes = computed(() => [
-      { path: '/', breadcrumbName: '' },
-      ...currentRoute.matched.map((route) => {
-        const children = menuTree.value.find((item: any) => item.name === route.name)?.children || []
-        return {
-          ...formatRoute(route),
-          children: children.map(formatRoute)
-        }
-      })
+      ...currentRoute.matched.map(formatRoute)
     ])
 
     const formatRoute = (route: any) => ({
       path: route.path,
       breadcrumbName: route.name as string,
-      locale: $t(route.meta.locale!)
+      locale: route.meta.title
     })
 
     return () => (

@@ -51,7 +51,6 @@
     "@typescript-eslint/no-empty-interface": "off"
   },
   "globals": {
-    "$t": "readonly",
     "$bem": "readonly",
     "$http": "readonly",
     "seedToken": "readonly"

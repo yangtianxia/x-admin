@@ -1,5 +1,5 @@
 import mitt, { type Handler } from 'mitt'
-import { THEME_LIGHT_KEY, THEME_DARK_KEY } from '@/shared/constant'
+import { THEME_LIGHT, THEME_DARK } from '@/constant/theme'
 
 const emitter = mitt()
 
@@ -8,7 +8,7 @@ const key = Symbol('THEME_CHANGE')
 let themeMedia: MediaQueryList | null
 
 function formatTheme(matches: boolean) {
-  return matches ? THEME_LIGHT_KEY : THEME_DARK_KEY
+  return matches ? THEME_LIGHT : THEME_DARK
 }
 
 function changeHandler(evt: MediaQueryListEvent) {

@@ -5,13 +5,8 @@ import {
   KeepAlive
 } from 'vue'
 
-// Common
-import { RouterView, type RouteLocationNormalized } from 'vue-router'
-
-interface RouterViewEvent  {
-  Component: any
-  route: RouteLocationNormalized
-}
+// Components
+import { RouterView } from 'vue-router'
 
 export default defineComponent({
   name: 'LayoutPage',
@@ -25,7 +20,7 @@ export default defineComponent({
               name="fade"
               mode="out-in"
             >
-              {route.meta.ignoreCache ? <Component key={route.fullPath} /> : (
+              {route.meta.keepAlive ? <Component key={route.fullPath} /> : (
                 <KeepAlive>
                   <Component key={route.fullPath} />
                 </KeepAlive>

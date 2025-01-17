@@ -1,22 +1,20 @@
-import { computed } from 'vue'
 import type { RouteRecordRaw, RouteRecordNormalized } from 'vue-router'
+import { computed } from 'vue'
 import { cloneDeep } from '@txjs/shared'
-import { useAppStore } from '@/stores'
-import appClientMenus from '@/router/app-menus'
-import { usePermission } from '../permission'
+
+import { useRouteStore } from '@/store'
+import { isLogin } from '@/shared/auth'
+import { hasRoleOr } from '@/shared/has'
+
+const accessRightsAfterAuth = (route: RouteRecordNormalized | RouteRecordRaw) => {
+  return isLogin() ? route.meta?.authNoAccessAfter !== true : true
+}
 
 export const useMenuTree = () => {
-  const appStore = useAppStore()
-  const permission = usePermission()
+  const routeStore = useRouteStore()
 
-  const appRoute = computed(() => {
-    if (appStore.menuFromServer) {
-      return appStore.appAsyncMenus
-    }
-    return appClientMenus
-  })
   const menuTree = computed(() => {
-    const copyRoute = cloneDeep(appRoute.value) as RouteRecordNormalized[]
+    const copyRoute = cloneDeep(routeStore.routes) as RouteRecordNormalized[]
 
     function travel(_routes: RouteRecordRaw[], layer: number) {
       if (!_routes) {
@@ -25,13 +23,12 @@ export const useMenuTree = () => {
 
       const collector: any = _routes.map((route) => {
         // no access
-        if (!permission.accessRouter(route)) {
+        if (!accessRightsAfterAuth(route) || (route.meta?.roles && hasRoleOr(route.meta?.roles))) {
           return null
         }
 
         if (route.meta?.hideChildrenInMenu || !route.children) {
           route.children = []
-          return route
         }
 
         // 路由筛选器 hideInMenu true
@@ -51,7 +48,7 @@ export const useMenuTree = () => {
           return route
         }
 
-        if (route.meta?.hideInMenu === false) {
+        if (route.meta?.hideInMenu !== true) {
           return route
         }
 

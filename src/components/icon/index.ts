@@ -5,3 +5,5 @@ import './index.less'
 
 export const Icon = withInstall(_Icon)
 export default Icon
+
+export * from './map'
