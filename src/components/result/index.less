@@ -1,21 +1,10 @@
-@result-cls: ~'@{prefix}-result';
-
-:root {
-  --result-bg: theme('backgroundColor.inherit');
-  --result-p: theme('padding.3') 0 theme('padding.6');
-  --result-img-w: theme('width.56');
-  --result-img-h: theme('height.56');
-}
+@result-cls: x-result;
 
 .@{result-cls} {
-  @apply box-border w-full h-full flex flex-col items-center justify-center;
-  padding: var(--result-p);
-  background-color: var(--result-bg);
+  @apply box-border w-full h-full flex flex-col items-center justify-center pt-3 pb-6 bg-inherit;
 
   &__img {
-    @apply block;
-    width: var(--result-img-w);
-    height: var(--result-img-h);
+    @apply block size-56;
   }
 
   &__title,

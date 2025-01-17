@@ -28,15 +28,21 @@ import {
   makeStringProp
 } from '../_utils/props'
 
-const [name, bem] = $bem('send-code')
+const [name, bem] = $bem('x-send-code')
 
 const sendCodeProps = shallowMerge({}, {
   interval: makeNumberProp(60),
   size: makeStringProp<ButtonProps['size']>('small'),
   type: makeStringProp<ButtonProps['type']>('text'),
-  beforeText: String,
-  text: VNodeProp,
-  afterText: VNodeProp,
+  beforeText: makeStringProp('[S] 秒后重发'),
+  text: {
+    type: VNodeProp,
+    default: '获取验证码'
+  },
+  afterText: {
+    type: VNodeProp,
+    default: '重新获取'
+  },
   beforeChange: Function as PropType<Interceptor>
 })
 
@@ -45,8 +51,7 @@ const sendCodePropsKeys = [
   'beforeText',
   'text',
   'afterText',
-  'beforeChange',
-  'finish'
+  'beforeChange'
 ] as const
 
 export type SendCodeProps = ExtractPropTypes<typeof sendCodeProps>
@@ -55,9 +60,9 @@ export default defineComponent({
   name,
   props: sendCodeProps,
   setup(props, { slots }) {
-    const beforeText = toRef(() => props.beforeText || $t('send-code.text.before'))
-    const text = toRef(() => props.text || $t('send-code.text.default'))
-    const afterText = toRef(() => props.afterText || $t('send-code.text.after'))
+    const beforeText = toRef(() => props.beforeText)
+    const text = toRef(() => props.text)
+    const afterText = toRef(() => props.afterText)
     const state = reactive({
       interval: props.interval,
       disabled: false,

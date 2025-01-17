@@ -5,7 +5,7 @@ import { defineComponent } from 'vue'
 import { Result } from '@/components/result'
 
 export default defineComponent({
-  name: 'NotFound',
+  name: 'NotFoundPage',
   setup() {
     return () => (
       <div class="h-screen flex flex-col items-center justify-center">

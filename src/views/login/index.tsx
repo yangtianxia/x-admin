@@ -2,13 +2,13 @@
 import { defineComponent } from 'vue'
 
 // Common
-import { LOCALE_OPTIONS } from '@/locale'
-import { useLocale } from '@/hooks/locale'
-import { THEME_OPTIONS, useTheme } from '@/hooks/theme'
+import { useAppStore } from '@/store'
+import { useTheme } from '@/hooks/theme'
+import { THEME_OPTIONS } from '@/constant/theme'
 
 // Components
 import { Icon } from '@/components/icon'
-import { Dropdown, Menu, Divider } from 'ant-design-vue'
+import { Dropdown, Menu } from 'ant-design-vue'
 import LayoutFooter from '@/layout/components/footer'
 import LoginBanner from './components/banner'
 import LoginForm from './components/form'
@@ -16,8 +16,7 @@ import LoginForm from './components/form'
 export default defineComponent({
   name: 'LoginPage',
   setup() {
-    const locales = [...LOCALE_OPTIONS]
-    const { changeLocale } = useLocale()
+    const appStore = useAppStore()
     const { currentTheme, changeTheme } = useTheme()
 
     return () => (
@@ -25,42 +24,19 @@ export default defineComponent({
         <div class="z-10 absolute top-6 left-6 max-xl:left-4 flex items-center">
           <img
             src="/logo.png"
-            alt={$t('global.title')}
+            alt={import.meta.env.VITE_TITLE}
             class="w-8"
           />
-          <h4 class="text-white/90 max-md:text text-h4 ml-2 mr-1">{$t('global.title')}</h4>
+          <h4 class="text-white/90 max-md:text text-h4 ml-2 mr-1">{import.meta.env.VITE_TITLE}</h4>
         </div>
         <div class="z-10 absolute top-6 right-6 max-xl:right-6 flex items-center">
-          <Dropdown
-            placement="bottom"
-            trigger="click"
-            overlayStyle={{zIndex: 1070}}
-            overlay={(
-              <Menu onClick={({ key }) => changeLocale(key as string)}>
-                {locales.map((item) => (
-                  <Menu.Item key={item.value}>
-                    {item.label}
-                  </Menu.Item>
-                ))}
-              </Menu>
-            )}
-          >
-            <div class="cursor-pointer inline-flex items-center text hover:text-tertiary">
-              <Icon type="Translate" />
-              <span class="text-sm ml-1">{$t('login.locale')}</span>
-            </div>
-          </Dropdown>
-          <Divider
-            class="border-100 mx-3"
-            type="vertical"
-          />
           <Dropdown
             placement="bottomRight"
             trigger="click"
             overlayStyle={{zIndex: 1070}}
             overlay={(
               <Menu onClick={({ key }) => changeTheme(key as string)}>
-                {THEME_OPTIONS.value.map((item) => (
+                {THEME_OPTIONS.map((item) => (
                   <Menu.Item
                     key={item.value}
                     class={currentTheme.value === item.value ? '!text-primary' : null}
@@ -84,7 +60,7 @@ export default defineComponent({
                 class="!hidden dark:!inline-block"
                 type="Moon"
               />
-              <span class="text-sm ml-1">{$t('login.theme')}</span>
+              <span class="text-sm ml-1">主题</span>
             </div>
           </Dropdown>
         </div>
@@ -93,9 +69,11 @@ export default defineComponent({
         </div>
         <div class="relative flex-1 min-w-0 max-xl:min-w-[420px] max-md:min-w-full flex justify-center items-center px-6 pb-10 bg-container">
           <LoginForm />
-          <div class="absolute left-0 bottom-0 w-full h-10 flex items-center justify-center">
-            <LayoutFooter />
-          </div>
+          {appStore.footer ? (
+            <div class="absolute left-0 bottom-0 w-full h-10 flex items-center justify-center">
+              <LayoutFooter />
+            </div>
+          ) : null}
         </div>
       </div>
     )

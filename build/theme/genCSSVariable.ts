@@ -1,9 +1,9 @@
 import { camelToKebab } from '@txjs/shared'
-import { LightTheme } from './seed'
+import { lightTheme } from './seed'
 import filterExceptColor from './filterExceptColor'
 import toHex from './toHex'
 
-const WhiteList = [
+const whiteList = [
   'wireframe',
   'motionUnit',
   'lineType',
@@ -88,13 +88,7 @@ const genCSSVariable = (seedToken: Record<string, any>, isLight = true) => {
     .keys(seedToken)
     .reduce(
       (ret, key) => {
-        if (!WhiteList.includes(key)) {
-          let value = seedToken[key]
-          if (needToPx(key)) {
-            value = addUtil(value)
-          } else if (needToHex(key)) {
-            value = toHex(value)
-          }
+        if (!whiteList.includes(key)) {
           ret.push(`--${camelToKebab(key)}: ${getSeedValueByKey(key, seedToken)}`)
         }
         return ret
@@ -103,8 +97,8 @@ const genCSSVariable = (seedToken: Record<string, any>, isLight = true) => {
     .join(';')
 }
 
-export const withCSSVariable = (token: keyof typeof LightTheme) => {
-  return `var(--${camelToKebab(token)}) /* ${getSeedValueByKey(token, LightTheme)} */`
+export const withCSSVariable = (token: keyof typeof lightTheme) => {
+  return `var(--${camelToKebab(token)}) /* ${getSeedValueByKey(token, lightTheme)} */`
 }
 
 export default genCSSVariable

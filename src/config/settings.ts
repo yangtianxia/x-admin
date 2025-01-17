@@ -2,16 +2,11 @@ const settings = {
   theme: 'light',
   colorScheme: 'light',
   header: true,
-  menu: true,
-  topMenu: false,
-  hideMenu: false,
-  menuCollapse: false,
-  footer: true,
-  menuWidth: 220,
-  menuCollapseWidth: 60,
   headerHeight: 60,
-  menuFromServer: false,
-  serverMenu: []
+  sider: true,
+  footer: true,
+  siderCollapsed: false,
+  siderWidths: [60, 220]
 }
 
 export default settings

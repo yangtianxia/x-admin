@@ -1,4 +1,4 @@
-import { TOKEN_KEY } from './constant'
+import { TOKEN_KEY } from '@/constant/auth'
 
 export const isLogin = () => {
   return !!localStorage.getItem(TOKEN_KEY)

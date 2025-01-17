@@ -1,10 +1,3 @@
-// Types
-import type {
-  StrokeLinejoin,
-  StrokeLinecap,
-  Theme
-} from './types'
-
 // Vue
 import {
   defineComponent,
@@ -15,6 +8,7 @@ import {
 // Common
 import { camelize } from '@txjs/shared'
 import { isNil } from '@txjs/bool'
+import { printWarn } from '@/shared/utils'
 
 // Component utils
 import { IconProvider, DEFAULT_ICON_CONFIGS } from '@icon-park/vue-next/lib/runtime'
@@ -24,11 +18,18 @@ import {
   type IconMapCamel
 } from './map'
 
-const [name] = $bem('icon')
+// Types
+import type {
+  StrokeLinejoin,
+  StrokeLinecap,
+  Theme
+} from './types'
+
+const [name] = $bem('x-icon')
 
 const iconProps = {
   type: {
-    type: String as PropType <IconMap>,
+    type: String as PropType<IconMap>,
     required: true as const
   },
   spin: Boolean,
@@ -52,16 +53,17 @@ export default defineComponent({
     })
 
     return () => {
-      const { type, ...partial } = props
+      const { type, ...rest } = props
       const name = camelize(`-${type}`) as IconMapCamel
       const Icon = icons[name]
 
       if (isNil(Icon)) {
-        throw new Error('Icon '.concat(type, ' 图标类型无效'))
+        printWarn(`"${type}" 图标类型无效，请添加`)
+        return null
       }
 
       return (
-        <Icon {...partial} />
+        <Icon {...rest} />
       )
     }
   }

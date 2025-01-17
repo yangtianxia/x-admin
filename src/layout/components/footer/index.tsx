@@ -9,7 +9,9 @@ export default defineComponent({
   setup() {
     return () => (
       <p class="text-quaternary text-sm text-center">
-        <a href="https://github.com/yangtianxia/x-admin" target="_blank"><Icon type="GithubOne" /> x-admin</a>
+        <a href="https://github.com/yangtianxia/x-admin" target="_blank">
+          <Icon type="GithubOne" /> x-admin
+        </a>
       </p>
     )
   }

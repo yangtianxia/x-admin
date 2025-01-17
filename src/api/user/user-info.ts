@@ -1,4 +1,4 @@
-import type { UserState } from '@/stores/modules/user/types'
+import type { UserState } from '@/store/modules/user/types'
 
 /** 用户资料 */
 export async function getUserInfo() {

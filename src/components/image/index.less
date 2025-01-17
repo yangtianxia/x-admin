@@ -1,15 +1,7 @@
-@image-cls: ~'@{prefix}-image';
-
-:root {
-  --image-w: 200px;
-  --image-h: 120px;
-  --image-fill: var(--color-fill-secondary);
-}
+@image-cls: x-image;
 
 .@{image-cls} {
-  @apply relative inline-block align-top;
-  width: var(--image-w);
-  height: var(--image-h);
+  @apply relative inline-block align-top w-52 h-28;
 
   &--block {
     @apply block;
@@ -43,8 +35,7 @@
 
   &__loading,
   &__error {
-    @apply absolute top-0 left-0;
-    background-color: var(--image-fill);
+    @apply absolute top-0 left-0 bg-fill-secondary;
 
     &-icon {
       @apply absolute top-2/4 left-2/4 w-2/3 h-2/3 flex flex-col items-center justify-center;

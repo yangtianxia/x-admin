@@ -16,7 +16,12 @@ import { createHtmlPlugin } from 'vite-plugin-html'
 import { vitePluginFakeServer } from 'vite-plugin-fake-server'
 
 // Theme
-import { LightTheme, DarkTheme, seedToken, genCSSVariable } from './build/theme'
+import {
+  lightTheme,
+  darkTheme,
+  seedToken,
+  genCSSVariable
+} from './build/theme'
 
 // Package
 import { version } from './package.json'
@@ -27,10 +32,30 @@ const resolve = (path: string) => {
 
 export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd())
+  const isDev = mode === 'development'
   const isServer = command === 'serve'
   const isMockEnabled = env.VITE_MOCK === 'true'
 
+  const currentApi = () => {
+    return !isMockEnabled
+      ? isDev
+        ? env.VITE_PROXY_API
+        : env.VITE_API
+      : ''
+  }
+
+  const currentRemote = () => {
+    return isDev
+      ? env.VITE_PROXY_REMOTE
+      : env.VITE_REMOTE
+  }
+
   const config = {
+    define: {
+      'import.meta.env.MOCK': isMockEnabled,
+      'import.meta.env.API': JSON.stringify(currentApi()),
+      'import.meta.env.REMOTE': JSON.stringify(currentRemote())
+    },
     server: {
       hmr: true,
       open: true,
@@ -48,10 +73,7 @@ export default defineConfig(({ mode, command }) => {
           math: 'always',
           relativeUrls: true,
           javascriptEnabled: true,
-          charset: false,
-          modifyVars: {
-            '@prefix': 'x'
-          }
+          charset: false
         }
       },
       modules: {
@@ -73,20 +95,19 @@ export default defineConfig(({ mode, command }) => {
         output: {
           manualChunks: {
             txjs: ['@txjs/bem', '@txjs/bool', '@txjs/make', '@txjs/shared', '@txjs/validator'],
-            vue: ['vue', 'vue-router', 'pinia', 'vue-i18n']
+            vue: ['vue', 'vue-router', 'pinia']
           }
         }
       }
     },
     plugins: [
       Vue(),
+      Legacy(),
       VueJSX({
         isCustomElement: (tag) => tag.startsWith('custom')
       }),
-      Legacy(),
       Inject({
         $bem: '@txjs/bem',
-        $t: resolve('./src/locale/t.ts'),
         $http: resolve('./src/shared/http.ts')
       }),
       vitePluginFakeServer({
@@ -103,21 +124,11 @@ export default defineConfig(({ mode, command }) => {
           tags: [
             {
               injectTo: 'head',
-              tag: 'meta',
+              tag: 'style',
               attrs: {
-                name: 'theme-color',
-                content: LightTheme.colorBgContainer,
-                media: '(prefers-color-scheme: light)'
-              }
-            },
-            {
-              injectTo: 'head',
-              tag: 'meta',
-              attrs: {
-                name: 'theme-color',
-                content: DarkTheme.colorBgContainer,
-                media: '(prefers-color-scheme: dark)'
-              }
+                type: 'text/css'
+              },
+              children: `:root{${genCSSVariable(lightTheme)}}`
             },
             {
               injectTo: 'head',
@@ -125,15 +136,7 @@ export default defineConfig(({ mode, command }) => {
               attrs: {
                 type: 'text/css'
               },
-              children: `:root { ${genCSSVariable(LightTheme)} }`
-            },
-            {
-              injectTo: 'head',
-              tag: 'style',
-              attrs: {
-                type: 'text/css'
-              },
-              children: `.dark { ${genCSSVariable(DarkTheme, false)} }`
+              children: `.dark{${genCSSVariable(darkTheme, false)}}`
             },
             {
               injectTo: 'body',
@@ -166,6 +169,21 @@ export default defineConfig(({ mode, command }) => {
             changeOrigin: true,
             ws: true,
             rewrite: (path: string) => path.replace(new RegExp(`^${env.VITE_PROXY_API}`), '')
+          }
+        }
+      }
+    })
+  }
+
+  if (env.VITE_PROXY_REMOTE && env.VITE_REMOTE) {
+    extend(true, config, {
+      server: {
+        proxy: {
+          [env.VITE_PROXY_RESOURCE]: {
+            target: env.VITE_RESOURCE,
+            changeOrigin: true,
+            ws: true,
+            rewrite: (path: string) => path.replace(new RegExp(`^${env.VITE_PROXY_RESOURCE}`), '')
           }
         }
       }

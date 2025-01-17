@@ -29,7 +29,7 @@ import { addUnit, getSizeStyle } from '../_utils/style'
 // Types
 import type { ImageFit, ImagePosition } from './types'
 
-const [name, bem] = $bem('image')
+const [name, bem] = $bem('x-image')
 
 const imageProps = {
   src: String,

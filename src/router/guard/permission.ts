@@ -1,65 +1,103 @@
-import type { Router, RouteRecordNormalized } from 'vue-router'
-import NProgress from 'nprogress'
-import { useAppStore, useUserStore } from '@/stores'
-import { usePermission } from '@/hooks/permission'
-import { useMenuTree } from '@/hooks/menu-tree'
-import { useRedirectUri } from '@/hooks/redirect'
+import type { Router } from 'vue-router'
+import { h } from 'vue'
+import { Modal } from 'ant-design-vue'
+import { isUndefined, isHttpUrl } from '@txjs/bool'
 
-import { appRoutes } from '../routes'
-import { WHITE_LIST, NOT_FOUND_ROUTE } from '../constant'
+import { useUserStore, useRouteStore } from '@/store'
+import { msgWrap } from '@/shared/http'
+import { isLogin } from '@/shared/auth'
+import {
+  REDIRECT_URI,
+  LOGIN_NAME,
+  DEFAULT_ROUTE
+} from '@/constant/route'
+
+/** 免登录白名单 */
+const whiteList = ['/login']
+
+const notifyHandler = (error: any) => {
+  Modal.error({
+    centered: true,
+    title: '加载异常',
+    content: h('div', [
+      h('p', `状态：${error.code}`),
+      h('p', `原因：${msgWrap(error)}`)
+    ]),
+    okText: '刷新',
+    onOk() {
+      window.location.reload()
+    }
+  })
+}
+
+/** 是否已经生成过路由表 */
+let hasRouteFlag = false
+export const resetHasRouteFlag = () => {
+  hasRouteFlag = false
+}
 
 export default function setupPermissionGuard(router: Router) {
   router.beforeEach(async (to, from, next) => {
-    const appStore = useAppStore()
     const userStore = useUserStore()
-    const menuTree = useMenuTree()
-    const permission = usePermission()
-    const permissionsAllow = permission.accessRouter(to)
-    const redirectUri = useRedirectUri(to)
+    const routeStore = useRouteStore()
 
-    if (appStore.menuFromServer) {
-      if (
-        !appStore.appAsyncMenus.length &&
-        (!WHITE_LIST.find((el) => el.name === to.name) || !permission.accessRightsAfterAuth(to))
-      ) {
-        await appStore.fetchServerMenuConfig()
-      }
-
-      const serverMenuConfig = [...appStore.appAsyncMenus, ...WHITE_LIST]
-
-      let exist = false
-      while (serverMenuConfig.length && !exist) {
-        const element = serverMenuConfig.shift()
-        if (element?.name === to.name) {
-          exist = true
+    const nextLogin = () => {
+      next({
+        name: LOGIN_NAME,
+        query: {
+          [REDIRECT_URI]: to.fullPath
         }
-        if (element?.children) {
-          serverMenuConfig.push(
-            ...(element.children as unknown as RouteRecordNormalized[])
-          )
-        }
-      }
-
-      if (exist && permissionsAllow) {
-        next()
-      } else if (redirectUri) {
-        next({ path: redirectUri })
-      } else {
-        const serverFirstMenu = menuTree.value[0]
-        const destination = serverFirstMenu ? { name: serverFirstMenu.name } : NOT_FOUND_ROUTE
-        next(destination)
-      }
-    } else {
-      if (permissionsAllow) {
-        next()
-      } else if (redirectUri) {
-        next({ path: redirectUri })
-      } else {
-        const destination = permission.findFirstPermissionRoute(appRoutes, userStore.roles) || NOT_FOUND_ROUTE
-        next(destination)
-      }
+      })
     }
 
-    NProgress.done()
+    if (isLogin()) {
+      // 拦截已登录禁止访问页面
+      if (to.meta.authNoAccessAfter !== true) {
+        // 获取登录用户数据
+        if (!userStore.hasUserInfo) {
+          try {
+            await userStore.getUserInfo()
+          } catch (error: any) {
+            if (isUndefined(error.code)) {
+              userStore.logoutCallback()
+              nextLogin()
+            } else {
+              notifyHandler(error)
+            }
+          }
+        }
+        // 获取路由数据
+        if (!hasRouteFlag) {
+          try {
+            const accessRoutes = await routeStore.generateRoutes()
+            accessRoutes.forEach((route) => {
+              if (!isHttpUrl(route.path)) {
+                router.addRoute(route)
+              }
+            })
+            hasRouteFlag = true
+            next({ ...to, replace: true })
+          } catch (error: any) {
+            if (isUndefined(error.code)) {
+              userStore.logoutCallback()
+              nextLogin()
+            } else {
+              notifyHandler(error)
+            }
+          }
+        } else {
+          next()
+        }
+      } else {
+        next(DEFAULT_ROUTE)
+      }
+    } else {
+      // 白名单路由直接访问
+      if (whiteList.includes(to.path)) {
+        next()
+      } else {
+        nextLogin()
+      }
+    }
   })
 }

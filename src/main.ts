@@ -1,28 +1,15 @@
 import 'ant-design-vue/dist/reset.css'
-import 'nprogress/nprogress.css'
 import '@/global.less'
-import 'dayjs/locale/zh-cn'
 
 import { createApp } from 'vue'
-import dayjs from 'dayjs'
 import { message, notification } from 'ant-design-vue'
-import { useTheme } from '@/hooks/theme'
 
 import app from '@/App'
 import router from '@/router'
-import store from '@/stores'
+import store from '@/store'
 import directive from '@/directive'
-import i18n from '@/locale'
+import { useTheme } from '@/hooks/theme'
 import { Lazyload } from '@/components/lazy-load'
-
-// bem配置
-$bem.config({
-  mode: import.meta.env.DEV ? 'always' : 'match',
-  prefix: 'x'
-})
-
-// dayjs语言配置
-dayjs.locale('zh-cn')
 
 // message配置
 message.config({
@@ -41,7 +28,6 @@ createApp(app)
   .use(router)
   .use(store)
   .use(directive)
-  .use(i18n)
   .mount('#app')
   .$nextTick(() => {
     useTheme().loadTheme()

@@ -1,6 +1,6 @@
 import type { PropType } from 'vue'
 import type { ResultStatus } from './types'
-import { useLocal } from '@/hooks/assets'
+import { assetUrl } from '@/shared/asset'
 
 import img404 from './image/404.svg'
 import img500 from './image/500.svg'
@@ -16,20 +16,20 @@ export const resultSharedProps = {
 
 export const resultStatusConfig = {
   404: {
-    title: $t('result.title.404'),
-    image: useLocal(img404)
+    title: '页面不存在或已删除',
+    image: assetUrl(img404)
   },
   500: {
-    title: $t('result.title.500'),
-    image: useLocal(img500)
+    title: '抱歉，服务请求异常',
+    image: assetUrl(img500)
   },
   network: {
-    title: $t('result.title.network'),
-    image: useLocal(imgNetwork)
+    title: '网络异常，请检查设备网络连接',
+    image: assetUrl(imgNetwork)
   },
   error: {
-    title: $t('result.title.error'),
-    image: useLocal(imgError)
+    title: '抱歉，访问发生错误',
+    image: assetUrl(imgError)
   }
 } as const
 

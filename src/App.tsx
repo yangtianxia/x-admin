@@ -1,34 +1,26 @@
 // Vue
-import { defineComponent, computed } from 'vue'
+import { defineComponent } from 'vue'
 
 // Common
+import dayjs from 'dayjs'
 import { RouterView } from 'vue-router'
-import { useLocale } from '@/hooks/locale'
 import { useTheme } from '@/hooks/theme'
 
 // Components
 import { ConfigProvider } from 'ant-design-vue'
 import zhCN from 'ant-design-vue/es/locale/zh_CN'
-import enUS from 'ant-design-vue/es/locale/en_US'
+
+// dayjs语言配置
+import 'dayjs/locale/zh-cn'
+dayjs.locale('zh-cn')
 
 export default defineComponent({
   setup () {
-    const { currentLocale } = useLocale()
     const { currentMapToken } = useTheme()
-
-    const locale = computed(() => {
-      switch (currentLocale.value) {
-        case 'zh-CN':
-          return zhCN
-        default:
-        case 'en-US':
-          return enUS
-      }
-    })
 
     return () => (
       <ConfigProvider
-        locale={locale.value}
+        locale={zhCN}
         theme={{token: currentMapToken.value}}
       >
         <RouterView />
