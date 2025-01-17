@@ -26,6 +26,9 @@ importers:
       '@txjs/types':
         specifier: ^1.0.0
         version: 1.0.0
+      '@txjs/validator':
+        specifier: ^1.1.1
+        version: 1.1.1
       '@vant/use':
         specifier: ^1.6.0
         version: 1.6.0(vue@3.5.13(typescript@5.7.2))
@@ -1230,14 +1233,23 @@ packages:
   '@txjs/bool@1.0.2':
     resolution: {integrity: sha512-1lXLlEMJKcXwTqLTq6L13xUXjE1VIIbJAd3kYH7JPK8d0luzMvNnJI4jpklyVdU8x/h10LrMYrJDXdujdwn+0w==}
 
+  '@txjs/bool@1.0.3':
+    resolution: {integrity: sha512-emIXcVk7PF/7vJb5U6O5REgaaZMOjK/VP1u0N8ucxLwiGdLNE6y+bMT08kfozWE4q26R48Wd7r4IBwRGLNd9jQ==}
+
   '@txjs/make@1.0.0':
     resolution: {integrity: sha512-c+8alNaEOG5B+VR4M6pwNBamSY5ALVyC9UgzXhm+BD6TfcJUNTBSclkFnprNHI8y7rbwVvqpqtf7arNmaQvoFA==}
 
   '@txjs/shared@1.0.4':
     resolution: {integrity: sha512-K87tXTsr/vpRMf/OCLT16DQfu7fXjkSbyl9O2/d0SBrbQM7KYzzQfQm10T28lBKLYTX9XboUfYaybJRGf91cbg==}
 
+  '@txjs/shared@1.0.5':
+    resolution: {integrity: sha512-lJwI6wRBUIzuQ5+54XCqz30QNEjujoXf5KpzzXDkGe0xvekFe+PpKA2BCsvPhkkvR9DjbbDPV9fFRyy0n1gb1Q==}
+
   '@txjs/types@1.0.0':
     resolution: {integrity: sha512-TGzDDhvrqVK0/QxwcP9cgbAmEWPMkFUY+QyMK4EVMjInCiJ3MVEcAhd6H6IVzawnI8/lAZSdPtu0rXrUxhPFxA==}
+
+  '@txjs/validator@1.1.1':
+    resolution: {integrity: sha512-SZKZZal+lzSRZmi1My1Hrpu5nIywpIdYxCsQTf2hBTCrJUPxI6w/uX2wB85lrLIMlvlR/B/NIy7RZ8Rqsu0hSw==}
 
   '@types/ejs@3.1.5':
     resolution: {integrity: sha512-nv+GSx77ZtXiJzwKdsASqi+YQ5Z7vwHsTP0JY2SiQgjGckkBRKZnk8nIM+7oUZ1VCtuTz0+By4qVR7fqzp/Dfg==}
@@ -4414,6 +4426,8 @@ snapshots:
 
   '@txjs/bool@1.0.2': {}
 
+  '@txjs/bool@1.0.3': {}
+
   '@txjs/make@1.0.0': {}
 
   '@txjs/shared@1.0.4':
@@ -4421,7 +4435,18 @@ snapshots:
       '@txjs/bool': 1.0.2
       shallow-clone: 3.0.1
 
+  '@txjs/shared@1.0.5':
+    dependencies:
+      '@txjs/bool': 1.0.3
+      shallow-clone: 3.0.1
+
   '@txjs/types@1.0.0': {}
+
+  '@txjs/validator@1.1.1':
+    dependencies:
+      '@txjs/bool': 1.0.3
+      '@txjs/shared': 1.0.5
+      extend: 3.0.2
 
   '@types/ejs@3.1.5': {}
 

@@ -39,6 +39,7 @@
     "@txjs/make": "^1.0.0",
     "@txjs/shared": "^1.0.4",
     "@txjs/types": "^1.0.0",
+    "@txjs/validator": "^1.1.1",
     "@vant/use": "^1.6.0",
     "ant-design-vue": "^4.2.6",
     "axios": "^1.7.9",
