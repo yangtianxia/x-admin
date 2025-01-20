@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { resetRouter } from '@/router'
 import { setToken, clearToken } from '@/shared/auth'
 import { removeRouteListener } from '@/shared/route-listener'
 import { TOKEN_HEAD_KEY, REQUEST_TOKEN_KEY } from '@/constant/http'
@@ -78,6 +79,7 @@ const useUserStore = defineStore('user', {
     logoutCallback() {
       this.resetInfo()
       clearToken()
+      resetRouter()
       removeRouteListener()
     },
     async logout() {
