@@ -27,14 +27,6 @@ export const constantRoutes: RouteRecordRaw[] = [
         meta: {
           title: '工作台'
         }
-      },
-      {
-        path: '/dashboard/theme',
-        name: 'DashboardTheme',
-        component: () => import('@/views/dashboard/theme'),
-        meta: {
-          title: '主题'
-        }
       }
     ]
   },
