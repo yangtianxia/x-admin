@@ -9,13 +9,15 @@ import { getMenuList, type MenuItem } from '@/api/app/menu'
 
 import type { RouteState } from './types'
 
+const NotFoundBase = () => import('@/views/not-found/base')
+
 const layoutComponentMap = {
   Layout: DEFAULT_LAYOUT,
-  ParentView: () => import('@/components/parent-view')
+  Parent: () => import('@/components/parent-view')
 }
 
 const transformComponentView = (component: string) => {
-  return layoutComponentMap[component as keyof typeof layoutComponentMap] || asyncRouteModules[component]
+  return layoutComponentMap[component as keyof typeof layoutComponentMap] || asyncRouteModules[component] || NotFoundBase
 }
 
 const formatAsyncRoutes = (menus: MenuItem[]) => {
@@ -59,7 +61,6 @@ const formatAsyncRoutes = (menus: MenuItem[]) => {
       }
 
       routes.push(route)
-
       return routes
     }, [] as RouteRecordRaw[]
   )
