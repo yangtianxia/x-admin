@@ -199,13 +199,13 @@ export default defineComponent({
               htmlType="submit"
               loading={formModel.loading}
               disabled={formModel.loading}
-              >登录</Button>
+            >登录</Button>
             <Button
               block
               type="text"
               class="text-tertiary mt-2"
               onClick={onLoginMethodSwitch}
-              >{isPwd.value ? '验证码' : '密码'}登录</Button>
+            >{isPwd.value ? '验证码' : '密码'}登录</Button>
           </div>
         </Form>
       </div>
