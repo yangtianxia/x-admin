@@ -1,5 +1,7 @@
 import { default as LeftC } from '@icon-park/vue-next/lib/icons/LeftC'
+import { default as Left } from '@icon-park/vue-next/lib/icons/Left'
 import { default as RightC } from '@icon-park/vue-next/lib/icons/RightC'
+import { default as Right } from '@icon-park/vue-next/lib/icons/Right'
 import { default as Translate } from '@icon-park/vue-next/lib/icons/Translate'
 import { default as People } from '@icon-park/vue-next/lib/icons/People'
 import { default as Lock } from '@icon-park/vue-next/lib/icons/Lock'
@@ -22,7 +24,9 @@ import { default as Setting } from '@icon-park/vue-next/lib/icons/Setting'
 
 export const icons = {
   LeftC,
+  Left,
   RightC,
+  Right,
   Translate,
   People,
   Lock,
