@@ -24,7 +24,7 @@ import {
 } from './build/theme'
 
 // Package
-import { version } from './package.json'
+import pkg from './package.json'
 
 const resolve = (path: string) => {
   return fileURLToPath(new URL(path, import.meta.url))
@@ -120,15 +120,19 @@ export default defineConfig(({ mode, command }) => {
       createHtmlPlugin({
         minify: true,
         inject: {
-          data: { version },
           tags: [
             {
               injectTo: 'head',
-              tag: 'style',
+              tag: 'meta',
               attrs: {
-                type: 'text/css'
-              },
-              children: `:root{${genCSSVariable(lightTheme)}}`
+                name: 'version',
+                content: pkg.version
+              }
+            },
+            {
+              injectTo: 'head',
+              tag: 'title',
+              children: env.VITE_TITLE || pkg.name
             },
             {
               injectTo: 'head',
@@ -136,7 +140,7 @@ export default defineConfig(({ mode, command }) => {
               attrs: {
                 type: 'text/css'
               },
-              children: `.dark{${genCSSVariable(darkTheme, false)}}`
+              children: `:root{${genCSSVariable(lightTheme)}} .dark{${genCSSVariable(darkTheme, false)}}`
             },
             {
               injectTo: 'body',
