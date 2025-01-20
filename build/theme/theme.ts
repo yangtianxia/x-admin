@@ -28,7 +28,7 @@ export const genDefaultColorMapToken = (seedToken: Record<string, any>) => {
     )
 }
 
-const AliasMapping: Record<string, string> = {
+const aliasMap: Record<string, string> = {
   'bg': 'backgroundColor',
   'border': 'borderColor',
   'text': 'textColor'
@@ -49,7 +49,7 @@ export const genPresetColorMapToken = (seedToken: Record<string, any>) => {
           // ['hover']
           // ['active']
           const [str1, str2] = camelToKebab(trimKey).split('-')
-          const type = AliasMapping[str1] || 'colors'
+          const type = aliasMap[str1] || 'colors'
           const colorMap = ret[type][name] ??= {}
           if (str2) {
             colorMap[str2] = value
@@ -70,8 +70,8 @@ export const genPresetColorMapToken = (seedToken: Record<string, any>) => {
     )
 }
 
-const AntDesignThemeColor = genPresetColorMapToken(lightTheme)
+const themeColor = genPresetColorMapToken(lightTheme)
 
-shallowMerge(AntDesignThemeColor.colors, genDefaultColorMapToken(lightTheme))
+shallowMerge(themeColor.colors, genDefaultColorMapToken(lightTheme))
 
-export { AntDesignThemeColor }
+export { themeColor }

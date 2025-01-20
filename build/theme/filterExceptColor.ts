@@ -1,9 +1,9 @@
 import { defaultPresetColorKeys } from './seed'
 
-const prefixList = [...defaultPresetColorKeys, 'color']
+const whiteList = [...defaultPresetColorKeys, 'color']
 
-const isIncludeColor = (key: string) => {
-  return prefixList.find((item) => key.startsWith(item))
+const isColor = (key: string) => {
+  return whiteList.find((item) => key.startsWith(item))
 }
 
 const filterExceptColor = (seedToken: Record<string, any>) => {
@@ -11,7 +11,7 @@ const filterExceptColor = (seedToken: Record<string, any>) => {
     .keys(seedToken)
     .reduce(
       (ret, key) => {
-        const resultKey = isIncludeColor(key)
+        const resultKey = isColor(key)
         if (resultKey) {
           ret[key] = seedToken[key]
         }

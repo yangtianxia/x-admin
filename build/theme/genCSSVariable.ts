@@ -20,7 +20,7 @@ const whiteList = [
   'sizePopupArrow'
 ]
 
-const PxKeys = [
+const pxKeyList = [
   'lineWidth',
   'fontSize',
   'fontSizeSM',
@@ -51,7 +51,7 @@ const PxKeys = [
   'controlHeightLG'
 ]
 
-const HexKeys = [
+const colorKeyList = [
   'colorText',
   'colorTextSecondary',
   'colorTextTertiary',
@@ -59,11 +59,11 @@ const HexKeys = [
 ]
 
 const needToPx = (key: string) => {
-  return PxKeys.includes(key)
+  return pxKeyList.includes(key)
 }
 
 const needToHex = (key: string) => {
-  return HexKeys.includes(key)
+  return colorKeyList.includes(key)
 }
 
 const addUtil = (value: number) => {
