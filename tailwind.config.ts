@@ -3,12 +3,12 @@ import plugin from 'tailwindcss/plugin'
 import colors from 'tailwindcss/colors'
 import theme from 'tailwindcss/defaultTheme'
 import scrollbar from 'tailwind-scrollbar'
-import { AntDesignThemeColor, withCSSVariable } from './build/theme'
+import { themeColor, withCSSVariable } from './build/theme'
 
 const config: Config = {
   mode: 'jit',
   darkMode: ['class'],
-  content: ["./src/**/*.{vue,js,ts,jsx,tsx}"],
+  content: ['./src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     colors: {
       inherit: colors.inherit,
@@ -18,7 +18,7 @@ const config: Config = {
       black: colors.black
     },
     extend: {
-      ...AntDesignThemeColor,
+      ...themeColor,
       textColor: {
         DEFAULT: withCSSVariable('colorText'),
         secondary: withCSSVariable('colorTextSecondary'),
@@ -90,7 +90,7 @@ const config: Config = {
         md: withCSSVariable('sizeMD'),
         lg: withCSSVariable('sizeLG'),
         xl: withCSSVariable('sizeXL'),
-        xxl: withCSSVariable('sizeXXS')
+        xxl: withCSSVariable('sizeXXL')
       },
       lineHeight: {
         DEFAULT: withCSSVariable('lineHeight'),
