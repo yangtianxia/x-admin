@@ -82,7 +82,7 @@ export const flatMultiLevelRoutes = (routes: RouteRecordRaw[]) => {
   })
 }
 
-const useRouteStore = defineStore('route', {
+const useRouteStore = defineStore('x_admin_route', {
   state: (): RouteState => ({
     routes: [],
     asyncRoutes: []

@@ -16,7 +16,7 @@ import { postLogout } from '@/api/user/logout'
 
 import type { UserState } from './types'
 
-const useUserStore = defineStore('user', {
+const useUserStore = defineStore('x_admin_user', {
   state: (): UserState => ({
     id: undefined,
     name: undefined,
