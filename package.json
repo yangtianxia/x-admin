@@ -1,7 +1,7 @@
 {
   "name": "x-admin",
   "description": "一个基于Vue3生态打造的后台应用模版",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "type": "module",
   "private": true,
   "scripts": {
@@ -48,6 +48,7 @@
     "mitt": "^3.0.1",
     "nprogress": "^0.2.0",
     "pinia": "^2.3.0",
+    "pinia-plugin-persistedstate": "^4.2.0",
     "qs": "^6.13.1",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
