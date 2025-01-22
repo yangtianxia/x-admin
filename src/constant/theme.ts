@@ -1,6 +1,3 @@
-/** 网站主题 */
-export const THEME_KEY = 'x_admin_theme'
-
 /** 明亮模式 */
 export const THEME_LIGHT = 'light'
 

@@ -4,7 +4,7 @@ import { defineComponent } from 'vue'
 // Common
 import dayjs from 'dayjs'
 import { RouterView } from 'vue-router'
-import { useTheme } from '@/hooks/theme'
+import { useAppStore } from '@/store'
 
 // Components
 import { ConfigProvider } from 'ant-design-vue'
@@ -16,12 +16,12 @@ dayjs.locale('zh-cn')
 
 export default defineComponent({
   setup () {
-    const { currentMapToken } = useTheme()
+    const appStore = useAppStore()
 
     return () => (
       <ConfigProvider
         locale={zhCN}
-        theme={{token: currentMapToken.value}}
+        theme={{token: appStore.seedToken}}
       >
         <RouterView />
       </ConfigProvider>

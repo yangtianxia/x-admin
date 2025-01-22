@@ -6,9 +6,8 @@ import {
 } from 'vue'
 
 // Common
-import { useUserStore } from '@/store'
+import { useAppStore, useUserStore } from '@/store'
 import { useRedirect } from '@/hooks/redirect'
-import { useTheme } from '@/hooks/theme'
 import { THEME_OPTIONS } from '@/constant/theme'
 
 // Components
@@ -24,12 +23,12 @@ import {
 export default defineComponent({
   name: 'LayoutHeader',
   setup() {
+    const appStore = useAppStore()
     const userStore = useUserStore()
-    const { currentTheme, changeTheme } = useTheme()
 
     const themeRef = ref<HTMLElement>()
 
-    const onBtnClick = (el: Ref<HTMLElement | undefined>) => {
+    const onClick = (el: Ref<HTMLElement | undefined>) => {
       const event = new MouseEvent('click', {
         view: window,
         bubbles: true,
@@ -71,7 +70,7 @@ export default defineComponent({
             >
               <Button
                 shape="circle"
-                onClick={() => onBtnClick(themeRef)}
+                onClick={() => onClick(themeRef)}
               >
                 <Icon
                   class="dark:hidden"
@@ -88,11 +87,11 @@ export default defineComponent({
               trigger="click"
               overlayStyle={{zIndex: 1070}}
               overlay={(
-                <Menu onClick={({ key }) => changeTheme(key as string)}>
+                <Menu onClick={({ key }) => appStore.switchTheme(key as string)}>
                   {THEME_OPTIONS.map((item) => (
                     <Menu.Item
                       key={item.value}
-                      class={currentTheme.value === item.value ? '!text-primary' : ''}
+                      class={appStore.isSelectedTheme(item.value) ? '!text-primary' : ''}
                     >
                       <Icon
                         class="mr-1"

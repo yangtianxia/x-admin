@@ -148,7 +148,7 @@ export default defineConfig(({ mode, command }) => {
               attrs: {
                 type: 'text/javascript'
               },
-              children: `window.seedToken = ${JSON.stringify(seedToken)}`
+              children: `window.SEED_TOKEN = ${JSON.stringify(seedToken)}`
             }
           ]
         }

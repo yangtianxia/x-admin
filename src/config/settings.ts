@@ -1,6 +1,6 @@
 const settings = {
-  theme: 'light',
   colorScheme: 'light',
+  systemTheme: false,
   header: true,
   headerHeight: 60,
   sider: true,

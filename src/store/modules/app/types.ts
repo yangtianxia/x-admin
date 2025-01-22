@@ -1,6 +1,6 @@
 export interface AppState {
-  theme: string
   colorScheme: string
+  systemTheme: boolean
   header: boolean
   headerHeight: number
   sider: boolean

@@ -19,7 +19,7 @@ declare global {
 
   const $bem: typeof import('@txjs/bem')['default']
   const $http: typeof import('../src/shared/http')['default']
-  const seedToken: Partial<SeedToken & Record<string, Partial<SeedToken>>>
+  const SEED_TOKEN: Partial<SeedToken & Record<string, Partial<SeedToken>>>
 
   interface RouterViewEvent {
     Component: any

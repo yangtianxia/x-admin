@@ -1,9 +1,12 @@
 import { createPinia } from 'pinia'
-import useAppStore from './modules/app'
+import persistedState from 'pinia-plugin-persistedstate'
+import useAppStore, { runAppStore } from './modules/app'
 import useRouteStore from './modules/route'
 import useUserStore from './modules/user'
 
 const pinia = createPinia()
 
-export { useAppStore, useRouteStore, useUserStore }
+pinia.use(persistedState)
+
+export { useAppStore, runAppStore, useRouteStore, useUserStore }
 export default pinia
