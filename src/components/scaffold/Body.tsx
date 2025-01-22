@@ -7,7 +7,6 @@ import {
 
 // Common
 import { notNil } from '@txjs/bool'
-import { throwError } from '@/shared/utils'
 
 // Components
 import { Spin } from 'ant-design-vue'
