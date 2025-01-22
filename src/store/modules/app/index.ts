@@ -1,11 +1,25 @@
 import { defineStore } from 'pinia'
+import { theme } from 'ant-design-vue'
+import { shallowMerge, cloneDeep } from '@txjs/shared'
 
 import defaultSettings from '@/config/settings'
-import { THEME_LIGHT, THEME_DARK } from '@/constant/theme'
+import { THEME_DARK, THEME_SYSTEM } from '@/constant/theme'
+import { rootElement } from '@/shared/element'
+import {
+  setThemeListener,
+  listenerThemeChange,
+  removeThemeListener
+} from '@/shared/theme-listener'
 
 import type { AppState } from './types'
 
-const useAppStore = defineStore('app', {
+const seedToken = shallowMerge({}, theme.defaultSeed, cloneDeep(SEED_TOKEN))
+
+const darkTheme = theme.darkAlgorithm(seedToken)
+
+const lightTheme = theme.defaultAlgorithm(seedToken)
+
+const useAppStore = defineStore('x_admin_app', {
   state: (): AppState => ({ ...defaultSettings }),
   getters: {
     appSettings(state: AppState) {
@@ -17,22 +31,60 @@ const useAppStore = defineStore('app', {
     siderCollapseWidth(state: AppState) {
       return state.siderWidths[0]
     },
-    isDark(state: AppState) {
-      return state.colorScheme === THEME_DARK
-    },
-    isLight(state: AppState) {
-      return state.colorScheme === THEME_LIGHT
-    },
+    seedToken(state: AppState) {
+      return state.colorScheme === THEME_DARK ? darkTheme : lightTheme
+    }
   },
   actions: {
-    updateSettings(partial: Partial<AppState>) {
-      // @ts-ignore
+    setSettings(partial: Partial<AppState>) {
       this.$patch(partial)
     },
     toggleSider() {
       this.siderCollapsed = !this.siderCollapsed
+    },
+    isSelectedTheme(value: string) {
+      if (this.systemTheme) {
+        return value === THEME_SYSTEM
+      } else {
+        return this.colorScheme === value
+      }
+    },
+    changeTheme(colorScheme: string) {
+      if (colorScheme === THEME_DARK) {
+        rootElement.classList.add('dark')
+      } else {
+        rootElement.classList.remove('dark')
+      }
+      this.colorScheme = colorScheme
+    },
+    switchTheme(value: string) {
+      this.systemTheme = value === THEME_SYSTEM
+      // 跟随系统主题
+      if (this.systemTheme) {
+        setThemeListener()
+        listenerThemeChange(this.changeTheme)
+      } else {
+        removeThemeListener()
+        this.changeTheme(value)
+      }
+    },
+    initTheme() {
+      if (this.systemTheme) {
+        this.switchTheme(THEME_SYSTEM)
+      } else {
+        this.switchTheme(this.colorScheme)
+      }
     }
+  },
+  persist: {
+    storage: localStorage,
+    pick: ['colorScheme', 'systemTheme']
   }
 })
+
+export const runAppStore = () => {
+  const appStore = useAppStore()
+  appStore.initTheme()
+}
 
 export default useAppStore

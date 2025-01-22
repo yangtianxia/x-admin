@@ -3,7 +3,6 @@ import { defineComponent } from 'vue'
 
 // Common
 import { useAppStore } from '@/store'
-import { useTheme } from '@/hooks/theme'
 import { THEME_OPTIONS } from '@/constant/theme'
 
 // Components
@@ -17,8 +16,6 @@ export default defineComponent({
   name: 'LoginPage',
   setup() {
     const appStore = useAppStore()
-    const { currentTheme, changeTheme } = useTheme()
-
     return () => (
       <div class="flex h-screen min-h-[640px] relative">
         <div class="z-10 absolute top-6 left-6 max-xl:left-4 flex items-center">
@@ -35,11 +32,11 @@ export default defineComponent({
             trigger="click"
             overlayStyle={{zIndex: 1070}}
             overlay={(
-              <Menu onClick={({ key }) => changeTheme(key as string)}>
+              <Menu onClick={({ key }) => appStore.switchTheme(key as string)}>
                 {THEME_OPTIONS.map((item) => (
                   <Menu.Item
                     key={item.value}
-                    class={currentTheme.value === item.value ? '!text-primary' : null}
+                    class={appStore.isSelectedTheme(item.value) ? '!text-primary' : null}
                   >
                     <Icon
                       class="mr-1"

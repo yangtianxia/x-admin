@@ -6,9 +6,8 @@ import { message, notification } from 'ant-design-vue'
 
 import app from '@/App'
 import router from '@/router'
-import store from '@/store'
+import store, { runAppStore } from '@/store'
 import directive from '@/directive'
-import { useTheme } from '@/hooks/theme'
 import { Lazyload } from '@/components/lazy-load'
 
 // message配置
@@ -29,6 +28,4 @@ createApp(app)
   .use(store)
   .use(directive)
   .mount('#app')
-  .$nextTick(() => {
-    useTheme().loadTheme()
-  })
+  .$nextTick(runAppStore)
