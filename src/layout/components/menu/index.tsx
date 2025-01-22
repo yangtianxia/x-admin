@@ -1,9 +1,5 @@
 // Vue
-import {
-  defineComponent,
-  ref,
-  computed
-} from 'vue'
+import { defineComponent, ref } from 'vue'
 
 // Common
 import {
