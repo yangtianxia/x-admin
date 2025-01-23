@@ -1,7 +1,7 @@
 {
   "name": "x-admin",
   "description": "一个基于Vue3生态打造的后台应用模版",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "type": "module",
   "private": true,
   "scripts": {
@@ -50,6 +50,9 @@
     "pinia": "^2.3.0",
     "pinia-plugin-persistedstate": "^4.2.0",
     "qs": "^6.13.1",
+    "quill": "^2.0.3",
+    "quill-resize-module": "^2.0.4",
+    "quill-table-better": "^1.1.5",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
@@ -80,6 +83,7 @@
     "postcss-import": "^16.1.0",
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.9",
+    "sass-embedded": "^1.83.4",
     "shelljs": "^0.8.5",
     "tailwind-scrollbar": "^3.1.0",
     "tailwindcss": "^3.4.17",
