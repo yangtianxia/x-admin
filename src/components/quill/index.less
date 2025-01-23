@@ -1,0 +1,55 @@
+@quill-cls: x-quill;
+
+.@{quill-cls} {
+  @apply relative flex flex-col;
+
+  .ql-snow {
+    &.ql-toolbar {
+      @apply rounded-tl rounded-tr border-100 bg-container;
+
+      .ql-formats {
+        @apply mr-3;
+      }
+    }
+
+    &.ql-container {
+      @apply rounded-bl rounded-br min-h-56 border-100 bg-container overflow-x-hidden scrollbar-thin;
+
+      &.ql-disabled {
+        @apply cursor-not-allowed;
+      }
+    }
+
+    .ql-picker.ql-header {
+      @apply w-20;
+
+      .ql-picker-label {
+        &::before {
+          content: '段落';
+        }
+
+        &[data-value]::before {
+          content: "标题" attr(data-value);
+        }
+      }
+
+      .ql-picker-item {
+        &::before {
+          content: '段落';
+        }
+
+        &[data-value]::before {
+          content: "标题" attr(data-value);
+        }
+      }
+    }
+  }
+
+  .ql-editor.ql-blank::before {
+    @apply not-italic;
+  }
+
+  .ql-editor .ql-table-better {
+    width: unset;
+  }
+}
