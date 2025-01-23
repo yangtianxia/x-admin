@@ -1,7 +1,6 @@
 // Vue
 import {
   defineComponent,
-  toRef,
   reactive,
   computed,
   type PropType,
@@ -60,9 +59,6 @@ export default defineComponent({
   name,
   props: sendCodeProps,
   setup(props, { slots }) {
-    const beforeText = toRef(() => props.beforeText)
-    const text = toRef(() => props.text)
-    const afterText = toRef(() => props.afterText)
     const state = reactive({
       interval: props.interval,
       disabled: false,
@@ -83,7 +79,7 @@ export default defineComponent({
       }
     })
 
-    const formatTpl = computed(() => beforeText.value.replace(/^\[S\](.*)?$/g, `${state.interval}$1`))
+    const formatTpl = computed(() => props.beforeText.replace(/^\[S\](.*)?$/g, `${state.interval}$1`))
 
     const onClick = () => {
       state.loading = true
@@ -104,8 +100,8 @@ export default defineComponent({
       const node = state.disabled
         ? formatTpl.value
         : state.finish
-          ? afterText.value
-          : slots.default || text.value
+          ? props.afterText
+          : slots.default || props.text
       return createVNode(node)
     }
 
