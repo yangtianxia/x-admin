@@ -20,6 +20,30 @@ const getDefaultMenu = () => ({
 
 const data = [
   {
+    id: 2000,
+    parentId: 0,
+    title: '示例管理',
+    type: 1,
+    path: '/example',
+    name: 'Example',
+    component: 'Layout',
+    redirect: '/example/quill',
+    icon: 'Components',
+    sort: 1,
+    children: [
+      {
+        id: 2010,
+        parentId: 2000,
+        title: 'Quill编辑器',
+        type: 2,
+        path: '/example/quill',
+        name: 'ExampleQuill',
+        component: 'example/quill/index',
+        sort: 1
+      }
+    ]
+  },
+  {
     id: 1000,
     parentId: 0,
     title: '系统管理',
