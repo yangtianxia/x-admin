@@ -40,6 +40,16 @@ const data = [
         name: 'ExampleQuill',
         component: 'example/quill/index',
         sort: 1
+      },
+      {
+        id: 2020,
+        parentId: 2000,
+        title: 'Upload上传',
+        type: 2,
+        path: '/example/upload',
+        name: 'ExampleUpload',
+        component: 'example/upload/index',
+        sort: 2
       }
     ]
   },
