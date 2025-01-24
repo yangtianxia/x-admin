@@ -1,0 +1,126 @@
+@upload-cls: x-upload;
+
+.ant-upload {
+  @apply relative;
+
+  &&-select-picture,
+  &&-select-text {
+    @apply block;
+  }
+
+  &&-select-picture-card {
+    @apply !border-solid !bg-container !rounded !w-20 !h-20;
+  }
+
+  &-picture-card-wrapper {
+    @apply align-top;
+  }
+
+  &-wrapper&-picture-card-wrapper &-list&-list-picture-card &-list-item-container {
+    @apply w-20 h-20;
+  }
+
+  &-wrapper&-picture-card-wrapper &-list&-list-picture-card &-list-item {
+    @apply bg-container;
+  }
+
+  &-list-picture &-list-item,
+  &-list-picture-card &-list-item {
+    @apply !rounded;
+
+    &-uploading {
+      @apply !border-solid;
+    }
+  }
+
+  &-list-picture-card &-list-item-actions {
+    @apply h-full flex flex-col justify-center;
+
+    & > .ant-btn-sm:last-child {
+      @apply absolute;
+      top: -11px;
+      right: -11px;
+
+      &:not(:disabled):hover {
+        @apply bg-transparent;
+      }
+    }
+  }
+
+  &-list-picture-card &-list-item:hover {
+    .@{upload-cls}__delete {
+      @apply opacity-100;
+    }
+  }
+
+  &-list-picture-card &-list-item-uploading&-list-item {
+    @apply bg-layout;
+  }
+
+  &-list-picture-card &-list-item-uploading-text {
+    @apply mt-5;
+  }
+
+  &-list-picture-card &-list-item-progress {
+    @apply !bottom-4 pl-1;
+  }
+
+  &-list-text &-list-item-name,
+  &-list-picture &-list-item-name {
+    @apply cursor-pointer;
+  }
+
+  &-animate-inline-appear,
+  &-animate-inline-enter,
+  &-animate-inline-leave {
+    animation-duration: 0s!important;
+  }
+}
+
+.@{upload-cls} {
+  &--hidden .ant-upload,
+  &--hidden.ant-upload-drag {
+    @apply !content-none;
+  }
+
+  &--single .ant-upload.ant-upload-select-picture-card {
+    @apply !me-0 !mb-0;
+  }
+
+  &--single .ant-upload-list.ant-upload-list-picture-card .ant-upload-list-item-container {
+    margin-inline: 1px!important;
+    margin-block: 1px!important;
+  }
+
+  &__button {
+    @apply flex flex-col items-center justify-center w-full h-full text-xl text-quaternary;
+
+    &:hover {
+      @apply text-primary;
+    }
+
+    &-icon {
+      @apply leading-none;
+    }
+  }
+
+  &__preview {
+    @apply text-xl text-white/65;
+
+    &:hover {
+      @apply text-white/85;
+    }
+  }
+
+  &__delete {
+    @apply !inline-flex items-center justify-center opacity-0 size-4 rounded-full bg-black/50 dark:bg-white/35;
+
+    &:hover {
+      @apply bg-black/65 dark:bg-white/45;
+    }
+
+    .x-icon {
+      @apply text-md text-white;
+    }
+  }
+}
