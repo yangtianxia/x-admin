@@ -1,7 +1,7 @@
 {
   "name": "x-admin",
   "description": "一个基于Vue3生态打造的后台应用模版",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "type": "module",
   "private": true,
   "scripts": {
@@ -44,6 +44,7 @@
     "ant-design-vue": "^4.2.6",
     "axios": "^1.7.9",
     "dayjs": "^1.11.13",
+    "debounce": "^2.2.0",
     "extend": "^3.0.2",
     "mitt": "^3.0.1",
     "nprogress": "^0.2.0",
