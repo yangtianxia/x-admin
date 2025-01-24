@@ -23,8 +23,15 @@ textarea {
   }
 }
 
-.ant-btn:not(.ant-btn-circle) > span[class*="icon"] {
-  @apply mr-1;
+.ant-btn {
+  >*+.x-icon,
+  >.x-icon+* {
+    @apply ms-2;
+  }
+
+  >.anticon {
+    @apply inline-flex;
+  }
 }
 
 .ant-tag {
