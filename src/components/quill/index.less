@@ -10,6 +10,16 @@
       .ql-formats {
         @apply mr-3;
       }
+
+      .ql-picker.ql-expanded {
+        .ql-picker-label {
+          @apply border-100;
+        }
+
+        .ql-picker-options {
+          @apply border-100;
+        }
+      }
     }
 
     &.ql-container {
@@ -18,6 +28,10 @@
       &.ql-disabled {
         @apply cursor-not-allowed;
       }
+    }
+
+    .ql-picker {
+      @apply text-black/65 dark:text-white/65;
     }
 
     .ql-picker.ql-header {
@@ -43,10 +57,25 @@
         }
       }
     }
+
+    .ql-picker-options {
+      @apply bg-container;
+    }
+
+    .ql-stroke {
+      @apply stroke-black/65 dark:stroke-white/65;
+    }
+
+    .ql-fill {
+      &,
+      &.ql-stroke {
+        @apply fill-black/65 dark:fill-white/65;
+      }
+    }
   }
 
   .ql-editor.ql-blank::before {
-    @apply not-italic;
+    @apply not-italic dark:text-white/65;
   }
 
   .ql-editor .ql-table-better {
