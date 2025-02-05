@@ -118,6 +118,12 @@ export default defineComponent({
     let options = {} as QuillOptions
     let content: string | undefined = props.value || props.content || ''
 
+    const setContent = (newContent?: string) => {
+      if (quill) {
+        quill.root.innerHTML = newContent || ''
+      }
+    }
+
     const initialize = () => {
       if (editorRef.value) {
         // Quill Options
@@ -132,7 +138,7 @@ export default defineComponent({
 
         // Set editor content
         if (content) {
-          quill.clipboard.dangerouslyPasteHTML(content)
+          setContent(content)
         }
 
         // Disabled
@@ -166,6 +172,10 @@ export default defineComponent({
       }
     }
 
+    const quillDestroy = () => {
+      quill = null
+    }
+
     watch(
       () => props.disabled,
       (value) => {
@@ -181,7 +191,7 @@ export default defineComponent({
         if (quill) {
           if (value && value !== content) {
             content = value
-            quill.clipboard.dangerouslyPasteHTML(value)
+            setContent(value)
           } else if (!value) {
             quill.setText('')
           }
@@ -195,7 +205,7 @@ export default defineComponent({
         if (quill) {
           if (value && value !== content) {
             content = value
-            quill.clipboard.dangerouslyPasteHTML(value)
+            setContent(value)
           } else if (!value) {
             quill.setText('')
           }
@@ -214,9 +224,7 @@ export default defineComponent({
       }
     })
 
-    onUnmounted(() => {
-      quill = null
-    })
+    onUnmounted(quillDestroy)
 
     return () => (
       <div class={bem()}>
