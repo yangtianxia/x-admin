@@ -69,6 +69,9 @@ export default defineConfig(({ mode, command }) => {
     },
     css: {
       preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler'
+        },
         less: {
           math: 'always',
           relativeUrls: true,

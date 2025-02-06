@@ -4,6 +4,10 @@
   @apply relative flex flex-col;
 
   .ql-snow {
+    &:not(.ql-disabled) {
+      @apply resize-y;
+    }
+
     &.ql-toolbar {
       @apply rounded-tl rounded-tr border-100 bg-container;
 
@@ -32,28 +36,28 @@
 
     .ql-picker {
       @apply text-black/65 dark:text-white/65;
-    }
 
-    .ql-picker.ql-header {
-      @apply w-20;
+      &.ql-header {
+        @apply w-20;
 
-      .ql-picker-label {
-        &::before {
-          content: '段落';
+        .ql-picker-label {
+          &::before {
+            content: '段落';
+          }
+
+          &[data-value]::before {
+            content: "标题" attr(data-value);
+          }
         }
 
-        &[data-value]::before {
-          content: "标题" attr(data-value);
-        }
-      }
+        .ql-picker-item {
+          &::before {
+            content: '段落';
+          }
 
-      .ql-picker-item {
-        &::before {
-          content: '段落';
-        }
-
-        &[data-value]::before {
-          content: "标题" attr(data-value);
+          &[data-value]::before {
+            content: "标题" attr(data-value);
+          }
         }
       }
     }
@@ -72,6 +76,14 @@
         @apply fill-black/65 dark:fill-white/65;
       }
     }
+
+    .ql-editor td {
+      @apply dark:border-white/45;
+    }
+
+    .ql-operate-drag-table {
+      @apply dark:border-white/45;
+    }
   }
 
   .ql-editor.ql-blank::before {
@@ -80,5 +92,73 @@
 
   .ql-editor .ql-table-better {
     width: unset;
+  }
+
+  .ql-table-button-disabled {
+    @apply !bg-fill-secondary;
+  }
+
+  .ql-table-border-shadow,
+  .ql-table-select-container,
+  .ql-table-dropdown-list,
+  .ql-table-dropdown-properties-list,
+  .ql-table-menus-container {
+    @apply border-100 bg-container;
+  }
+
+  .ql-table-select-container span {
+    @apply dark:border-white/45;
+  }
+
+  .ql-table-dropdown {
+    &:nth-child(1),
+    &:nth-child(2),
+    &:nth-child(3),
+    &:nth-child(4) {
+      svg:first-child path {
+        @apply dark:fill-white/65;
+      }
+
+      svg:last-child path {
+        @apply dark:stroke-white/65;
+      }
+
+      &:hover {
+        svg:first-child path {
+          @apply dark:fill-black/65;
+        }
+
+        svg:last-child path {
+          @apply dark:stroke-black/65;
+        }
+      }
+    }
+
+    &:nth-child(5),
+    &:nth-child(6) {
+      svg path {
+        @apply dark:stroke-white/65;
+      }
+
+      &:hover {
+        svg path {
+          @apply dark:stroke-black/65;
+        }
+      }
+    }
+  }
+
+  .ql-table-dropdown,
+  .ql-table-dropdown-properties {
+    &:hover {
+      @apply dark:bg-white/65;
+    }
+  }
+
+  .ql-table-dropdown-list,
+  .ql-table-dropdown-properties-list {
+    li:hover {
+      @apply dark:bg-white/45;
+    }
   }
 }
