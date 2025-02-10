@@ -14,7 +14,7 @@ import { isPlainObject } from '@txjs/bool'
 import { resultSharedProps, resultStatusConfig } from './utils'
 
 // Components
-import { Image } from '../image'
+import { Image } from 'ant-design-vue'
 
 // Component utils
 import { createVNode } from '../_utils/basic'
@@ -86,8 +86,8 @@ export default defineComponent({
         render: (value) => (
           <Image
             class={bem('img')}
-            lazyLoad={false}
             src={value}
+            preview={false}
           />
         )
       })
