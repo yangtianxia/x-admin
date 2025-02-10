@@ -4,7 +4,8 @@ import { cloneDeep } from '@txjs/shared'
 
 import { useRouteStore } from '@/store'
 import { isLogin } from '@/shared/auth'
-import { hasRoleOr } from '@/shared/has'
+
+import { usePermission } from '../permission'
 
 const accessRightsAfterAuth = (route: RouteRecordNormalized | RouteRecordRaw) => {
   return isLogin() ? route.meta?.authNoAccessAfter !== true : true
@@ -12,6 +13,7 @@ const accessRightsAfterAuth = (route: RouteRecordNormalized | RouteRecordRaw) =>
 
 export const useMenuTree = () => {
   const routeStore = useRouteStore()
+  const permission = usePermission()
 
   const menuTree = computed(() => {
     const copyRoute = cloneDeep(routeStore.routes) as RouteRecordNormalized[]
@@ -23,7 +25,7 @@ export const useMenuTree = () => {
 
       const collector: any = _routes.map((route) => {
         // no access
-        if (!accessRightsAfterAuth(route) || (route.meta?.roles && hasRoleOr(route.meta?.roles))) {
+        if (!accessRightsAfterAuth(route) || (route.meta?.roles && permission.hasRoleOr(route.meta?.roles))) {
           return null
         }
 
