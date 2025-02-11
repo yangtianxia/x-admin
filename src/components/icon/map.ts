@@ -26,6 +26,7 @@ import { default as Components } from '@icon-park/vue-next/lib/icons/Components'
 import { default as CloseSmall } from '@icon-park/vue-next/lib/icons/CloseSmall'
 import { default as ZoomIn } from '@icon-park/vue-next/lib/icons/ZoomIn'
 import { default as PreviewOpen } from '@icon-park/vue-next/lib/icons/PreviewOpen'
+import { default as PlayOne } from '@icon-park/vue-next/lib/icons/PlayOne'
 
 export const icons = {
   LeftC,
@@ -55,7 +56,8 @@ export const icons = {
   Components,
   CloseSmall,
   ZoomIn,
-  PreviewOpen
+  PreviewOpen,
+  PlayOne
 } as const
 
 type IconMapTypeOf = typeof icons
