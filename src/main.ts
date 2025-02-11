@@ -8,7 +8,6 @@ import app from '@/App'
 import router from '@/router'
 import store, { runAppStore } from '@/store'
 import directive from '@/directive'
-import { Lazyload } from '@/components/lazy-load'
 
 // message配置
 message.config({
@@ -23,7 +22,6 @@ notification.config({
 })
 
 createApp(app)
-  .use(Lazyload)
   .use(router)
   .use(store)
   .use(directive)
