@@ -17,8 +17,7 @@ import debounce from 'debounce'
 import {
   omit,
   shallowMerge,
-  toArray,
-  noop
+  toArray
 } from '@txjs/shared'
 import { isNil, isPlainObject } from '@txjs/bool'
 import { getToken } from '@/shared/auth'
@@ -91,7 +90,18 @@ export default defineComponent({
     const headers = shallowRef<NonNullable<UploadProps['headers']>>(props.headers || {})
 
     const isPictureCard = computed(() => props.listType === 'picture-card')
+
     const isImageType = computed(() => props.type === 'image')
+
+    const previewIcon = computed(() => {
+      if (props.type === 'image') {
+        return 'ZoomIn'
+      }
+      if (props.type === 'video') {
+        return 'PlayOne'
+      }
+      return 'PreviewOpen'
+    })
 
     const uploadedList = new Map<string, UploadFile>()
     const uploadErrorList = new Map<string, UploadFile>()
@@ -119,19 +129,43 @@ export default defineComponent({
       })
     }
 
-    // 文件上传检查
+    const checkFileType = (file: UploadFile) => {
+      if (!file.type) {
+        return false
+      }
+      const fileTypes = props.accept.split(',')
+      // 处理包含*的accept
+      // video/*
+      // image/*
+      const foundAt = fileTypes.findIndex((el) => el.endsWith('*'))
+      if (foundAt !== -1) {
+        const value = fileTypes[foundAt]
+        // video/* => ['video', '*']
+        // image/* => ['image', '*']
+        const [fileType] = value.split('/')
+        // 过滤掉相同前缀
+        const result = fileTypes.filter((el) => !el.startsWith(fileType))
+        // 没有其它类型
+        if (!result.length) {
+          return file.type.startsWith(fileType)
+        }
+        return formatAccept(result.join(',')).includes(file.type)
+      }
+      return formatAccept(props.accept).includes(file.type)
+    }
+
     const beforeRead = (file: UploadFile) => [
       {
-        validator: () => !!file.type && formatAccept(props.accept).includes(file.type),
+        validator: () => checkFileType(file),
         message: '选择文件类型不支持'
       },
       {
-        validator: () => !!file.size && (file.size / 1024) < props.maxSize,
+        validator: () => Boolean(file.size) && (file.size! / 1024) < props.maxSize,
         message: `文件大小必须 ≤ ${props.maxSize >= 1024 ? props.maxSize / 1024 + 'MB' : props.maxSize + 'KB'}`
       },
       {
         validator: () => uploadedList.size + 1 <= props.maxCount,
-        message: `文件数量超过限制，最多只能上传 ${props.maxCount} 个`
+        message: `上传数量超过限制，最多只能上传 ${props.maxCount} 个`
       }
     ].find((item) => !item.validator())
 
@@ -248,10 +282,7 @@ export default defineComponent({
           ...omit(props, uploadPropsKeys),
           'onUpdate:fileList': updateFileList
         }}
-        class={bem({
-          'single': props.maxCount === 1,
-          hidden: !canUpload.value
-        })}
+        class={bem({hidden: !canUpload.value})}
         locale={{uploading: '正在上传'}}
         fileList={fileList.value}
         headers={headers.value}
@@ -261,7 +292,7 @@ export default defineComponent({
         previewFile={async (file) => URL.createObjectURL(file)}
         previewIcon={() => (
           <span class={bem('preview')}>
-            <Icon type={isImageType.value ? 'ZoomIn' : 'PreviewOpen'} />
+            <Icon type={previewIcon.value} />
           </span>
         )}
         removeIcon={isPictureCard.value ? () => (
@@ -277,11 +308,13 @@ export default defineComponent({
           <span
             title="选择文件"
             id={formItemContext.id.value}
-            class={bem('button')}
           >
             {slots.default?.() || (
-              <span class={bem('button-icon')}>
-                <Icon type="Plus" />
+              <span class={bem('button')}>
+                <Icon
+                  type="Plus"
+                  class={bem('button-icon')}
+                />
               </span>
             )}
           </span>
