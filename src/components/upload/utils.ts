@@ -18,7 +18,10 @@ export const fileToObj = (path: string) => {
 }
 
 export const formatAccept = (value: string) => {
-  return value.replace(/pjpeg/g, 'jpeg').split(',')
+  return value.replace(/pjpeg/ig, 'jpeg')
+    .toLowerCase()
+    .split(',')
+    .map((el) => el.split('/'))
 }
 
 export const formatFile = (obj: Record<string, any>, formatter?: (value: any) => string[]) => {
