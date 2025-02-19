@@ -13,11 +13,11 @@ import {
 
 import type { AppState } from './types'
 
-const seedToken = shallowMerge({}, theme.defaultSeed, cloneDeep(SEED_TOKEN))
+const seedToken = shallowMerge({}, theme.defaultSeed, cloneDeep(__SEED_TOKEN__))
 
-const darkTheme = theme.darkAlgorithm(seedToken)
+const dark = theme.darkAlgorithm(seedToken)
 
-const lightTheme = theme.defaultAlgorithm(seedToken)
+const light = theme.defaultAlgorithm(seedToken)
 
 const useAppStore = defineStore('x_admin_app', {
   state: (): AppState => ({ ...defaultSettings }),
@@ -32,7 +32,7 @@ const useAppStore = defineStore('x_admin_app', {
       return state.siderWidths[0]
     },
     seedToken(state: AppState) {
-      return state.colorScheme === THEME_DARK ? darkTheme : lightTheme
+      return state.colorScheme === THEME_DARK ? dark : light
     }
   },
   actions: {

@@ -116,7 +116,7 @@ export default defineComponent({
       handleTimer = null
     }
 
-    const checkCanUpload = () => {
+    const checkUpload = () => {
       nextTick(() => {
         if (uploadedList.size < props.maxCount) {
           onTimerClear()
@@ -133,25 +133,20 @@ export default defineComponent({
       if (!file.type) {
         return false
       }
-      const fileTypes = props.accept.split(',')
-      // 处理包含*的accept
-      // video/*
-      // image/*
-      const foundAt = fileTypes.findIndex((el) => el.endsWith('*'))
-      if (foundAt !== -1) {
-        const value = fileTypes[foundAt]
-        // video/* => ['video', '*']
-        // image/* => ['image', '*']
-        const [fileType] = value.split('/')
-        // 过滤掉相同前缀
-        const result = fileTypes.filter((el) => !el.startsWith(fileType))
-        // 没有其它类型
-        if (!result.length) {
-          return file.type.startsWith(fileType)
-        }
-        return formatAccept(result.join(',')).includes(file.type)
+
+      const fileTypes = formatAccept(props.accept)
+
+      // 匹配前缀符合的类型
+      const foundAt = fileTypes.findIndex(([type]) => file.type!.startsWith(type))
+
+      if (foundAt === -1) {
+        return false
       }
-      return formatAccept(props.accept).includes(file.type)
+
+      const suffix = fileTypes[foundAt][1]
+
+      // 后缀为 `*` 或 文件类型后缀匹配
+      return suffix === '*' || file.type.endsWith(suffix)
     }
 
     const beforeRead = (file: UploadFile) => [
@@ -187,7 +182,7 @@ export default defineComponent({
 
       if (!result) {
         uploadedList.set(file.uid, file)
-        checkCanUpload()
+        checkUpload()
       } else {
         notifyHandler(result.message)
         return false
@@ -218,7 +213,7 @@ export default defineComponent({
         }, [] as UploadFile<UploadResponse>[]
       )
 
-      checkCanUpload()
+      checkUpload()
       fileList.value = files
       emit('update:fileList', files)
       formItemContext.onFieldChange()
@@ -234,13 +229,13 @@ export default defineComponent({
     }
 
     const onPreview = (file: UploadFile) => {
-      previewUrl.value = file.remote || file.thumbUrl
+      previewUrl.value = file.remote || file.thumbUrl || file.preview
       previewCurrent.value = fileList.value.findIndex((el) => el.uid === file.uid)
       setPreviewVisible(true)
     }
 
     const onPreviewFile = (file: UploadFile) => {
-      const url = file.remote || file.thumbUrl
+      const url = file.remote || file.thumbUrl || file.preview
       if (url) {
         openWindow(url)
       }
@@ -251,7 +246,7 @@ export default defineComponent({
       (values) => {
         if (!values?.length) {
           uploadedList.clear()
-          checkCanUpload()
+          checkUpload()
         }
       }
     )
