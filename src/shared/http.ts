@@ -148,7 +148,9 @@ const responseHandler = (response: AxiosResponse) => {
   // 登录过期
   if (isUnauthorized(data.code)) {
     useRedirect().goto()
-  } else if (config?.errorNotify !== false) {
+  }
+  // 响应错误
+  else if (config?.errorNotify !== false) {
     notifyHandler(msgWrap(data))
   }
   return Promise.reject(data)
