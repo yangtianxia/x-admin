@@ -8,7 +8,43 @@ import { Quill } from '@/components/quill'
 export default defineComponent({
   name: 'ExampleQuillPage',
   setup() {
-    const content = ref('<h1>标题一</h1><p><br></p><table class="ql-table-better"><temporary class="ql-table-temporary" data-class="ql-table-better"><br></temporary><tbody><tr><td data-row="row-eqjm" width="72"><p class="ql-table-block" data-cell="cell-5h51"><br></p></td><td data-row="row-eqjm" width="72"><p class="ql-table-block" data-cell="cell-nx14"><br></p></td><td data-row="row-eqjm" width="72"><p class="ql-table-block" data-cell="cell-m7m8"><br></p></td><td data-row="row-eqjm" width="72"><p class="ql-table-block" data-cell="cell-aaqn"><br></p></td><td data-row="row-eqjm" width="72"><p class="ql-table-block" data-cell="cell-kup7"><br></p></td></tr><tr><td data-row="row-fpli" width="72"><p class="ql-table-block" data-cell="cell-per0"><br></p></td><td data-row="row-fpli" width="72"><p class="ql-table-block" data-cell="cell-7h4u"><br></p></td><td data-row="row-fpli" width="72"><p class="ql-table-block" data-cell="cell-aoo8"><br></p></td><td data-row="row-fpli" width="72"><p class="ql-table-block" data-cell="cell-j1es"><br></p></td><td data-row="row-fpli" width="72"><p class="ql-table-block" data-cell="cell-sas0"><br></p></td></tr><tr><td data-row="row-h377" width="72"><p class="ql-table-block" data-cell="cell-3acw"><br></p></td><td data-row="row-h377" width="72"><p class="ql-table-block" data-cell="cell-qvrd"><br></p></td><td data-row="row-h377" width="72"><p class="ql-table-block" data-cell="cell-zr8i"><br></p></td><td data-row="row-h377" width="72"><p class="ql-table-block" data-cell="cell-w0m9"><br></p></td><td data-row="row-h377" width="72"><p class="ql-table-block" data-cell="cell-9opq"><br></p></td></tr></tbody></table><p><br></p>')
+    const content = ref(`<table style="width: 640px" class="ql-table-better">
+      <tbody>
+        <tr>
+          <td data-row="row-kbbt" width="72" class="">
+            <p class="ql-table-block" data-cell="cell-pqbh">1</p>
+          </td>
+          <td data-row="row-kbbt" width="72" style="background-color: #4d99e6; " class="">
+            <p class="ql-table-block" data-cell="cell-6vwb">2</p>
+          </td>
+          <td data-row="row-kbbt" width="72" style="background-color: #4d99e6; " class="">
+            <p class="ql-table-block" data-cell="cell-sbdd">3</p>
+          </td>
+        </tr>
+        <tr>
+          <td data-row="row-j9rd" width="72" class="">
+            <p class="ql-table-block" data-cell="cell-hbqz">4</p>
+          </td>
+          <td data-row="row-j9rd" width="72" class="">
+            <p class="ql-table-block" data-cell="cell-kgtt">5</p>
+          </td>
+          <td data-row="row-j9rd" width="72" class="">
+            <p class="ql-table-block" data-cell="cell-2pu4">6</p>
+          </td>
+        </tr>
+        <tr>
+          <td data-row="row-inie" width="72" class="">
+            <p class="ql-table-block" data-cell="cell-x6xx">7</p>
+          </td>
+          <td data-row="row-inie" width="72" class="">
+            <p class="ql-table-block ql-align-center" data-cell="cell-8axw">8</p>
+          </td>
+          <td data-row="row-inie" width="72" class="">
+            <p class="ql-table-block ql-align-center" data-cell="cell-45td">9</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>`)
 
     return () => (
       <Scaffold loading={false}>
