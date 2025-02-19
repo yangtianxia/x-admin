@@ -16,12 +16,7 @@ import { createHtmlPlugin } from 'vite-plugin-html'
 import { vitePluginFakeServer } from 'vite-plugin-fake-server'
 
 // Theme
-import {
-  lightTheme,
-  darkTheme,
-  seedToken,
-  genCSSVariable
-} from './build/theme'
+import { comprehensiveColors } from './build/theme/constants'
 
 // Package
 import pkg from './package.json'
@@ -138,20 +133,12 @@ export default defineConfig(({ mode, command }) => {
               children: env.VITE_TITLE || pkg.name
             },
             {
-              injectTo: 'head',
-              tag: 'style',
-              attrs: {
-                type: 'text/css'
-              },
-              children: `:root{${genCSSVariable(lightTheme)}} .dark{${genCSSVariable(darkTheme, false)}}`
-            },
-            {
               injectTo: 'body',
               tag: 'script',
               attrs: {
                 type: 'text/javascript'
               },
-              children: `window.SEED_TOKEN = ${JSON.stringify(seedToken)}`
+              children: `window.__SEED_TOKEN__ = ${JSON.stringify(comprehensiveColors)}`
             }
           ]
         }
