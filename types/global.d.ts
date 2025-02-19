@@ -1,30 +1,24 @@
 /// <reference types="@txjs/types" />
 
-declare module '*.vue'
-declare module '*.tsx'
-declare module '*.png'
-declare module '*.gif'
-declare module '*.jpg'
-declare module '*.jpeg'
-declare module '*.svg'
-declare module '*.css'
-declare module '*.less'
-declare module '*.scss'
-declare module '*.sass'
-declare module '*.styl'
-declare module '*.json'
-
 declare global {
-  type SeedToken = typeof import('ant-design-vue')['theme']['defaultSeed']
+  type ISeedToken = typeof import('ant-design-vue')['theme']['defaultSeed']
 
-  const $bem: typeof import('@txjs/bem')['default']
-  const $http: typeof import('../src/shared/http')['default']
-  const SEED_TOKEN: Partial<SeedToken & Record<string, Partial<SeedToken>>>
-
-  interface RouterViewEvent {
-    Component: any
+  interface IRouterView<T = any> {
+    Component: T
     route: import('vue-router').RouteLocationNormalized
   }
+
+  interface IUserInfo {}
+
+  interface IPageQuery {}
+
+  interface IPageRes<T> {}
+
+  const __SEED_TOKEN__: Partial<ISeedToken & Record<string, Partial<ISeedToken>>>
+
+  const $bem: typeof import('@txjs/bem')['default']
+
+  const $http: typeof import('../src/shared/http')['default']
 }
 
 export {}
