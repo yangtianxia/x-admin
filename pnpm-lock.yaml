@@ -69,8 +69,8 @@ importers:
         specifier: ^2.0.4
         version: 2.0.4
       quill-table-better:
-        specifier: ^1.1.5
-        version: 1.1.5
+        specifier: 1.1.6-rc.0
+        version: 1.1.6-rc.0
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.7.2)
@@ -110,13 +110,13 @@ importers:
         version: 1.4.6
       '@vitejs/plugin-legacy':
         specifier: ^5.4.3
-        version: 5.4.3(terser@5.37.0)(vite@5.4.11(@types/node@18.19.68)(less@4.2.1)(sass-embedded@1.83.4)(terser@5.37.0))
+        version: 5.4.3(terser@5.37.0)(vite@5.4.11(@types/node@18.19.68)(less@4.2.1)(lightningcss@1.29.1)(sass-embedded@1.83.4)(terser@5.37.0))
       '@vitejs/plugin-vue':
         specifier: ^5.2.1
-        version: 5.2.1(vite@5.4.11(@types/node@18.19.68)(less@4.2.1)(sass-embedded@1.83.4)(terser@5.37.0))(vue@3.5.13(typescript@5.7.2))
+        version: 5.2.1(vite@5.4.11(@types/node@18.19.68)(less@4.2.1)(lightningcss@1.29.1)(sass-embedded@1.83.4)(terser@5.37.0))(vue@3.5.13(typescript@5.7.2))
       '@vitejs/plugin-vue-jsx':
         specifier: ^4.1.1
-        version: 4.1.1(vite@5.4.11(@types/node@18.19.68)(less@4.2.1)(sass-embedded@1.83.4)(terser@5.37.0))(vue@3.5.13(typescript@5.7.2))
+        version: 4.1.1(vite@5.4.11(@types/node@18.19.68)(less@4.2.1)(lightningcss@1.29.1)(sass-embedded@1.83.4)(terser@5.37.0))(vue@3.5.13(typescript@5.7.2))
       '@vue/eslint-config-prettier':
         specifier: ^7.1.0
         version: 7.1.0(eslint@8.57.1)(prettier@3.4.2)
@@ -179,13 +179,13 @@ importers:
         version: 5.7.2
       vite:
         specifier: ^5.4.11
-        version: 5.4.11(@types/node@18.19.68)(less@4.2.1)(sass-embedded@1.83.4)(terser@5.37.0)
+        version: 5.4.11(@types/node@18.19.68)(less@4.2.1)(lightningcss@1.29.1)(sass-embedded@1.83.4)(terser@5.37.0)
       vite-plugin-fake-server:
         specifier: ^2.1.4
         version: 2.1.4
       vite-plugin-html:
         specifier: ^3.2.2
-        version: 3.2.2(vite@5.4.11(@types/node@18.19.68)(less@4.2.1)(sass-embedded@1.83.4)(terser@5.37.0))
+        version: 3.2.2(vite@5.4.11(@types/node@18.19.68)(less@4.2.1)(lightningcss@1.29.1)(sass-embedded@1.83.4)(terser@5.37.0))
       vue-tsc:
         specifier: ^1.8.27
         version: 1.8.27(typescript@5.7.2)
@@ -1888,6 +1888,11 @@ packages:
   destr@2.0.3:
     resolution: {integrity: sha512-2N3BOUU4gYMpTP24s5rF5iP7BDr7uNTCs4ozw3kf/eKfvWSIu93GEBi5m427YoyJoeOzQ5smuu4nNAPGb8idSQ==}
 
+  detect-libc@1.0.3:
+    resolution: {integrity: sha512-pGjwhsmsp4kL2RTz08wcOlGN83otlqHeD/Z5T8GXZB+/YcpQ/dgo+lbU8ZsGxV0HIvqqxo9l7mqYwyYMD9bKDg==}
+    engines: {node: '>=0.10'}
+    hasBin: true
+
   didyoumean@1.2.2:
     resolution: {integrity: sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==}
 
@@ -2636,6 +2641,74 @@ packages:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
 
+  lightningcss-darwin-arm64@1.29.1:
+    resolution: {integrity: sha512-HtR5XJ5A0lvCqYAoSv2QdZZyoHNttBpa5EP9aNuzBQeKGfbyH5+UipLWvVzpP4Uml5ej4BYs5I9Lco9u1fECqw==}
+    engines: {node: '>= 12.0.0'}
+    cpu: [arm64]
+    os: [darwin]
+
+  lightningcss-darwin-x64@1.29.1:
+    resolution: {integrity: sha512-k33G9IzKUpHy/J/3+9MCO4e+PzaFblsgBjSGlpAaFikeBFm8B/CkO3cKU9oI4g+fjS2KlkLM/Bza9K/aw8wsNA==}
+    engines: {node: '>= 12.0.0'}
+    cpu: [x64]
+    os: [darwin]
+
+  lightningcss-freebsd-x64@1.29.1:
+    resolution: {integrity: sha512-0SUW22fv/8kln2LnIdOCmSuXnxgxVC276W5KLTwoehiO0hxkacBxjHOL5EtHD8BAXg2BvuhsJPmVMasvby3LiQ==}
+    engines: {node: '>= 12.0.0'}
+    cpu: [x64]
+    os: [freebsd]
+
+  lightningcss-linux-arm-gnueabihf@1.29.1:
+    resolution: {integrity: sha512-sD32pFvlR0kDlqsOZmYqH/68SqUMPNj+0pucGxToXZi4XZgZmqeX/NkxNKCPsswAXU3UeYgDSpGhu05eAufjDg==}
+    engines: {node: '>= 12.0.0'}
+    cpu: [arm]
+    os: [linux]
+
+  lightningcss-linux-arm64-gnu@1.29.1:
+    resolution: {integrity: sha512-0+vClRIZ6mmJl/dxGuRsE197o1HDEeeRk6nzycSy2GofC2JsY4ifCRnvUWf/CUBQmlrvMzt6SMQNMSEu22csWQ==}
+    engines: {node: '>= 12.0.0'}
+    cpu: [arm64]
+    os: [linux]
+    libc: [glibc]
+
+  lightningcss-linux-arm64-musl@1.29.1:
+    resolution: {integrity: sha512-UKMFrG4rL/uHNgelBsDwJcBqVpzNJbzsKkbI3Ja5fg00sgQnHw/VrzUTEc4jhZ+AN2BvQYz/tkHu4vt1kLuJyw==}
+    engines: {node: '>= 12.0.0'}
+    cpu: [arm64]
+    os: [linux]
+    libc: [musl]
+
+  lightningcss-linux-x64-gnu@1.29.1:
+    resolution: {integrity: sha512-u1S+xdODy/eEtjADqirA774y3jLcm8RPtYztwReEXoZKdzgsHYPl0s5V52Tst+GKzqjebkULT86XMSxejzfISw==}
+    engines: {node: '>= 12.0.0'}
+    cpu: [x64]
+    os: [linux]
+    libc: [glibc]
+
+  lightningcss-linux-x64-musl@1.29.1:
+    resolution: {integrity: sha512-L0Tx0DtaNUTzXv0lbGCLB/c/qEADanHbu4QdcNOXLIe1i8i22rZRpbT3gpWYsCh9aSL9zFujY/WmEXIatWvXbw==}
+    engines: {node: '>= 12.0.0'}
+    cpu: [x64]
+    os: [linux]
+    libc: [musl]
+
+  lightningcss-win32-arm64-msvc@1.29.1:
+    resolution: {integrity: sha512-QoOVnkIEFfbW4xPi+dpdft/zAKmgLgsRHfJalEPYuJDOWf7cLQzYg0DEh8/sn737FaeMJxHZRc1oBreiwZCjog==}
+    engines: {node: '>= 12.0.0'}
+    cpu: [arm64]
+    os: [win32]
+
+  lightningcss-win32-x64-msvc@1.29.1:
+    resolution: {integrity: sha512-NygcbThNBe4JElP+olyTI/doBNGJvLs3bFCRPdvuCcxZCcCZ71B858IHpdm7L1btZex0FvCmM17FK98Y9MRy1Q==}
+    engines: {node: '>= 12.0.0'}
+    cpu: [x64]
+    os: [win32]
+
+  lightningcss@1.29.1:
+    resolution: {integrity: sha512-FmGoeD4S05ewj+AkhTY+D+myDvXI6eL27FjHIjoyUkO/uw7WZD1fBVs0QxeYWa7E17CUHJaYX/RUGISCtcrG4Q==}
+    engines: {node: '>= 12.0.0'}
+
   lilconfig@3.1.3:
     resolution: {integrity: sha512-/vlFKAoH5Cgt3Ie+JLhRbwOsCQePABiU3tJ1egGvyQ+33R/vcwM2Zl2QR/LzjsBeItPt3oSVXapn+m4nQDvpzw==}
     engines: {node: '>=14'}
@@ -3148,8 +3221,8 @@ packages:
   quill-resize-module@2.0.4:
     resolution: {integrity: sha512-RzKj4qSrZB3Kjgi3QjxDmGR96bQI7XOwFenLvdWdzSecSf5eD1BMIXQcvKBp7BwBX+9OilHOyQ13TJT9MW11Ig==}
 
-  quill-table-better@1.1.5:
-    resolution: {integrity: sha512-u3ORWp3P354HSxKnTJKSGCaDdYSrbYki8vLUyFqfFrbAAfd3k3ja6aqd7W1RaHyl1Zl8/we6DN1D5IGmrfb7LQ==}
+  quill-table-better@1.1.6-rc.0:
+    resolution: {integrity: sha512-hArXihw1Tj+3b2eXNUWCOfVy1Z7VJK2CcaytseikU5jkE4tJGmUsWDDh7/ARR4NDyCP7Em899U0Ajmua3WjbwA==}
     engines: {node: '>= v12.13.0'}
 
   quill@2.0.3:
@@ -3869,8 +3942,8 @@ packages:
   yallist@4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
 
-  yaml@2.6.1:
-    resolution: {integrity: sha512-7r0XPzioN/Q9kXBro/XPnA6kznR73DHq+GXh5ON7ZozRO6aMjbmiBuKste2wslTFkC5d1dw0GooOCepZXJ2SAg==}
+  yaml@2.7.0:
+    resolution: {integrity: sha512-+hSoy/QHluxmC9kCIJyL/uyFmLmc+e5CFR5Wa+bpIhIj85LVb9ZH2nVnqrHoSvKogwODv0ClqZkmiSSaIH5LTA==}
     engines: {node: '>= 14'}
     hasBin: true
 
@@ -5110,7 +5183,7 @@ snapshots:
     dependencies:
       vue: 3.5.13(typescript@5.7.2)
 
-  '@vitejs/plugin-legacy@5.4.3(terser@5.37.0)(vite@5.4.11(@types/node@18.19.68)(less@4.2.1)(sass-embedded@1.83.4)(terser@5.37.0))':
+  '@vitejs/plugin-legacy@5.4.3(terser@5.37.0)(vite@5.4.11(@types/node@18.19.68)(less@4.2.1)(lightningcss@1.29.1)(sass-embedded@1.83.4)(terser@5.37.0))':
     dependencies:
       '@babel/core': 7.26.0
       '@babel/preset-env': 7.26.0(@babel/core@7.26.0)
@@ -5121,23 +5194,23 @@ snapshots:
       regenerator-runtime: 0.14.1
       systemjs: 6.15.1
       terser: 5.37.0
-      vite: 5.4.11(@types/node@18.19.68)(less@4.2.1)(sass-embedded@1.83.4)(terser@5.37.0)
+      vite: 5.4.11(@types/node@18.19.68)(less@4.2.1)(lightningcss@1.29.1)(sass-embedded@1.83.4)(terser@5.37.0)
     transitivePeerDependencies:
       - supports-color
 
-  '@vitejs/plugin-vue-jsx@4.1.1(vite@5.4.11(@types/node@18.19.68)(less@4.2.1)(sass-embedded@1.83.4)(terser@5.37.0))(vue@3.5.13(typescript@5.7.2))':
+  '@vitejs/plugin-vue-jsx@4.1.1(vite@5.4.11(@types/node@18.19.68)(less@4.2.1)(lightningcss@1.29.1)(sass-embedded@1.83.4)(terser@5.37.0))(vue@3.5.13(typescript@5.7.2))':
     dependencies:
       '@babel/core': 7.26.0
       '@babel/plugin-transform-typescript': 7.26.3(@babel/core@7.26.0)
       '@vue/babel-plugin-jsx': 1.2.5(@babel/core@7.26.0)
-      vite: 5.4.11(@types/node@18.19.68)(less@4.2.1)(sass-embedded@1.83.4)(terser@5.37.0)
+      vite: 5.4.11(@types/node@18.19.68)(less@4.2.1)(lightningcss@1.29.1)(sass-embedded@1.83.4)(terser@5.37.0)
       vue: 3.5.13(typescript@5.7.2)
     transitivePeerDependencies:
       - supports-color
 
-  '@vitejs/plugin-vue@5.2.1(vite@5.4.11(@types/node@18.19.68)(less@4.2.1)(sass-embedded@1.83.4)(terser@5.37.0))(vue@3.5.13(typescript@5.7.2))':
+  '@vitejs/plugin-vue@5.2.1(vite@5.4.11(@types/node@18.19.68)(less@4.2.1)(lightningcss@1.29.1)(sass-embedded@1.83.4)(terser@5.37.0))(vue@3.5.13(typescript@5.7.2))':
     dependencies:
-      vite: 5.4.11(@types/node@18.19.68)(less@4.2.1)(sass-embedded@1.83.4)(terser@5.37.0)
+      vite: 5.4.11(@types/node@18.19.68)(less@4.2.1)(lightningcss@1.29.1)(sass-embedded@1.83.4)(terser@5.37.0)
       vue: 3.5.13(typescript@5.7.2)
 
   '@volar/language-core@1.11.1':
@@ -5684,6 +5757,9 @@ snapshots:
   delayed-stream@1.0.0: {}
 
   destr@2.0.3: {}
+
+  detect-libc@1.0.3:
+    optional: true
 
   didyoumean@1.2.2: {}
 
@@ -6557,6 +6633,52 @@ snapshots:
       prelude-ls: 1.2.1
       type-check: 0.4.0
 
+  lightningcss-darwin-arm64@1.29.1:
+    optional: true
+
+  lightningcss-darwin-x64@1.29.1:
+    optional: true
+
+  lightningcss-freebsd-x64@1.29.1:
+    optional: true
+
+  lightningcss-linux-arm-gnueabihf@1.29.1:
+    optional: true
+
+  lightningcss-linux-arm64-gnu@1.29.1:
+    optional: true
+
+  lightningcss-linux-arm64-musl@1.29.1:
+    optional: true
+
+  lightningcss-linux-x64-gnu@1.29.1:
+    optional: true
+
+  lightningcss-linux-x64-musl@1.29.1:
+    optional: true
+
+  lightningcss-win32-arm64-msvc@1.29.1:
+    optional: true
+
+  lightningcss-win32-x64-msvc@1.29.1:
+    optional: true
+
+  lightningcss@1.29.1:
+    dependencies:
+      detect-libc: 1.0.3
+    optionalDependencies:
+      lightningcss-darwin-arm64: 1.29.1
+      lightningcss-darwin-x64: 1.29.1
+      lightningcss-freebsd-x64: 1.29.1
+      lightningcss-linux-arm-gnueabihf: 1.29.1
+      lightningcss-linux-arm64-gnu: 1.29.1
+      lightningcss-linux-arm64-musl: 1.29.1
+      lightningcss-linux-x64-gnu: 1.29.1
+      lightningcss-linux-x64-musl: 1.29.1
+      lightningcss-win32-arm64-msvc: 1.29.1
+      lightningcss-win32-x64-msvc: 1.29.1
+    optional: true
+
   lilconfig@3.1.3: {}
 
   lines-and-columns@1.2.4: {}
@@ -6912,7 +7034,7 @@ snapshots:
   postcss-load-config@4.0.2(postcss@8.4.49)(ts-node@10.9.2(@types/node@18.19.68)(typescript@5.7.2)):
     dependencies:
       lilconfig: 3.1.3
-      yaml: 2.6.1
+      yaml: 2.7.0
     optionalDependencies:
       postcss: 8.4.49
       ts-node: 10.9.2(@types/node@18.19.68)(typescript@5.7.2)
@@ -6970,7 +7092,7 @@ snapshots:
 
   quill-resize-module@2.0.4: {}
 
-  quill-table-better@1.1.5:
+  quill-table-better@1.1.6-rc.0:
     dependencies:
       '@babel/runtime': 7.26.0
       '@jaames/iro': 5.5.2
@@ -7402,7 +7524,7 @@ snapshots:
       chokidar: 3.6.0
       didyoumean: 1.2.2
       dlv: 1.1.3
-      fast-glob: 3.3.2
+      fast-glob: 3.3.3
       glob-parent: 6.0.2
       is-glob: 4.0.3
       jiti: 1.21.7
@@ -7637,7 +7759,7 @@ snapshots:
       picocolors: 1.1.1
       tinyglobby: 0.2.10
 
-  vite-plugin-html@3.2.2(vite@5.4.11(@types/node@18.19.68)(less@4.2.1)(sass-embedded@1.83.4)(terser@5.37.0)):
+  vite-plugin-html@3.2.2(vite@5.4.11(@types/node@18.19.68)(less@4.2.1)(lightningcss@1.29.1)(sass-embedded@1.83.4)(terser@5.37.0)):
     dependencies:
       '@rollup/pluginutils': 4.2.1
       colorette: 2.0.20
@@ -7651,9 +7773,9 @@ snapshots:
       html-minifier-terser: 6.1.0
       node-html-parser: 5.4.2
       pathe: 0.2.0
-      vite: 5.4.11(@types/node@18.19.68)(less@4.2.1)(sass-embedded@1.83.4)(terser@5.37.0)
+      vite: 5.4.11(@types/node@18.19.68)(less@4.2.1)(lightningcss@1.29.1)(sass-embedded@1.83.4)(terser@5.37.0)
 
-  vite@5.4.11(@types/node@18.19.68)(less@4.2.1)(sass-embedded@1.83.4)(terser@5.37.0):
+  vite@5.4.11(@types/node@18.19.68)(less@4.2.1)(lightningcss@1.29.1)(sass-embedded@1.83.4)(terser@5.37.0):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.4.49
@@ -7662,6 +7784,7 @@ snapshots:
       '@types/node': 18.19.68
       fsevents: 2.3.3
       less: 4.2.1
+      lightningcss: 1.29.1
       sass-embedded: 1.83.4
       terser: 5.37.0
 
@@ -7794,7 +7917,7 @@ snapshots:
 
   yallist@4.0.0: {}
 
-  yaml@2.6.1: {}
+  yaml@2.7.0: {}
 
   yn@3.1.1: {}
 
