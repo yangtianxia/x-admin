@@ -18,25 +18,23 @@ import { shallowMerge } from '@txjs/shared'
 import { useExpose } from '@/hooks/expose'
 import { bodyElement } from '@/shared/element'
 
-// UI Icons
-import uiIcons from './ui-icons'
+// Toolbar Icons
+import toolBarIcons from './toolbar-icons'
 
 // Quill Style
 import 'quill/dist/quill.snow.css'
 import 'quill-resize-module/dist/resize.css'
 import 'quill-table-better/dist/quill-table-better.css'
 
-if (!Quill.imports['modules/imageResize']) {
-  Quill.register('modules/imageResize', ImageResize)
-}
+Quill.register({
+  'modules/imageResize': ImageResize,
+  'modules/tableBetter': TableBetter
+}, true)
 
-if (!Quill.imports['modules/tableBetter']) {
-  Quill.register('modules/tableBetter', TableBetter)
-}
-
-shallowMerge(Quill.import('ui/icons') as Record<string, any>, uiIcons)
+shallowMerge(Quill.import('ui/icons') as any, toolBarIcons)
 
 const getDefaultOptions = () => ({
+  theme: 'snow',
   bounds: bodyElement,
   placeholder: '输入内容 ...',
   readOnly: false,
@@ -60,7 +58,15 @@ const getDefaultOptions = () => ({
     },
     tableBetter: {
       language: 'zh_CN',
-      menus: ['column', 'row', 'merge', 'wrap', 'copy', 'delete'],
+      menus: [
+        'column',
+        'row',
+        'merge',
+        'table',
+        'cell',
+        'wrap',
+        'delete'
+      ],
       toolbarTable: true
     },
     keyboard: {
@@ -118,9 +124,16 @@ export default defineComponent({
     let options = {} as QuillOptions
     let content: string | undefined = props.value || props.content || ''
 
-    const setContent = (newContent?: string) => {
+    const setContent = (html?: string) => {
       if (quill) {
-        quill.root.innerHTML = newContent || ''
+        const delta = quill.clipboard.convert({ html })
+        const [range] = quill.selection.getRange()
+        quill.updateContents(delta, Quill.sources.USER)
+        quill.setSelection(
+          delta.length() - (range?.length || 0),
+          Quill.sources.SILENT
+        )
+        quill.scrollSelectionIntoView()
       }
     }
 
