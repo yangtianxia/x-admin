@@ -1,4 +1,7 @@
 {
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
   "css.customData": [
     ".vscode/tailwindcss.json"
   ],
