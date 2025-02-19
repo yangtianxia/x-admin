@@ -14,7 +14,7 @@ export default defineComponent({
     return () => (
       <RouterView
         v-slots={{
-          default: ({ Component, route }: RouterViewEvent) => (
+          default: ({ Component, route }: IRouterView) => (
             <Transition
               appear
               name="fade"
