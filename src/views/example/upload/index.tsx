@@ -9,6 +9,12 @@ export default defineComponent({
   name: 'ExampleUploadPage',
   setup() {
     const fileList = ref([])
+    const fileList2 = ref([])
+    const fileList3 = ref([])
+    const fileList4 = ref([])
+    const fileList5 = ref([])
+    const fileList6 = ref([])
+
     return () => (
       <Scaffold loading={false}>
         <Scaffold.Body>
@@ -18,26 +24,28 @@ export default defineComponent({
             urls={['https://gips0.baidu.com/it/u=3093851010,2626068568&fm=3042&app=3042&f=JPEG&wm=1,huayi,0,0,13,9&wmo=0,0&w=1024&h=1024']}
           />
           <Upload
-            v-model:fileList={fileList.value}
+            v-model:fileList={fileList2.value}
             type="video"
-            accept="video/*"
-            urls={['https://drama-video-mp4.oss-cn-beijing.aliyuncs.com/zh-cn/%E6%80%BB%E8%A3%81%E8%80%81%E5%A9%86/%E6%80%BB%E8%A3%81%E8%80%81%E5%A9%86-%E7%AC%AC3%E9%9B%86.mp4']}
+            accept="video/*,application/vnd.apple.mpegurl,application/x-mpegURL,audio/mpegurl"
           />
           <Upload
-            v-model:fileList={fileList.value}
+            v-model:fileList={fileList3.value}
             type="file"
             urls={['https://gips0.baidu.com/it/u=3093851010,2626068568&fm=3042&app=3042&f=JPEG&wm=1,huayi,0,0,13,9&wmo=0,0&w=1024&h=1024']}
           />
           <Upload
+            v-model:fileList={fileList4.value}
             listType="picture"
             urls={['https://gips0.baidu.com/it/u=3093851010,2626068568&fm=3042&app=3042&f=JPEG&wm=1,huayi,0,0,13,9&wmo=0,0&w=1024&h=1024']}
           />
           <Upload
+            v-model:fileList={fileList5.value}
             listType="picture"
             type="file"
             urls={['https://gips0.baidu.com/it/u=3093851010,2626068568&fm=3042&app=3042&f=JPEG&wm=1,huayi,0,0,13,9&wmo=0,0&w=1024&h=1024']}
           />
           <Upload
+            v-model:fileList={fileList6.value}
             listType="text"
             type="file"
             urls={['https://gips0.baidu.com/it/u=3093851010,2626068568&fm=3042&app=3042&f=JPEG&wm=1,huayi,0,0,13,9&wmo=0,0&w=1024&h=1024']}
