@@ -2,17 +2,16 @@
 import { defineComponent } from 'vue'
 
 // Common
-import dayjs from 'dayjs'
-import { RouterView } from 'vue-router'
+import zhCN from 'ant-design-vue/es/locale/zh_CN'
 import { useAppStore } from '@/store'
 
 // Components
-import { ConfigProvider } from 'ant-design-vue'
-import zhCN from 'ant-design-vue/es/locale/zh_CN'
-
-// dayjs语言配置
-import 'dayjs/locale/zh-cn'
-dayjs.locale('zh-cn')
+import { RouterView } from 'vue-router'
+import {
+  ConfigProvider,
+  StyleProvider,
+  legacyLogicalPropertiesTransformer
+} from 'ant-design-vue'
 
 export default defineComponent({
   setup () {
@@ -23,7 +22,9 @@ export default defineComponent({
         locale={zhCN}
         theme={{token: appStore.seedToken}}
       >
-        <RouterView />
+        <StyleProvider transformers={[legacyLogicalPropertiesTransformer]}>
+          <RouterView />
+        </StyleProvider>
       </ConfigProvider>
     )
   }
