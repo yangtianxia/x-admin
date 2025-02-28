@@ -9,11 +9,11 @@ export default defineComponent({
   name: 'NotFoundPage',
   setup() {
     return () => (
-      <div class='flex h-screen flex-col items-center justify-center'>
+      <div class="flex h-screen flex-col items-center justify-center">
         <Result
           status={404}
           bottom={() => (
-            <Button type='primary' icon={<Icon type='Left' />} onClick={goBack}>
+            <Button type="primary" icon={<Icon type="Left" />} onClick={goBack}>
               返回
             </Button>
           )}

@@ -32,15 +32,15 @@ export default defineComponent({
     }
 
     return () => (
-      <Layout class='h-full w-full'>
+      <Layout class="h-full w-full">
         {appStore.header ? <LayoutHeader /> : null}
         <Layout>
           {appStore.sider ? (
             <Layout.Sider
               collapsible
               trigger={null}
-              breakpoint='xl'
-              class='!fixed left-0 top-0 h-full !bg-container after:absolute after:right-0 after:top-0 after:block after:h-full after:border-r'
+              breakpoint="xl"
+              class="!fixed left-0 top-0 h-full !bg-container after:absolute after:right-0 after:top-0 after:block after:h-full after:border-r"
               width={appStore.siderWidth}
               collapsedWidth={appStore.siderCollapseWidth}
               collapsed={appStore.siderCollapsed}
@@ -57,7 +57,7 @@ export default defineComponent({
                 onClick={onCollapsed}
               >
                 <Icon
-                  theme='filled'
+                  theme="filled"
                   strokeWidth={2}
                   type={
                     appStore.siderCollapsed ? 'MenuFoldOne' : 'MenuUnfoldOne'
@@ -67,15 +67,15 @@ export default defineComponent({
             </Layout.Sider>
           ) : null}
           <Layout
-            class='min-h-screen overflow-hidden transition-[padding]'
+            class="min-h-screen overflow-hidden transition-[padding]"
             style={layoutStyle.value}
           >
-            <LayoutBreadcrumb class='mx-3 my-2' />
-            <Layout.Content class='flex flex-col'>
+            <LayoutBreadcrumb class="mx-3 my-2" />
+            <Layout.Content class="flex flex-col">
               <LayoutPage />
             </Layout.Content>
             {appStore.footer ? (
-              <Layout.Footer class='!px-0 !py-4'>
+              <Layout.Footer class="!px-0 !py-4">
                 <LayoutFooter />
               </Layout.Footer>
             ) : null}

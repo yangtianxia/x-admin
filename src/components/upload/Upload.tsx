@@ -295,17 +295,17 @@ export default defineComponent({
           isPictureCard.value
             ? () => (
                 <span class={bem('delete')}>
-                  <Icon type='CloseSmall' strokeWidth={5} />
+                  <Icon type="CloseSmall" strokeWidth={5} />
                 </span>
               )
             : undefined
         }
       >
         {canUpload.value ? (
-          <span title='选择文件' id={formItemContext.id.value}>
+          <span title="选择文件" id={formItemContext.id.value}>
             {slots.default?.() || (
               <span class={bem('button')}>
-                <Icon type='Plus' class={bem('button-icon')} />
+                <Icon type="Plus" class={bem('button-icon')} />
               </span>
             )}
           </span>
@@ -326,7 +326,7 @@ export default defineComponent({
           {renderUpload()}
           {fileList.value.map((file) => (
             <Image
-              class='hidden'
+              class="hidden"
               key={file.uid}
               preview={{ src: file.remote || file.thumbUrl }}
             />

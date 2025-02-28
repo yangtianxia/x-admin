@@ -8,7 +8,7 @@ export default defineComponent({
       <RouterView
         v-slots={{
           default: ({ Component, route }: IRouterView) => (
-            <Transition appear name='fade' mode='out-in'>
+            <Transition appear name="fade" mode="out-in">
               {route.meta.keepAlive ? (
                 <Component key={route.fullPath} />
               ) : (

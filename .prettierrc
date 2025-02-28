@@ -7,7 +7,7 @@
   "printWidth": 80,
   "arrowParens": "always",
   "trailingComma": "es5",
-  "jsxSingleQuote": true,
+  "jsxSingleQuote": false,
   "bracketSpacing": true,
   "endOfLine": "auto",
   "htmlWhitespaceSensitivity": "ignore",

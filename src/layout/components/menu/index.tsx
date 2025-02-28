@@ -125,9 +125,9 @@ export default defineComponent({
     }
 
     return () => (
-      <div class='h-full overflow-y-auto overflow-x-hidden scrollbar-thin'>
+      <div class="h-full overflow-y-auto overflow-x-hidden scrollbar-thin">
         <Menu
-          mode='inline'
+          mode="inline"
           class={style.menu}
           selectedKeys={selectedKey.value}
           inlineIndent={inlineIndent.value}

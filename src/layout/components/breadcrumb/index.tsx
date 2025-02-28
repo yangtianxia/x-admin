@@ -43,7 +43,7 @@ export default defineComponent({
           if (route.breadcrumbName === '_HOME_') {
             return (
               <a href={route.path}>
-                <Icon type='Home' />
+                <Icon type="Home" />
               </a>
             )
           }
