@@ -113,19 +113,19 @@ export default defineComponent({
     }
 
     const renderPwd = () => (
-      <div key='pwd'>
-        <FormItem validateFirst name='username'>
+      <div key="pwd">
+        <FormItem validateFirst name="username">
           <Input
-            placeholder='用户名'
-            prefix={<Icon type='People' />}
+            placeholder="用户名"
+            prefix={<Icon type="People" />}
             v-model:value={formModel.username}
           />
         </FormItem>
-        <FormItem validateFirst name='password'>
+        <FormItem validateFirst name="password">
           <Input.Password
             visibilityToggle
-            placeholder='登录密码'
-            prefix={<Icon type='Lock' />}
+            placeholder="登录密码"
+            prefix={<Icon type="Lock" />}
             v-model:value={formModel.password}
           />
         </FormItem>
@@ -133,19 +133,19 @@ export default defineComponent({
     )
 
     const renderSms = () => (
-      <div key='sms'>
-        <FormItem validateFirst name='telephone'>
+      <div key="sms">
+        <FormItem validateFirst name="telephone">
           <Input
-            type='tel'
-            placeholder='手机号码'
-            prefix={<Icon type='Phone' />}
+            type="tel"
+            placeholder="手机号码"
+            prefix={<Icon type="Phone" />}
             v-model:value={formModel.telephone}
           />
         </FormItem>
-        <FormItem validateFirst name='code'>
+        <FormItem validateFirst name="code">
           <Input
-            placeholder='短信验证码'
-            prefix={<Icon type='Message' />}
+            placeholder="短信验证码"
+            prefix={<Icon type="Message" />}
             suffix={<SendCode beforeChange={postLoginCodeReq} />}
             v-model:value={formModel.code}
           />
@@ -157,10 +157,10 @@ export default defineComponent({
       <div
         class={[style.form, 'max-w-[300px] max-sm:flex-auto md:min-w-[300px]']}
       >
-        <h5 class='text-h5 text max-sm:hidden'>
+        <h5 class="text-h5 text max-sm:hidden">
           登录 {import.meta.env.VITE_TITLE}
         </h5>
-        <p class='mt-1 text-sm text-tertiary max-sm:hidden'>
+        <p class="mt-1 text-sm text-tertiary max-sm:hidden">
           一个基于Vue3生态打造的后台应用模版
         </p>
         <Form
@@ -169,14 +169,14 @@ export default defineComponent({
           model={formModel}
           rules={formRules}
           onFinish={onSubmit}
-          class='sm:mt-9'
+          class="sm:mt-9"
         >
           {isPwd.value ? renderPwd() : renderSms()}
-          <div class='mt-6'>
+          <div class="mt-6">
             <Button
               block
-              type='primary'
-              htmlType='submit'
+              type="primary"
+              htmlType="submit"
               loading={formModel.loading}
               disabled={formModel.loading}
             >
@@ -184,8 +184,8 @@ export default defineComponent({
             </Button>
             <Button
               block
-              type='text'
-              class='mt-2 text-tertiary'
+              type="text"
+              class="mt-2 text-tertiary"
               onClick={onLoginMethodSwitch}
             >
               {isPwd.value ? '验证码' : '密码'}登录

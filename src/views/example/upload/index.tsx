@@ -25,35 +25,35 @@ export default defineComponent({
           />
           <Upload
             v-model:fileList={fileList2.value}
-            type='video'
-            accept='video/*,application/vnd.apple.mpegurl,application/x-mpegURL,audio/mpegurl'
+            type="video"
+            accept="video/*,application/vnd.apple.mpegurl,application/x-mpegURL,audio/mpegurl"
           />
           <Upload
             v-model:fileList={fileList3.value}
-            type='file'
+            type="file"
             urls={[
               'https://gips0.baidu.com/it/u=3093851010,2626068568&fm=3042&app=3042&f=JPEG&wm=1,huayi,0,0,13,9&wmo=0,0&w=1024&h=1024',
             ]}
           />
           <Upload
             v-model:fileList={fileList4.value}
-            listType='picture'
+            listType="picture"
             urls={[
               'https://gips0.baidu.com/it/u=3093851010,2626068568&fm=3042&app=3042&f=JPEG&wm=1,huayi,0,0,13,9&wmo=0,0&w=1024&h=1024',
             ]}
           />
           <Upload
             v-model:fileList={fileList5.value}
-            listType='picture'
-            type='file'
+            listType="picture"
+            type="file"
             urls={[
               'https://gips0.baidu.com/it/u=3093851010,2626068568&fm=3042&app=3042&f=JPEG&wm=1,huayi,0,0,13,9&wmo=0,0&w=1024&h=1024',
             ]}
           />
           <Upload
             v-model:fileList={fileList6.value}
-            listType='text'
-            type='file'
+            listType="text"
+            type="file"
             urls={[
               'https://gips0.baidu.com/it/u=3093851010,2626068568&fm=3042&app=3042&f=JPEG&wm=1,huayi,0,0,13,9&wmo=0,0&w=1024&h=1024',
             ]}

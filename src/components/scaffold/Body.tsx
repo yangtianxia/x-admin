@@ -31,7 +31,7 @@ export default defineComponent({
     return () => {
       const empty = notNil(status.value)
       return (
-        <Spin size='large' spinning={loading.value}>
+        <Spin size="large" spinning={loading.value}>
           {status.value ? (
             <Result status={status.value} />
           ) : (
