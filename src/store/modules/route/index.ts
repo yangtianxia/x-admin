@@ -13,11 +13,15 @@ const NotFoundBase = () => import('@/views/not-found/base')
 
 const layoutComponentMap = {
   Layout: DEFAULT_LAYOUT,
-  Parent: () => import('@/layout/parent')
+  Parent: () => import('@/layout/parent'),
 }
 
 const transformComponentView = (component: string) => {
-  return layoutComponentMap[component as keyof typeof layoutComponentMap] || asyncRouteModules[component] || NotFoundBase
+  return (
+    layoutComponentMap[component as keyof typeof layoutComponentMap] ||
+    asyncRouteModules[component] ||
+    NotFoundBase
+  )
 }
 
 const formatAsyncRoutes = (menus: MenuItem[]) => {
@@ -27,43 +31,41 @@ const formatAsyncRoutes = (menus: MenuItem[]) => {
 
   const nameMap = new Map()
 
-  return menus.reduce(
-    (routes, el) => {
-      nameMap.set(el.id, el.path)
+  return menus.reduce((routes, el) => {
+    nameMap.set(el.id, el.path)
 
-      if (el.children?.length) {
-        el.children.sort((a, b) => (a?.sort ?? 0) - (b?.sort ?? 0))
-      }
+    if (el.children?.length) {
+      el.children.sort((a, b) => (a?.sort ?? 0) - (b?.sort ?? 0))
+    }
 
-      if (el.parentId && el.type === 2) {
-        el.activeMenu = nameMap.get(el.parentId)
-      }
+    if (el.parentId && el.type === 2) {
+      el.activeMenu = nameMap.get(el.parentId)
+    }
 
-      const route = {
-        path: el.path,
-        name: el.name || transformPathToName(el.path),
-        component: transformComponentView(el.component),
-        meta: {
-          title: el.title,
-          hideInMenu: el.isHidden,
-          keepAlive: el.isCache,
-          icon: el.icon,
-          activeMenu: el.activeMenu
-        }
-      } as RouteRecordRaw
+    const route = {
+      path: el.path,
+      name: el.name || transformPathToName(el.path),
+      component: transformComponentView(el.component),
+      meta: {
+        title: el.title,
+        hideInMenu: el.isHidden,
+        keepAlive: el.isCache,
+        icon: el.icon,
+        activeMenu: el.activeMenu,
+      },
+    } as RouteRecordRaw
 
-      if (el.redirect) {
-        route.redirect = el.redirect
-      }
+    if (el.redirect) {
+      route.redirect = el.redirect
+    }
 
-      if (el.children?.length) {
-        route.children = formatAsyncRoutes(el.children)
-      }
+    if (el.children?.length) {
+      route.children = formatAsyncRoutes(el.children)
+    }
 
-      routes.push(route)
-      return routes
-    }, [] as RouteRecordRaw[]
-  )
+    routes.push(route)
+    return routes
+  }, [] as RouteRecordRaw[])
 }
 
 export const isMultipleRoute = (route: RouteRecordRaw) => {
@@ -77,7 +79,9 @@ export const flatMultiLevelRoutes = (routes: RouteRecordRaw[]) => {
     }
     return {
       ...route,
-      children: route.children?.map((el) => omit(el, ['children'])) as RouteRecordRaw[]
+      children: route.children?.map((el) =>
+        omit(el, ['children'])
+      ) as RouteRecordRaw[],
     }
   })
 }
@@ -85,11 +89,12 @@ export const flatMultiLevelRoutes = (routes: RouteRecordRaw[]) => {
 const useRouteStore = defineStore('x_admin_route', {
   state: (): RouteState => ({
     routes: [],
-    asyncRoutes: []
+    asyncRoutes: [],
   }),
   actions: {
     setRoutes(routes: RouteRecordRaw[]) {
-      this.routes = [...constantRoutes].concat(routes)
+      this.routes = [...constantRoutes]
+        .concat(routes)
         .sort((a, b) => (a.meta?.sort ?? 0) - (b.meta?.sort ?? 0))
       this.asyncRoutes = routes
     },
@@ -99,8 +104,8 @@ const useRouteStore = defineStore('x_admin_route', {
       const flatRoutes = flatMultiLevelRoutes(cloneDeep(asyncRoutes))
       this.setRoutes(asyncRoutes)
       return flatRoutes
-    }
-  }
+    },
+  },
 })
 
 export default useRouteStore

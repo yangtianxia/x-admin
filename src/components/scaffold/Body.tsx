@@ -10,7 +10,7 @@ import { SCAFFOLD_KEY } from './Scaffold'
 const [name, bem] = $bem('x-scaffold-body')
 
 const scaffoldBodyProps = {
-  flex: truthProp
+  flex: truthProp,
 }
 
 export type ScaffoldBodyProps = ExtractPropTypes<typeof scaffoldBodyProps>
@@ -31,20 +31,16 @@ export default defineComponent({
     return () => {
       const empty = notNil(status.value)
       return (
-        <Spin
-          size="large"
-          spinning={loading.value}
-        >
-          {status.value ? <Result status={status.value} /> : (
-            <div
-              {...attrs}
-              class={bem({empty, flex: props.flex})}
-            >
+        <Spin size='large' spinning={loading.value}>
+          {status.value ? (
+            <Result status={status.value} />
+          ) : (
+            <div {...attrs} class={bem({ empty, flex: props.flex })}>
               {slots.default?.()}
             </div>
           )}
         </Spin>
       )
     }
-  }
+  },
 })

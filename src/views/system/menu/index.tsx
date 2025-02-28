@@ -10,5 +10,5 @@ export default defineComponent({
         <Scaffold.Body></Scaffold.Body>
       </Scaffold>
     )
-  }
+  },
 })

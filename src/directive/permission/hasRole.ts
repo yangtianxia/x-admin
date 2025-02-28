@@ -29,5 +29,5 @@ export default {
   },
   update(el: HTMLElement, binding: DirectiveBinding) {
     checkRole(el, binding)
-  }
+  },
 }

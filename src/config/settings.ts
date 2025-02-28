@@ -6,7 +6,7 @@ const settings = {
   sider: true,
   footer: true,
   siderCollapsed: false,
-  siderWidths: [60, 220]
+  siderWidths: [60, 220],
 }
 
 export default settings

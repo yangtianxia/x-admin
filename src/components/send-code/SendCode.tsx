@@ -1,5 +1,16 @@
-import { defineComponent, reactive, computed, type PropType, type ExtractPropTypes } from 'vue'
-import { omit, shallowMerge, callInterceptor, type Interceptor } from '@txjs/shared'
+import {
+  defineComponent,
+  reactive,
+  computed,
+  type PropType,
+  type ExtractPropTypes,
+} from 'vue'
+import {
+  omit,
+  shallowMerge,
+  callInterceptor,
+  type Interceptor,
+} from '@txjs/shared'
 import { useCountDown } from '@vant/use'
 
 import { Button, type ButtonProps } from 'ant-design-vue'
@@ -8,28 +19,31 @@ import { VNodeProp, makeNumberProp, makeStringProp } from '../_utils/props'
 
 const [name, bem] = $bem('x-send-code')
 
-const sendCodeProps = shallowMerge({}, {
-  interval: makeNumberProp(60),
-  size: makeStringProp<ButtonProps['size']>('small'),
-  type: makeStringProp<ButtonProps['type']>('text'),
-  beforeText: makeStringProp('[S] 秒后重发'),
-  text: {
-    type: VNodeProp,
-    default: '获取验证码'
-  },
-  afterText: {
-    type: VNodeProp,
-    default: '重新获取'
-  },
-  beforeChange: Function as PropType<Interceptor>
-})
+const sendCodeProps = shallowMerge(
+  {},
+  {
+    interval: makeNumberProp(60),
+    size: makeStringProp<ButtonProps['size']>('small'),
+    type: makeStringProp<ButtonProps['type']>('text'),
+    beforeText: makeStringProp('[S] 秒后重发'),
+    text: {
+      type: VNodeProp,
+      default: '获取验证码',
+    },
+    afterText: {
+      type: VNodeProp,
+      default: '重新获取',
+    },
+    beforeChange: Function as PropType<Interceptor>,
+  }
+)
 
 const sendCodePropsKeys = [
   'interval',
   'beforeText',
   'text',
   'afterText',
-  'beforeChange'
+  'beforeChange',
 ] as const
 
 export type SendCodeProps = ExtractPropTypes<typeof sendCodeProps>
@@ -42,7 +56,7 @@ export default defineComponent({
       interval: props.interval,
       disabled: false,
       loading: false,
-      finish: false
+      finish: false,
     })
 
     const { start, reset } = useCountDown({
@@ -55,10 +69,12 @@ export default defineComponent({
         state.finish = true
         state.interval = props.interval
         reset()
-      }
+      },
     })
 
-    const formatTpl = computed(() => props.beforeText.replace(/^\[S\](.*)?$/g, `${state.interval}$1`))
+    const formatTpl = computed(() =>
+      props.beforeText.replace(/^\[S\](.*)?$/g, `${state.interval}$1`)
+    )
 
     const onClick = () => {
       state.loading = true
@@ -71,7 +87,7 @@ export default defineComponent({
         },
         canceled: () => {
           state.loading = false
-        }
+        },
       })
     }
 
@@ -93,5 +109,5 @@ export default defineComponent({
         {renderText()}
       </Button>
     )
-  }
+  },
 })

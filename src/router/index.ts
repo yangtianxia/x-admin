@@ -11,13 +11,11 @@ import createRouteGuard from './guard'
 NProgress.configure({
   easing: 'ease',
   showSpinner: false,
-  trickleSpeed: 150
+  trickleSpeed: 150,
 })
 
 const router = createRouter({
-  history: createWebHistory(
-    import.meta.env.BASE_URL
-  ),
+  history: createWebHistory(import.meta.env.BASE_URL),
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition
@@ -25,7 +23,7 @@ const router = createRouter({
       return { left: 0, top: 0 }
     }
   },
-  routes: constantRoutes
+  routes: constantRoutes,
 })
 
 createRouteGuard(router)

@@ -9,7 +9,7 @@ import {
   postLoginBySms,
   type LoginByPwdQuery,
   type LoginBySmsQuery,
-  type LoginReturn
+  type LoginReturn,
 } from '@/api/user/login'
 import { getUserInfo } from '@/api/user/user-info'
 import { postLogout } from '@/api/user/logout'
@@ -30,7 +30,7 @@ const useUserStore = defineStore('x_admin_user', {
     jobName: undefined,
     certification: undefined,
     roles: [],
-    permissions: []
+    permissions: [],
   }),
   getters: {
     hasUserInfo(state: UserState) {
@@ -38,7 +38,7 @@ const useUserStore = defineStore('x_admin_user', {
     },
     userInfo(state: UserState): UserState {
       return { ...state }
-    }
+    },
   },
   actions: {
     setInfo(partial: Partial<UserState>) {
@@ -88,8 +88,8 @@ const useUserStore = defineStore('x_admin_user', {
       } finally {
         this.logoutCallback()
       }
-    }
-  }
+    },
+  },
 })
 
 export default useUserStore

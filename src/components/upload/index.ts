@@ -10,6 +10,6 @@ export {
   makeUpload,
   makeUploadLimit,
   makeUploadException,
-  formatFile
+  formatFile,
 } from './utils'
 export type { UploadFile } from './types'

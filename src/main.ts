@@ -17,13 +17,13 @@ dayjs.locale('zh-cn')
 // message配置
 message.config({
   duration: 2,
-  top: '12px'
+  top: '12px',
 })
 
 // notification配置
 notification.config({
   duration: 3,
-  top: '80px'
+  top: '80px',
 })
 
 createApp(app)

@@ -2,29 +2,29 @@
 @scaffold-body-cls: x-scaffold-body;
 
 .@{scaffold-cls} {
-  @apply flex-1 relative flex flex-nowrap flex-col box-border;
+  @apply relative box-border flex flex-1 flex-col flex-nowrap;
 
   & > .ant-spin-nested-loading {
-    @apply flex-1 min-h-0 flex flex-col;
+    @apply flex min-h-0 flex-1 flex-col;
 
     & > .ant-spin-container {
-      @apply flex-1 min-h-0 flex flex-col after:bg-layout;
+      @apply flex min-h-0 flex-1 flex-col after:bg-layout;
     }
   }
 }
 
 .@{scaffold-body-cls} {
-  @apply flex-1 relative box-border px-4;
+  @apply relative box-border flex-1 px-4;
 
   &--flex {
     @apply flex flex-col;
   }
 
   &--empty {
-    @apply p-0 bg-transparent;
+    @apply bg-transparent p-0;
 
     .x-result {
-      @apply absolute top-0 bottom-0 w-full h-4/5 box-border;
+      @apply absolute bottom-0 top-0 box-border h-4/5 w-full;
     }
   }
 }

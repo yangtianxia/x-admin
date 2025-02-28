@@ -6,7 +6,7 @@ import {
   onBeforeUnmount,
   onUnmounted,
   type ExtractPropTypes,
-  type PropType
+  type PropType,
 } from 'vue'
 import extend from 'extend'
 import { shallowMerge } from '@txjs/shared'
@@ -22,54 +22,60 @@ import 'quill/dist/quill.snow.css'
 import 'quill-resize-module/dist/resize.css'
 import 'quill-table-better/dist/quill-table-better.css'
 
-Quill.register({
-  'modules/resize': ImageResize,
-  'modules/table-better': TableBetter
-}, true)
+Quill.register(
+  {
+    'modules/resize': ImageResize,
+    'modules/table-better': TableBetter,
+  },
+  true
+)
 
 shallowMerge(Quill.import('ui/icons') as any, toolBarIcons)
 
-const getDefaultOptions = () => ({
-  theme: 'snow',
-  bounds: bodyElement,
-  placeholder: '输入内容 ...',
-  readOnly: false,
-  modules: {
-    table: false,
-    toolbar: [
-      [{ font: [] }],
-      [{ header: [1, 2, 3, 4, 5, 6, false] }],
-      [{ align: '' }, { align: 'center' }, { align: 'right' }, { direction: 'rtl' }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ script: 'sub' }, { script: 'super' }],
-      [{ color: [] }, { background: [] }],
-      ['blockquote', 'code-block'],
-      [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
-      ['table-better'],
-      ['clean']
-    ],
-    resize: {
-      embedTags: ['VIDEO', 'IFRAME'],
-      tools: ['left', 'center', 'right', 'full']
-    },
-    'table-better': {
-      language: 'zh_CN',
-      menus: [
-        'column',
-        'row',
-        'merge',
-        'table',
-        'cell',
-        'wrap',
-        'delete'
+const getDefaultOptions = () =>
+  ({
+    theme: 'snow',
+    bounds: bodyElement,
+    placeholder: '输入内容 ...',
+    readOnly: false,
+    modules: {
+      table: false,
+      toolbar: [
+        [{ font: [] }],
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+        [
+          { align: '' },
+          { align: 'center' },
+          { align: 'right' },
+          { direction: 'rtl' },
+        ],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ script: 'sub' }, { script: 'super' }],
+        [{ color: [] }, { background: [] }],
+        ['blockquote', 'code-block'],
+        [
+          { list: 'ordered' },
+          { list: 'bullet' },
+          { indent: '-1' },
+          { indent: '+1' },
+        ],
+        ['table-better'],
+        ['clean'],
       ],
-      toolbarTable: true
+      resize: {
+        embedTags: ['VIDEO', 'IFRAME'],
+        tools: ['left', 'center', 'right', 'full'],
+      },
+      'table-better': {
+        language: 'zh_CN',
+        menus: ['column', 'row', 'merge', 'table', 'cell', 'wrap', 'delete'],
+        toolbarTable: true,
+      },
+      keyboard: {
+        bindings: TableBetter.keyboardBindings,
+      },
     },
-    keyboard: {
-      bindings: TableBetter.keyboardBindings
-    }
-  }
-}) as QuillOptions
+  }) as QuillOptions
 
 const [name, bem] = $bem('x-quill')
 
@@ -79,18 +85,20 @@ const quillProps = {
   disabled: Boolean,
   options: {
     type: Object as PropType<QuillOptions>,
-    default: () => ({})
+    default: () => ({}),
   },
   onReady: Function as PropType<(quill: Quill | null) => void>,
-  onChange: Function as PropType<(event: {
-    html: string | undefined
-    text: string | undefined
-    quill: Quill | null
-  }) => void>,
+  onChange: Function as PropType<
+    (event: {
+      html: string | undefined
+      text: string | undefined
+      quill: Quill | null
+    }) => void
+  >,
   onInput: Function,
   onBlur: Function as PropType<(quill: Quill | null) => void>,
   onFocus: Function as PropType<(quill: Quill | null) => void>,
-  'onUpdate:value': Function as PropType<(value: string | undefined) => void>
+  'onUpdate:value': Function as PropType<(value: string | undefined) => void>,
 }
 
 export type QuillProps = ExtractPropTypes<typeof quillProps>
@@ -138,7 +146,7 @@ export default defineComponent({
         // Quill Instance
         quill = new Quill(editorRef.value, {
           theme: 'snow',
-          ...options
+          ...options,
         })
 
         // Set editor content
@@ -224,7 +232,11 @@ export default defineComponent({
 
     onBeforeUnmount(() => {
       const editorToolbar = editorRef.value?.previousSibling as HTMLDivElement
-      if (editorToolbar && editorToolbar.nodeType === 1 && editorToolbar.className.includes('ql-toolbar')) {
+      if (
+        editorToolbar &&
+        editorToolbar.nodeType === 1 &&
+        editorToolbar.className.includes('ql-toolbar')
+      ) {
         editorToolbar.parentNode?.removeChild(editorToolbar)
       }
     })
@@ -236,5 +248,5 @@ export default defineComponent({
         <div ref={editorRef} />
       </div>
     )
-  }
+  },
 })

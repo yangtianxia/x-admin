@@ -4,7 +4,8 @@ import { isFunction } from '@txjs/bool'
 
 export const inBrowser = typeof window !== 'undefined'
 
-export const createInjectionKey = <T = any>(value?: Numeric): InjectionKey<T> => Symbol(value)
+export const createInjectionKey = <T = any>(value?: Numeric): InjectionKey<T> =>
+  Symbol(value)
 
 export type VNodeReturn = ReturnType<typeof createVNode>
 

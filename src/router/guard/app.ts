@@ -11,9 +11,7 @@ const setTitle = (...args: (string | undefined)[]) => {
 }
 
 const setRouteTitle = (to: RouteLocationNormalizedGeneric) => {
-  const matchs = to.matched
-      .map((el) => el.meta?.title)
-      .reverse()
+  const matchs = to.matched.map((el) => el.meta?.title).reverse()
   setTitle(...matchs)
 }
 

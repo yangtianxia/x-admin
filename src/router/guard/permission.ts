@@ -16,12 +16,12 @@ const notifyHandler = (error: any) => {
     title: '加载异常',
     content: h('div', [
       h('p', `状态：${error.code}`),
-      h('p', `原因：${msgWrap(error)}`)
+      h('p', `原因：${msgWrap(error)}`),
     ]),
     okText: '刷新',
     onOk() {
       window.location.reload()
-    }
+    },
   })
 }
 
@@ -40,8 +40,8 @@ export default function setupPermissionGuard(router: Router) {
       next({
         name: LOGIN_NAME,
         query: {
-          [REDIRECT_URI]: to.fullPath
-        }
+          [REDIRECT_URI]: to.fullPath,
+        },
       })
     }
 

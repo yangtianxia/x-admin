@@ -19,7 +19,9 @@ const checkPermission = (el: HTMLElement, binding: DirectiveBinding) => {
     // 示例
     // v-hasPerm={[['sys:menu:add', 'sys:menu:edit']]}
     // v-hasPerm="sys:menu:add"
-    throw new Error(`need perms! Like v-hasPerm={[['sys:menu:add', 'sys:menu:edit']]}`)
+    throw new Error(
+      `need perms! Like v-hasPerm={[['sys:menu:add', 'sys:menu:edit']]}`
+    )
   }
 }
 
@@ -29,5 +31,5 @@ export default {
   },
   update(el: HTMLElement, binding: DirectiveBinding) {
     checkPermission(el, binding)
-  }
+  },
 }

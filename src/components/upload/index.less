@@ -9,15 +9,17 @@
   }
 
   &&-select-picture-card {
-    @apply !border-solid !bg-container !rounded !w-20 !h-20;
+    @apply !h-20 !w-20 !rounded !border-solid !bg-container;
   }
 
   &-picture-card-wrapper {
     @apply align-top;
   }
 
-  &-wrapper&-picture-card-wrapper &-list&-list-picture-card &-list-item-container {
-    @apply w-20 h-20;
+  &-wrapper&-picture-card-wrapper
+    &-list&-list-picture-card
+    &-list-item-container {
+    @apply h-20 w-20;
   }
 
   &-wrapper&-picture-card-wrapper &-list&-list-picture-card &-list-item {
@@ -34,7 +36,7 @@
   }
 
   &-list-picture-card &-list-item-actions {
-    @apply h-full flex flex-col justify-center;
+    @apply flex h-full flex-col justify-center;
 
     & > .ant-btn-sm:last-child {
       @apply absolute !size-4;
@@ -73,7 +75,7 @@
   &-animate-inline-appear,
   &-animate-inline-enter,
   &-animate-inline-leave {
-    animation-duration: 0s!important;
+    animation-duration: 0s !important;
   }
 }
 
@@ -84,7 +86,7 @@
   }
 
   &__button {
-    @apply flex flex-col items-center justify-center w-full h-full text-xl text-quaternary;
+    @apply flex h-full w-full flex-col items-center justify-center text-xl text-quaternary;
 
     &:hover {
       @apply text-primary;
@@ -104,7 +106,7 @@
   }
 
   &__delete {
-    @apply !inline-flex items-center justify-center opacity-0 size-4 rounded-full bg-black/50 dark:bg-white/35;
+    @apply !inline-flex size-4 items-center justify-center rounded-full bg-black/50 opacity-0 dark:bg-white/35;
 
     &:hover {
       @apply bg-black/65 dark:bg-white/45;

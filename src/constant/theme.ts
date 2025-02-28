@@ -12,16 +12,16 @@ export const THEME_OPTIONS = [
   {
     label: '明亮',
     value: THEME_LIGHT,
-    icon: 'SunOne' as const
+    icon: 'SunOne' as const,
   },
   {
     label: '暗黑',
     value: THEME_DARK,
-    icon: 'Moon' as const
+    icon: 'Moon' as const,
   },
   {
     label: '系统',
     value: THEME_SYSTEM,
-    icon: 'Computer' as const
-  }
+    icon: 'Computer' as const,
+  },
 ]

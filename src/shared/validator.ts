@@ -6,6 +6,6 @@ export const validator = new Validator({
   locale: 'zhCN',
   validation: createValidation(defaults),
   messages: {
-    zhCN: createMessage(zhCN)
-  }
+    zhCN: createMessage(zhCN),
+  },
 })

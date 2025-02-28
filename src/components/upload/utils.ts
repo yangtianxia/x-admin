@@ -13,11 +13,14 @@ export const fileToObj = (path: string) => {
     remote,
     name: uid,
     thumbUrl: assetRemote(remote),
-    status: 'done' as const
+    status: 'done' as const,
   }
 }
 
-export const formatFile = (obj: Record<string, any>, formatter?: (value: any) => string[]) => {
+export const formatFile = (
+  obj: Record<string, any>,
+  formatter?: (value: any) => string[]
+) => {
   const result = {} as Record<string, string[]>
   for (const key in obj) {
     const item = obj[key]
@@ -36,7 +39,7 @@ export const makeUploadLimit = (quantity = 1) => ({
     if (values.length < quantity) {
       throw new Error(`[0] 最少上传 ${quantity} 个`)
     }
-  }
+  },
 })
 
 export const makeUploadException = () => ({
@@ -45,5 +48,5 @@ export const makeUploadException = () => ({
     if (values.some((file) => file.status === 'error')) {
       throw new Error('有文件上传异常')
     }
-  }
+  },
 })

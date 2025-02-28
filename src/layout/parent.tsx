@@ -8,14 +8,16 @@ export default defineComponent({
       <RouterView
         v-slots={{
           default: ({ Component, route }: IRouterView) => {
-            return route.meta.keepAlive ? <Component key={route.fullPath} /> : (
+            return route.meta.keepAlive ? (
+              <Component key={route.fullPath} />
+            ) : (
               <KeepAlive>
                 <Component key={route.fullPath} />
               </KeepAlive>
             )
-          }
+          },
         }}
       />
     )
-  }
+  },
 })

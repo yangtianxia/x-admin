@@ -1,5 +1,10 @@
 import type { RouteRecordRaw } from 'vue-router'
-import { LOGIN_NAME, DEFAULT_NAME, FORBIDDEN_NAME, REDIRECT_NAME } from '@/constant/route'
+import {
+  LOGIN_NAME,
+  DEFAULT_NAME,
+  FORBIDDEN_NAME,
+  REDIRECT_NAME,
+} from '@/constant/route'
 
 export const DEFAULT_LAYOUT = () => import('@/layout')
 
@@ -12,7 +17,7 @@ export const constantRoutes: RouteRecordRaw[] = [
     redirect: '/dashboard/workplace',
     meta: {
       title: '仪表盘',
-      icon: 'DashboardOne'
+      icon: 'DashboardOne',
     },
     children: [
       {
@@ -20,10 +25,10 @@ export const constantRoutes: RouteRecordRaw[] = [
         name: DEFAULT_NAME,
         component: () => import('@/views/dashboard/workplace'),
         meta: {
-          title: '工作台'
-        }
-      }
-    ]
+          title: '工作台',
+        },
+      },
+    ],
   },
   {
     path: '/login',
@@ -31,8 +36,8 @@ export const constantRoutes: RouteRecordRaw[] = [
     component: () => import('@/views/login'),
     meta: {
       title: '登录',
-      authNoAccessAfter: true
-    }
+      authNoAccessAfter: true,
+    },
   },
   {
     path: '/redirect',
@@ -40,15 +45,15 @@ export const constantRoutes: RouteRecordRaw[] = [
     component: DEFAULT_LAYOUT,
     meta: {
       hideInMenu: true,
-      hideChildrenInMenu: true
+      hideChildrenInMenu: true,
     },
     children: [
       {
         path: '/redirect/:path(.*)',
         name: REDIRECT_NAME,
-        component: () => import('@/views/redirect')
-      }
-    ]
+        component: () => import('@/views/redirect'),
+      },
+    ],
   },
   {
     path: '/forbidden',
@@ -56,21 +61,21 @@ export const constantRoutes: RouteRecordRaw[] = [
     component: DEFAULT_LAYOUT,
     meta: {
       hideInMenu: true,
-      hideChildrenInMenu: true
+      hideChildrenInMenu: true,
     },
     children: [
       {
         path: '/forbidden/:path(.*)',
         name: FORBIDDEN_NAME,
-        component: () => import('@/views/forbidden')
-      }
-    ]
+        component: () => import('@/views/forbidden'),
+      },
+    ],
   },
   {
     path: '/:pathMatch(.*)*',
     component: () => import('@/views/not-found'),
     meta: {
-      hideInMenu: true
-    }
-  }
+      hideInMenu: true,
+    },
+  },
 ]

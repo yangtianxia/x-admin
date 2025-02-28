@@ -4,7 +4,7 @@ import {
   provide,
   type ComputedRef,
   type ExtractPropTypes,
-  type PropType
+  type PropType,
 } from 'vue'
 import { shallowMerge } from '@txjs/shared'
 import { useParent } from '@vant/use'
@@ -20,7 +20,7 @@ const [name, bem] = $bem('x-scaffold')
 
 const scaffoldProps = shallowMerge({}, resultSharedProps, {
   loading: truthProp,
-  breadcrumbs: Array as PropType<string[]>
+  breadcrumbs: Array as PropType<string[]>,
 })
 
 export type ScaffoldProps = ExtractPropTypes<typeof scaffoldProps>
@@ -38,20 +38,12 @@ export default defineComponent({
   setup(props, { slots }) {
     const { parent } = useParent(SCAFFOLD_CONTEXT_KEY)
 
-    const loading = computed(() =>
-      parent?.state.loading ?? props.loading
-    )
-    const status = computed(() =>
-      parent?.state.status ?? props.status
-    )
+    const loading = computed(() => parent?.state.loading ?? props.loading)
+    const status = computed(() => parent?.state.status ?? props.status)
 
     provide(SCAFFOLD_LOADING_KEY, () => loading.value)
     provide(SCAFFOLD_KEY, { loading, status })
 
-    return () => (
-      <div class={bem()}>
-        {slots.default?.()}
-      </div>
-    )
-  }
+    return () => <div class={bem()}>{slots.default?.()}</div>
+  },
 })

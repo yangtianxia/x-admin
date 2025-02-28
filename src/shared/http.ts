@@ -1,12 +1,28 @@
 import qs from 'qs'
-import axios, { type AxiosError, type AxiosRequestConfig, type AxiosResponse, type RequestContentType, type InternalAxiosRequestConfig } from 'axios'
+import axios, {
+  type AxiosError,
+  type AxiosRequestConfig,
+  type AxiosResponse,
+  type RequestContentType,
+  type InternalAxiosRequestConfig,
+} from 'axios'
 import { notification } from 'ant-design-vue'
 import { toArray, shallowMerge } from '@txjs/shared'
-import { isPlainObject, isUndefined, isNil, notNil, isFunction } from '@txjs/bool'
+import {
+  isPlainObject,
+  isUndefined,
+  isNil,
+  notNil,
+  isFunction,
+} from '@txjs/bool'
 
 import { useRedirect } from '@/hooks/redirect'
 import { isLogin, getToken } from '@/shared/auth'
-import { REQUEST_TOKEN_KEY, ERROR_CODE_DEFAULT, REQUEST_ERROR } from '@/constant/http'
+import {
+  REQUEST_TOKEN_KEY,
+  ERROR_CODE_DEFAULT,
+  REQUEST_ERROR,
+} from '@/constant/http'
 
 enum RequestContentTypeEnum {
   JSON = 'application/json',
@@ -39,7 +55,7 @@ export const isUnauthorized = (code?: number) => {
 
 const notifyHandler = (message?: string) => {
   notification.error({
-    message: message || REQUEST_ERROR['default']
+    message: message || REQUEST_ERROR['default'],
   })
 }
 
@@ -48,7 +64,7 @@ const failWrap = (msg?: string) => {
     code: ERROR_CODE_DEFAULT,
     data: null,
     success: false,
-    msg
+    msg,
   }
   const update = (partial: Partial<typeof data>) => {
     shallowMerge(data, partial)
@@ -107,7 +123,9 @@ const errorHandler = (error: AxiosError<any>): Promise<any> => {
   return Promise.reject(fail.data)
 }
 
-const requestHandler = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig> => {
+const requestHandler = (
+  config: InternalAxiosRequestConfig
+): InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig> => {
   if (isLogin()) {
     config.headers.set(REQUEST_TOKEN_KEY, getToken())
   }
@@ -142,10 +160,10 @@ const responseHandler = (response: AxiosResponse) => {
 class CreateHttp {
   #instance = axios.create({
     baseURL: import.meta.env.API,
-    timeout: 1000 * 20
+    timeout: 1000 * 20,
   })
 
-  constructor () {
+  constructor() {
     this.#requestInterceptor()
     this.#responseInterceptor()
   }
@@ -172,10 +190,17 @@ class CreateHttp {
   }
 
   #getWrap(method: 'get' | 'delete') {
-    return <T = any>(url: string, data: any = {}, config: AxiosRequestConfig = {}) => {
+    return <T = any>(
+      url: string,
+      data: any = {},
+      config: AxiosRequestConfig = {}
+    ) => {
       this.#setConfig(config)
       this.#setHeaders(config)
-      if (isNil(config.paramsSerializer) || isFunction(config.paramsSerializer)) {
+      if (
+        isNil(config.paramsSerializer) ||
+        isFunction(config.paramsSerializer)
+      ) {
         const paramsSerializer = config.paramsSerializer
         config.paramsSerializer = (params) => {
           params = normalizeParams(params)
@@ -191,26 +216,34 @@ class CreateHttp {
   }
 
   #postWrap(method: 'post' | 'put' | 'patch') {
-    return <T = any>(url: string, data: any = {}, config: AxiosRequestConfig = {}) => {
+    return <T = any>(
+      url: string,
+      data: any = {},
+      config: AxiosRequestConfig = {}
+    ) => {
       this.#setConfig(config)
       this.#setHeaders(config)
       config.transformRequest = toArray(config.transformRequest ?? [])
         .concat(normalizeParams)
-        .concat((data: any) => config.type === 'JSON'
-          ? JSON.stringify(data)
-          : qs.stringify(data)
+        .concat((data: any) =>
+          config.type === 'JSON' ? JSON.stringify(data) : qs.stringify(data)
         )
       return this.#instance[method]<T>(url, data, config)
     }
   }
 
   #formWrap(method: 'postForm' | 'putForm' | 'patchForm') {
-    return <T = any>(url: string, data: any = {}, config: Omit<AxiosRequestConfig, 'type'> = {}) => {
-      config.transformRequest = toArray(config.transformRequest ?? [])
-        .concat(normalizeParams)
+    return <T = any>(
+      url: string,
+      data: any = {},
+      config: Omit<AxiosRequestConfig, 'type'> = {}
+    ) => {
+      config.transformRequest = toArray(config.transformRequest ?? []).concat(
+        normalizeParams
+      )
       return this.#instance[method]<T>(url, data, {
         ...config,
-        type: 'FORM_DATA'
+        type: 'FORM_DATA',
       })
     }
   }

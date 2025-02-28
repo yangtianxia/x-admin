@@ -15,10 +15,10 @@ export const LOGIN_NAME = 'Login'
 
 /** 403路由 */
 export const FORBIDDEN_ROUTE = {
-  name: FORBIDDEN_NAME
+  name: FORBIDDEN_NAME,
 }
 
 /** 默认路由 */
 export const DEFAULT_ROUTE = {
-  name: DEFAULT_NAME
+  name: DEFAULT_NAME,
 }

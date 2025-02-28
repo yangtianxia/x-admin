@@ -10,27 +10,27 @@ import imgError from './image/error.svg'
 export const resultSharedProps = {
   status: {
     type: [String, Number, Object] as PropType<ResultStatus>,
-    default: null as unknown
-  }
+    default: null as unknown,
+  },
 }
 
 export const resultStatusConfig = {
   404: {
     title: '页面不存在或已删除',
-    image: assetUrl(img404)
+    image: assetUrl(img404),
   },
   500: {
     title: '抱歉，服务请求异常',
-    image: assetUrl(img500)
+    image: assetUrl(img500),
   },
   network: {
     title: '网络异常，请检查设备网络连接',
-    image: assetUrl(imgNetwork)
+    image: assetUrl(imgNetwork),
   },
   error: {
     title: '抱歉，访问发生错误',
-    image: assetUrl(imgError)
-  }
+    image: assetUrl(imgError),
+  },
 } as const
 
 export const hasStatusConfig = (status: any) => {
