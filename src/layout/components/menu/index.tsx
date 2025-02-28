@@ -1,12 +1,9 @@
-// Vue
 import { defineComponent, ref } from 'vue'
-
-// Common
 import {
   useRoute,
   useRouter,
   type RouteRecordRaw,
-  type RouteMeta
+  type RouteMeta,
 } from 'vue-router'
 import { isAbsoluteUrl } from '@txjs/bool'
 import { makeArray } from '@txjs/make'
@@ -14,14 +11,10 @@ import { useMenuTree } from '@/hooks/menu-tree'
 import { openWindow } from '@/shared/open-window'
 import { listenerRouteChange } from '@/shared/route-listener'
 
-// Component
 import { Menu } from 'ant-design-vue'
 import { Icon, type IconMap } from '@/components/icon'
-
-// Components utils
 import { addUnit } from '@/components/_utils/style'
 
-// Style
 import style from './index.module.less'
 
 export default defineComponent({
@@ -75,65 +68,54 @@ export default defineComponent({
       return result
     }
 
-    listenerRouteChange(
-      (newRoute) => {
-        const { activeMenu, hideInMenu } = newRoute.meta
+    listenerRouteChange((newRoute) => {
+      const { activeMenu, hideInMenu } = newRoute.meta
 
-        if (!hideInMenu || activeMenu) {
-          const menuOpenKeys = findMenuOpenKeys(
-            (activeMenu || newRoute.name) as string
-          )
+      if (!hideInMenu || activeMenu) {
+        const menuOpenKeys = findMenuOpenKeys(
+          (activeMenu || newRoute.name) as string
+        )
 
-          const keySet = new Set([...menuOpenKeys, ...openKeys.value])
-          openKeys.value = [...keySet]
+        const keySet = new Set([...menuOpenKeys, ...openKeys.value])
+        openKeys.value = [...keySet]
 
-          selectedKey.value = [
-            activeMenu || menuOpenKeys[menuOpenKeys.length - 1]
-          ]
-        } else {
-          selectedKey.value = []
-        }
-      }, true
-    )
+        selectedKey.value = [
+          activeMenu || menuOpenKeys[menuOpenKeys.length - 1],
+        ]
+      } else {
+        selectedKey.value = []
+      }
+    }, true)
 
     const renderMenuItem = () => {
       function travel(_route: RouteRecordRaw[], nodes = []) {
         if (_route) {
           _route.forEach((route) => {
             const icon = route?.meta?.icon
-              ? () => (
-                <Icon
-                  size={18}
-                  type={route.meta!.icon as IconMap}
-                />
-              )
+              ? () => <Icon size={18} type={route.meta!.icon as IconMap} />
               : () => (
-                <div
-                  style={{
-                    minWidth: 0,
-                    marginLeft: addUnit(18 - inlineIndent.value)
-                  }}
-                />
+                  <div
+                    style={{
+                      minWidth: 0,
+                      marginLeft: addUnit(18 - inlineIndent.value),
+                    }}
+                  />
+                )
+            const title = route?.meta?.title ? () => route.meta?.title : null
+            const node =
+              route?.children && route.children.length !== 0 ? (
+                <Menu.SubMenu key={route.name} v-slots={{ icon, title }}>
+                  {travel(route.children)}
+                </Menu.SubMenu>
+              ) : (
+                <Menu.Item
+                  key={route.name}
+                  onClick={() => goto(route)}
+                  v-slots={{ icon }}
+                >
+                  {title?.()}
+                </Menu.Item>
               )
-            const title = route?.meta?.title
-              ? () => route.meta?.title
-              : null
-            const node = route?.children && route.children.length !== 0 ? (
-              <Menu.SubMenu
-                key={route.name}
-                v-slots={{ icon, title }}
-              >
-                {travel(route.children)}
-              </Menu.SubMenu>
-            ) : (
-              <Menu.Item
-                key={route.name}
-                onClick={() => goto(route)}
-                v-slots={{ icon }}
-              >
-                {title?.()}
-              </Menu.Item>
-            )
             nodes.push(node as never)
           })
         }
@@ -143,9 +125,9 @@ export default defineComponent({
     }
 
     return () => (
-      <div class="h-full overflow-y-auto overflow-x-hidden scrollbar-thin">
+      <div class='h-full overflow-y-auto overflow-x-hidden scrollbar-thin'>
         <Menu
-          mode="inline"
+          mode='inline'
           class={style.menu}
           selectedKeys={selectedKey.value}
           inlineIndent={inlineIndent.value}
@@ -155,5 +137,5 @@ export default defineComponent({
         </Menu>
       </div>
     )
-  }
+  },
 })

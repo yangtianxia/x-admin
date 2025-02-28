@@ -1,11 +1,4 @@
-// Vue
-import {
-  defineComponent,
-  Transition,
-  KeepAlive
-} from 'vue'
-
-// Components
+import { defineComponent, Transition, KeepAlive } from 'vue'
 import { RouterView } from 'vue-router'
 
 export default defineComponent({
@@ -15,20 +8,18 @@ export default defineComponent({
       <RouterView
         v-slots={{
           default: ({ Component, route }: IRouterView) => (
-            <Transition
-              appear
-              name="fade"
-              mode="out-in"
-            >
-              {route.meta.keepAlive ? <Component key={route.fullPath} /> : (
+            <Transition appear name='fade' mode='out-in'>
+              {route.meta.keepAlive ? (
+                <Component key={route.fullPath} />
+              ) : (
                 <KeepAlive>
                   <Component key={route.fullPath} />
                 </KeepAlive>
               )}
             </Transition>
-          )
+          ),
         }}
       />
     )
-  }
+  },
 })

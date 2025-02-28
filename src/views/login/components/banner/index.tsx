@@ -1,24 +1,21 @@
-// Vue
 import { defineComponent, computed } from 'vue'
 
-// Components
-import { Icon } from '@/components/icon'
 import { Carousel } from 'ant-design-vue'
+import { Icon } from '@/components/icon'
 
-// Style
 import style from './index.module.less'
 
 const slides = computed(() => [
   {
     id: 1,
     title: '开箱即用的高质量模板',
-    subtitle: '丰富的的页面模板，覆盖大多数典型业务场景'
+    subtitle: '丰富的的页面模板，覆盖大多数典型业务场景',
   },
   {
     id: 2,
     title: '开箱即用的高质量模板',
-    subtitle: '路由配置，状态管理应有尽有'
-  }
+    subtitle: '路由配置，状态管理应有尽有',
+  },
 ])
 
 export default defineComponent({
@@ -27,43 +24,44 @@ export default defineComponent({
     return () => (
       <Carousel
         arrows
-        effect="fade"
+        effect='fade'
         class={style.banner}
         v-slots={{
           prevArrow: () => (
-            <div class="z-10 !text-white !text-opacity-30 hover:!text-white/50 !text-3xl !w-auto !h-auto !-mt-3 !left-6 max-xl:!text-2xl max-xl:!left-3 before:!content-none">
+            <div class='!left-6 z-10 !-mt-3 !h-auto !w-auto !text-3xl !text-white !text-opacity-30 before:!content-none hover:!text-white/50 max-xl:!left-3 max-xl:!text-2xl'>
               <Icon
-                type="LeftC"
-                theme="filled"
-                fill="currentColor"
+                type='LeftC'
+                theme='filled'
+                fill='currentColor'
                 strokeWidth={2}
               />
             </div>
           ),
           nextArrow: () => (
-            <div class="z-10 !text-white !text-opacity-30 hover:!text-white/50 !text-3xl !w-auto !h-auto !-mt-3 !right-6 max-xl:!text-2xl max-xl:!right-3 before:!content-none">
+            <div class='!right-6 z-10 !-mt-3 !h-auto !w-auto !text-3xl !text-white !text-opacity-30 before:!content-none hover:!text-white/50 max-xl:!right-3 max-xl:!text-2xl'>
               <Icon
-                type="RightC"
-                theme="filled"
-                fill="currentColor"
+                type='RightC'
+                theme='filled'
+                fill='currentColor'
                 strokeWidth={2}
               />
             </div>
-          )
+          ),
         }}
       >
         {slides.value.map((item) => (
-          <div
-            key={item.id}
-            class="h-full"
-          >
-            <div class="h-full flex flex-col items-center justify-center">
-              <h4 class="text-white/90 text-h4 max-xl:text-h5 whitespace-nowrap">{item.title}</h4>
-              <p class="text-white/75 text-md xl:text-sm mt-2 whitespace-nowrap">{item.subtitle}</p>
+          <div key={item.id} class='h-full'>
+            <div class='flex h-full flex-col items-center justify-center'>
+              <h4 class='whitespace-nowrap text-h4 text-white/90 max-xl:text-h5'>
+                {item.title}
+              </h4>
+              <p class='mt-2 whitespace-nowrap text-md text-white/75 xl:text-sm'>
+                {item.subtitle}
+              </p>
             </div>
           </div>
         ))}
       </Carousel>
     )
-  }
+  },
 })

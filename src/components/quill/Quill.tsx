@@ -1,4 +1,3 @@
-// Vue
 import {
   defineComponent,
   ref,
@@ -7,73 +6,76 @@ import {
   onBeforeUnmount,
   onUnmounted,
   type ExtractPropTypes,
-  type PropType
+  type PropType,
 } from 'vue'
-
-// Common
-import Quill, { type QuillOptions } from 'quill'
-import ImageResize from 'quill-resize-module'
-import TableBetter from 'quill-table-better'
+import extend from 'extend'
 import { shallowMerge } from '@txjs/shared'
 import { useExpose } from '@/hooks/expose'
 import { bodyElement } from '@/shared/element'
 
-// Toolbar Icons
+import { Form } from 'ant-design-vue'
+import Quill, { type QuillOptions } from 'quill'
+import ImageResize from 'quill-resize-module'
+import TableBetter from 'quill-table-better'
 import toolBarIcons from './toolbar-icons'
-
-// Quill Style
 import 'quill/dist/quill.snow.css'
 import 'quill-resize-module/dist/resize.css'
 import 'quill-table-better/dist/quill-table-better.css'
 
-Quill.register({
-  'modules/imageResize': ImageResize,
-  'modules/tableBetter': TableBetter
-}, true)
+Quill.register(
+  {
+    'modules/resize': ImageResize,
+    'modules/table-better': TableBetter,
+  },
+  true
+)
 
 shallowMerge(Quill.import('ui/icons') as any, toolBarIcons)
 
-const getDefaultOptions = () => ({
-  theme: 'snow',
-  bounds: bodyElement,
-  placeholder: '输入内容 ...',
-  readOnly: false,
-  modules: {
-    table: false,
-    toolbar: [
-      [{ font: [] }],
-      [{ header: [1, 2, 3, 4, 5, 6, false] }],
-      [{ align: '' }, { align: 'center' }, { align: 'right' }, { direction: 'rtl' }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ script: 'sub' }, { script: 'super' }],
-      [{ color: [] }, { background: [] }],
-      ['blockquote', 'code-block'],
-      [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
-      ['table-better'],
-      ['clean']
-    ],
-    imageResize: {
-      embedTags: ['VIDEO', 'IFRAME'],
-      tools: ['left', 'center', 'right', 'full']
-    },
-    tableBetter: {
-      language: 'zh_CN',
-      menus: [
-        'column',
-        'row',
-        'merge',
-        'table',
-        'cell',
-        'wrap',
-        'delete'
+const getDefaultOptions = () =>
+  ({
+    theme: 'snow',
+    bounds: bodyElement,
+    placeholder: '输入内容 ...',
+    readOnly: false,
+    modules: {
+      table: false,
+      toolbar: [
+        [{ font: [] }],
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+        [
+          { align: '' },
+          { align: 'center' },
+          { align: 'right' },
+          { direction: 'rtl' },
+        ],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ script: 'sub' }, { script: 'super' }],
+        [{ color: [] }, { background: [] }],
+        ['blockquote', 'code-block'],
+        [
+          { list: 'ordered' },
+          { list: 'bullet' },
+          { indent: '-1' },
+          { indent: '+1' },
+        ],
+        ['table-better'],
+        ['clean'],
       ],
-      toolbarTable: true
+      resize: {
+        embedTags: ['VIDEO', 'IFRAME'],
+        tools: ['left', 'center', 'right', 'full'],
+      },
+      'table-better': {
+        language: 'zh_CN',
+        menus: ['column', 'row', 'merge', 'table', 'cell', 'wrap', 'delete'],
+        toolbarTable: true,
+      },
+      keyboard: {
+        bindings: TableBetter.keyboardBindings,
+      },
     },
-    keyboard: {
-      bindings: TableBetter.keyboardBindings
-    }
-  }
-}) as QuillOptions
+  }) as QuillOptions
 
 const [name, bem] = $bem('x-quill')
 
@@ -83,18 +85,20 @@ const quillProps = {
   disabled: Boolean,
   options: {
     type: Object as PropType<QuillOptions>,
-    default: () => ({})
+    default: () => ({}),
   },
   onReady: Function as PropType<(quill: Quill | null) => void>,
-  onChange: Function as PropType<(event: {
-    html: string | undefined
-    text: string | undefined
-    quill: Quill | null
-  }) => void>,
+  onChange: Function as PropType<
+    (event: {
+      html: string | undefined
+      text: string | undefined
+      quill: Quill | null
+    }) => void
+  >,
   onInput: Function,
   onBlur: Function as PropType<(quill: Quill | null) => void>,
   onFocus: Function as PropType<(quill: Quill | null) => void>,
-  'onUpdate:value': Function as PropType<(value: string | undefined) => void>
+  'onUpdate:value': Function as PropType<(value: string | undefined) => void>,
 }
 
 export type QuillProps = ExtractPropTypes<typeof quillProps>
@@ -109,15 +113,10 @@ export default defineComponent({
   setup(props, { emit }) {
     const editorRef = ref<HTMLDivElement>()
 
+    const formItemContext = Form.useInjectFormItemContext()
+
     const mergeOptions = (target: any, source: any) => {
-      for (const key in source) {
-        if (!target[key] || key !== 'modules') {
-          target[key] = source[key]
-        } else {
-          mergeOptions(target[key], source[key])
-        }
-      }
-      return target
+      return extend(true, {}, target, source)
     }
 
     let quill = null as Quill | null
@@ -126,14 +125,15 @@ export default defineComponent({
 
     const setContent = (html?: string) => {
       if (quill) {
+        quill.setContents([])
+
+        if (!html) {
+          quill.setText('')
+          return
+        }
+
         const delta = quill.clipboard.convert({ html })
-        const [range] = quill.selection.getRange()
         quill.updateContents(delta, Quill.sources.USER)
-        quill.setSelection(
-          delta.length() - (range?.length || 0),
-          Quill.sources.SILENT
-        )
-        quill.scrollSelectionIntoView()
       }
     }
 
@@ -146,7 +146,7 @@ export default defineComponent({
         // Quill Instance
         quill = new Quill(editorRef.value, {
           theme: 'snow',
-          ...options
+          ...options,
         })
 
         // Set editor content
@@ -170,15 +170,15 @@ export default defineComponent({
         quill.on('text-change', () => {
           if (props.disabled) {
             quill?.enable(false)
+            return
           }
-          let html = editorRef.value?.children[0].innerHTML
+
+          const html = editorRef.value?.children[0].innerHTML
           const text = quill?.getText()
-          if (html === '<p><br></p>') {
-            html = ''
-          }
-          content = html
+          content = html === '<p><br></p>' ? '' : html
           emit('update:value', content)
-          props.onChange?.({ html, text, quill })
+          formItemContext.onFieldChange()
+          props.onChange?.({ html: content, text, quill })
         })
 
         props.onReady?.(quill)
@@ -232,7 +232,11 @@ export default defineComponent({
 
     onBeforeUnmount(() => {
       const editorToolbar = editorRef.value?.previousSibling as HTMLDivElement
-      if (editorToolbar && editorToolbar.nodeType === 1 && editorToolbar.className.includes('ql-toolbar')) {
+      if (
+        editorToolbar &&
+        editorToolbar.nodeType === 1 &&
+        editorToolbar.className.includes('ql-toolbar')
+      ) {
         editorToolbar.parentNode?.removeChild(editorToolbar)
       }
     })
@@ -244,5 +248,5 @@ export default defineComponent({
         <div ref={editorRef} />
       </div>
     )
-  }
+  },
 })

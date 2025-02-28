@@ -6,5 +6,5 @@ export default {
   install(app: App) {
     app.directive('hasPerm', hasPerm)
     app.directive('hasRole', hasRole)
-  }
+  },
 }

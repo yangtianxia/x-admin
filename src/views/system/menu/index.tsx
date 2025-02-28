@@ -1,7 +1,5 @@
-// Vue
 import { defineComponent } from 'vue'
 
-// Components
 import { Scaffold } from '@/components/scaffold'
 
 export default defineComponent({
@@ -12,5 +10,5 @@ export default defineComponent({
         <Scaffold.Body></Scaffold.Body>
       </Scaffold>
     )
-  }
+  },
 })

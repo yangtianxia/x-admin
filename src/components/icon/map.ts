@@ -57,7 +57,7 @@ export const icons = {
   CloseSmall,
   ZoomIn,
   PreviewOpen,
-  PlayOne
+  PlayOne,
 } as const
 
 type IconMapTypeOf = typeof icons

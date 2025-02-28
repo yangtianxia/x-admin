@@ -1,5 +1,8 @@
 import { reactive, computed } from 'vue'
-import type { LocationQueryRaw, RouteLocationNormalizedLoaded } from 'vue-router'
+import type {
+  LocationQueryRaw,
+  RouteLocationNormalizedLoaded,
+} from 'vue-router'
 import { isNonEmptyString } from '@txjs/bool'
 
 import router, { goBack } from '@/router'
@@ -32,7 +35,7 @@ export const useRedirect = () => {
   const ignore = whiteList.includes(name as string)
 
   const state = reactive({
-    redirectUri: redirectUri
+    redirectUri: redirectUri,
   })
 
   const currentRedirectUri = computed(() => state.redirectUri)

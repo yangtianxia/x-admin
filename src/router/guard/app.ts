@@ -2,7 +2,6 @@ import type { Router, RouteLocationNormalizedGeneric } from 'vue-router'
 import NProgress from 'nprogress'
 import { isNonEmptyString } from '@txjs/bool'
 import { camelToKebab } from '@txjs/shared'
-
 import { rootElement } from '@/shared/element'
 
 const setTitle = (...args: (string | undefined)[]) => {
@@ -12,9 +11,7 @@ const setTitle = (...args: (string | undefined)[]) => {
 }
 
 const setRouteTitle = (to: RouteLocationNormalizedGeneric) => {
-  const matchs = to.matched
-      .map((el) => el.meta?.title)
-      .reverse()
+  const matchs = to.matched.map((el) => el.meta?.title).reverse()
   setTitle(...matchs)
 }
 

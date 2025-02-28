@@ -7,7 +7,9 @@ import { isLogin } from '@/shared/auth'
 
 import { usePermission } from '../permission'
 
-const accessRightsAfterAuth = (route: RouteRecordNormalized | RouteRecordRaw) => {
+const accessRightsAfterAuth = (
+  route: RouteRecordNormalized | RouteRecordRaw
+) => {
   return isLogin() ? route.meta?.authNoAccessAfter !== true : true
 }
 
@@ -24,8 +26,10 @@ export const useMenuTree = () => {
       }
 
       const collector: any = _routes.map((route) => {
-        // no access
-        if (!accessRightsAfterAuth(route) || (route.meta?.roles && permission.hasRoleOr(route.meta?.roles))) {
+        if (
+          !accessRightsAfterAuth(route) ||
+          (route.meta?.roles && permission.hasRoleOr(route.meta?.roles))
+        ) {
           return null
         }
 
@@ -33,9 +37,8 @@ export const useMenuTree = () => {
           route.children = []
         }
 
-        // 路由筛选器 hideInMenu true
-        route.children = route.children.filter((item) =>
-          item.meta?.hideInMenu !== true
+        route.children = route.children.filter(
+          (item) => item.meta?.hideInMenu !== true
         )
 
         const subItem = travel(route.children, layer + 1)

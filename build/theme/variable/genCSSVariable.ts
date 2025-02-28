@@ -84,9 +84,10 @@ export const genCSSVariable = (seedToken: SeedToken, isDark = false) => {
     .reduce(
       (ret, key) => {
         if (!ignoreList.includes(key)) {
-          ret[`--${camelToKebab(key)}`] = getSeedTokenValue(key, seedToken)
+          ret.push(`--${camelToKebab(key)}: ${getSeedTokenValue(key, seedToken)}`)
         }
         return ret
-      }, {} as Record<string, any>
+      }, [] as string[]
     )
+    .join(';')
 }

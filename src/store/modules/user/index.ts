@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { resetRouter } from '@/router'
-import { setToken, clearToken } from '@/shared/auth'
+import { isLogin, setToken, clearToken } from '@/shared/auth'
 import { removeRouteListener } from '@/shared/route-listener'
 import { TOKEN_HEAD_KEY, REQUEST_TOKEN_KEY } from '@/constant/http'
 
@@ -9,7 +9,7 @@ import {
   postLoginBySms,
   type LoginByPwdQuery,
   type LoginBySmsQuery,
-  type LoginReturn
+  type LoginReturn,
 } from '@/api/user/login'
 import { getUserInfo } from '@/api/user/user-info'
 import { postLogout } from '@/api/user/logout'
@@ -30,15 +30,15 @@ const useUserStore = defineStore('x_admin_user', {
     jobName: undefined,
     certification: undefined,
     roles: [],
-    permissions: []
+    permissions: [],
   }),
   getters: {
     hasUserInfo(state: UserState) {
-      return !!state.id
+      return !!state.id && isLogin()
     },
     userInfo(state: UserState): UserState {
       return { ...state }
-    }
+    },
   },
   actions: {
     setInfo(partial: Partial<UserState>) {
@@ -88,8 +88,8 @@ const useUserStore = defineStore('x_admin_user', {
       } finally {
         this.logoutCallback()
       }
-    }
-  }
+    },
+  },
 })
 
 export default useUserStore

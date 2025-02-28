@@ -63,6 +63,6 @@ export const usePermission = () => {
     hasPermAnd,
     hasRole,
     hasRoleOr,
-    hasRoleAnd
+    hasRoleAnd,
   }
 }

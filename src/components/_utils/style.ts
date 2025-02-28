@@ -2,11 +2,7 @@ import { unref, type Ref, type CSSProperties } from 'vue'
 import { isNumeric, isInteger, isArray } from '@txjs/bool'
 
 export const addUnit = (value?: Numeric) => {
-  if (isNumeric(value)) {
-    return `${value}px`
-  }
-
-  return value
+  return isNumeric(value) ? `${value}px` : value
 }
 
 export const isHidden = (elRef: HTMLElement | Ref<HTMLElement | undefined>) => {
@@ -23,7 +19,9 @@ export const isHidden = (elRef: HTMLElement | Ref<HTMLElement | undefined>) => {
   return hidden || parentHidden
 }
 
-export const getSizeStyle = (originSize?: Numeric | Numeric[]): CSSProperties | undefined => {
+export const getSizeStyle = (
+  originSize?: Numeric | Numeric[]
+): CSSProperties | undefined => {
   const style = {} as CSSProperties
 
   if (isArray(originSize)) {

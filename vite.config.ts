@@ -17,6 +17,7 @@ import { vitePluginFakeServer } from 'vite-plugin-fake-server'
 
 // Theme
 import { comprehensiveColors } from './build/theme/constants'
+import variable from './build/theme/variable'
 
 // Package
 import pkg from './package.json'
@@ -131,6 +132,22 @@ export default defineConfig(({ mode, command }) => {
               injectTo: 'head',
               tag: 'title',
               children: env.VITE_TITLE || pkg.name
+            },
+            {
+              injectTo: 'head-prepend',
+              tag: 'style',
+              attrs: {
+                type: 'text/css'
+              },
+              children: `:root {${variable.light}}`
+            },
+            {
+              injectTo: 'head-prepend',
+              tag: 'style',
+              attrs: {
+                type: 'text/css'
+              },
+              children: `.dark {${variable.dark}}`
             },
             {
               injectTo: 'body',

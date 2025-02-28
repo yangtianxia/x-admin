@@ -28,7 +28,8 @@ export interface ScaffoldContextProvide {
   }
 }
 
-export const SCAFFOLD_CONTEXT_KEY = createInjectionKey<ScaffoldContextProvide>('scaffold-context')
+export const SCAFFOLD_CONTEXT_KEY =
+  createInjectionKey<ScaffoldContextProvide>('scaffold-context')
 
 export const useScaffoldContext = (options?: ScaffoldContextOption) => {
   const { linkChildren } = useChildren(SCAFFOLD_CONTEXT_KEY)
@@ -36,7 +37,7 @@ export const useScaffoldContext = (options?: ScaffoldContextOption) => {
     loading = true,
     canRetry = true,
     immediate = true,
-    status
+    status,
   } = options || {}
 
   const state = reactive({ loading, status })
@@ -59,9 +60,7 @@ export const useScaffoldContext = (options?: ScaffoldContextOption) => {
       try {
         const returnVal = callback()
         if (isPromise(returnVal)) {
-          returnVal
-            .then(resolve)
-            .catch(reject)
+          returnVal.then(resolve).catch(reject)
         } else {
           resolve()
         }
@@ -133,6 +132,6 @@ export const useScaffoldContext = (options?: ScaffoldContextOption) => {
     },
     get status() {
       return state.status
-    }
+    },
   }
 }

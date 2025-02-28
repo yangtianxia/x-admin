@@ -1,7 +1,5 @@
-// Vue
 import { defineComponent, ref } from 'vue'
 
-// Components
 import { Scaffold } from '@/components/scaffold'
 import { Quill } from '@/components/quill'
 
@@ -49,7 +47,7 @@ export default defineComponent({
     return () => (
       <Scaffold loading={false}>
         <Scaffold.Body>
-          <div class="space-y-4">
+          <div class='space-y-4'>
             <Quill
               v-model:value={content.value}
               onChange={(event) => {
@@ -61,5 +59,5 @@ export default defineComponent({
         </Scaffold.Body>
       </Scaffold>
     )
-  }
+  },
 })

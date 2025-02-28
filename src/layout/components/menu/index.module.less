@@ -1,5 +1,5 @@
 .menu {
-  @apply w-full h-full;
+  @apply h-full w-full;
 
   &:global.ant-menu-light.ant-menu-inline {
     .ant-menu-sub.ant-menu-inline {
@@ -27,7 +27,9 @@
       }
     }
 
-    @{submenu-cls}-open@{submenu-cls}-inline > @{submenu-cls}-title > @{submenu-cls}-arrow {
+    @{submenu-cls}-open@{submenu-cls}-inline
+      > @{submenu-cls}-title
+      > @{submenu-cls}-arrow {
       &:before {
         transform: rotate(45deg) translateX(3px) translateZ(0px);
       }

@@ -8,7 +8,7 @@ import { rootElement } from '@/shared/element'
 import {
   setThemeListener,
   listenerThemeChange,
-  removeThemeListener
+  removeThemeListener,
 } from '@/shared/theme-listener'
 
 import type { AppState } from './types'
@@ -33,7 +33,7 @@ const useAppStore = defineStore('x_admin_app', {
     },
     seedToken(state: AppState) {
       return state.colorScheme === THEME_DARK ? dark : light
-    }
+    },
   },
   actions: {
     setSettings(partial: Partial<AppState>) {
@@ -74,12 +74,12 @@ const useAppStore = defineStore('x_admin_app', {
       } else {
         this.switchTheme(this.colorScheme)
       }
-    }
+    },
   },
   persist: {
     storage: localStorage,
-    pick: ['colorScheme', 'systemTheme']
-  }
+    pick: ['colorScheme', 'systemTheme'],
+  },
 })
 
 export const runAppStore = () => {

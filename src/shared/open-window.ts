@@ -3,7 +3,7 @@ type TargetContext = '_self' | '_parent' | '_blank' | '_top'
 export const openWindow = (
   url: string,
   options?: {
-    target?: TargetContext,
+    target?: TargetContext
     [key: string]: any
   }
 ) => {
@@ -12,12 +12,10 @@ export const openWindow = (
     url,
     target,
     Object.entries(other)
-      .reduce(
-        (preValue: string[], curValue) => {
-          const [key, value] = curValue
-          return [...preValue, `${key}=${value}`]
-        }, []
-      )
+      .reduce((preValue: string[], curValue) => {
+        const [key, value] = curValue
+        return [...preValue, `${key}=${value}`]
+      }, [])
       .join(',')
   )
 }

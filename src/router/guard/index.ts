@@ -1,5 +1,4 @@
 import type { Router } from 'vue-router'
-
 import { setRouteEmitter } from '@/shared/route-listener'
 
 import setupAppGuard from './app'

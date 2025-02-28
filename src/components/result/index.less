@@ -1,7 +1,7 @@
 @result-cls: x-result;
 
 .@{result-cls} {
-  @apply box-border w-full h-full flex flex-col items-center justify-center pt-3 pb-6 bg-inherit;
+  @apply box-border flex h-full w-full flex-col items-center justify-center bg-inherit pb-6 pt-3;
 
   &__img {
     @apply block !size-56;
@@ -9,15 +9,15 @@
 
   &__title,
   &__desc {
-    @apply break-all break-words;
+    @apply break-words break-all;
   }
 
   &__title {
-    @apply text-secondary text-sm mt-3;
+    @apply mt-3 text-sm text-secondary;
   }
 
   &__desc {
-    @apply text-tertiary text-xs py-6 mt-2;
+    @apply mt-2 py-6 text-xs text-tertiary;
   }
 
   &__bottom {

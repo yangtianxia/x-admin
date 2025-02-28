@@ -12,13 +12,17 @@ type EventShim = CustomShim<{
   onClick?: (event: Event) => void
 }>
 
-export type WithInstall<T, U> = T & U & EventShim & {
-  install(app: App): void
-}
+export type WithInstall<T, U> = T &
+  U &
+  EventShim & {
+    install(app: App): void
+  }
 
-export const withInstall = <T extends Component, U extends object>(options: T, additional?: U) => {
+export const withInstall = <T extends Component, U extends object>(
+  options: T,
+  additional?: U
+) => {
   extend(options, additional)
-
   ;(options as Record<string, unknown>).install = (app: App) => {
     const { name } = options
     if (name) {

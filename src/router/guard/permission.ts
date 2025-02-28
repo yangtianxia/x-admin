@@ -1,16 +1,11 @@
 import type { Router } from 'vue-router'
 import { h } from 'vue'
 import { Modal } from 'ant-design-vue'
-import { isUndefined, isHttpUrl } from '@txjs/bool'
-
+import { isHttpUrl } from '@txjs/bool'
 import { useUserStore, useRouteStore } from '@/store'
-import { msgWrap } from '@/shared/http'
+import { msgWrap, isUnauthorized } from '@/shared/http'
 import { isLogin } from '@/shared/auth'
-import {
-  REDIRECT_URI,
-  LOGIN_NAME,
-  DEFAULT_ROUTE
-} from '@/constant/route'
+import { REDIRECT_URI, LOGIN_NAME, DEFAULT_ROUTE } from '@/constant/route'
 
 /** 免登录白名单 */
 const whiteList = ['/login']
@@ -21,12 +16,12 @@ const notifyHandler = (error: any) => {
     title: '加载异常',
     content: h('div', [
       h('p', `状态：${error.code}`),
-      h('p', `原因：${msgWrap(error)}`)
+      h('p', `原因：${msgWrap(error)}`),
     ]),
     okText: '刷新',
     onOk() {
       window.location.reload()
-    }
+    },
   })
 }
 
@@ -45,8 +40,8 @@ export default function setupPermissionGuard(router: Router) {
       next({
         name: LOGIN_NAME,
         query: {
-          [REDIRECT_URI]: to.fullPath
-        }
+          [REDIRECT_URI]: to.fullPath,
+        },
       })
     }
 
@@ -58,7 +53,7 @@ export default function setupPermissionGuard(router: Router) {
           try {
             await userStore.getUserInfo()
           } catch (error: any) {
-            if (isUndefined(error.code)) {
+            if (isUnauthorized(error.code)) {
               userStore.logoutCallback()
               nextLogin()
             } else {
@@ -66,27 +61,30 @@ export default function setupPermissionGuard(router: Router) {
             }
           }
         }
-        // 获取路由数据
-        if (!hasRouteFlag) {
-          try {
-            const accessRoutes = await routeStore.generateRoutes()
-            accessRoutes.forEach((route) => {
-              if (!isHttpUrl(route.path)) {
-                router.addRoute(route)
+        // 验证是否登录
+        if (userStore.hasUserInfo) {
+          // 获取路由数据
+          if (!hasRouteFlag) {
+            try {
+              const accessRoutes = await routeStore.generateRoutes()
+              accessRoutes.forEach((route) => {
+                if (!isHttpUrl(route.path)) {
+                  router.addRoute(route)
+                }
+              })
+              hasRouteFlag = true
+              next({ ...to, replace: true })
+            } catch (error: any) {
+              if (isUnauthorized(error.code)) {
+                userStore.logoutCallback()
+                nextLogin()
+              } else {
+                notifyHandler(error)
               }
-            })
-            hasRouteFlag = true
-            next({ ...to, replace: true })
-          } catch (error: any) {
-            if (isUndefined(error.code)) {
-              userStore.logoutCallback()
-              nextLogin()
-            } else {
-              notifyHandler(error)
             }
+          } else {
+            next()
           }
-        } else {
-          next()
         }
       } else {
         next(DEFAULT_ROUTE)
