@@ -89,6 +89,7 @@ export default defineFakeRoute([
       if (authorization?.startsWith('Bearer')) {
         const roles = authorization.endsWith('12345') ? 'admin' : 'user'
         return successResponseWrap({
+          id: 1,
           name: 'admin',
           avatar: 'https://avatars.githubusercontent.com/yangtianxia',
           email: '1399378817@qq.com',

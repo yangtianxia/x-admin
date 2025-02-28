@@ -1,29 +1,11 @@
-// Vue
-import {
-  defineComponent,
-  type PropType,
-  type ExtractPropTypes
-} from 'vue'
-
-// Common
+import { defineComponent, type PropType, type ExtractPropTypes } from 'vue'
+import { IconProvider, DEFAULT_ICON_CONFIGS } from '@icon-park/vue-next/lib/runtime'
 import { camelize } from '@txjs/shared'
 import { isNil } from '@txjs/bool'
 import { printWarn } from '@/shared/utils'
 
-// Component utils
-import { IconProvider, DEFAULT_ICON_CONFIGS } from '@icon-park/vue-next/lib/runtime'
-import {
-  icons,
-  type IconMap,
-  type IconMapCamel
-} from './map'
-
-// Types
-import type {
-  StrokeLinejoin,
-  StrokeLinecap,
-  Theme
-} from './types'
+import { icons, type IconMap, type IconMapCamel } from './map'
+import type { StrokeLinejoin, StrokeLinecap, Theme } from './types'
 
 const [name] = $bem('x-icon')
 
@@ -62,9 +44,7 @@ export default defineComponent({
         return null
       }
 
-      return (
-        <Icon {...rest} />
-      )
+      return <Icon {...rest} />
     }
   }
 })

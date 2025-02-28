@@ -1,4 +1,3 @@
-// Vue
 import {
   defineComponent,
   ref,
@@ -7,26 +6,16 @@ import {
   watch,
   nextTick,
   onBeforeMount,
-  onMounted,
   onUnmounted,
   type PropType
 } from 'vue'
-
-// Common
 import debounce from 'debounce'
-import {
-  omit,
-  shallowMerge,
-  toArray
-} from '@txjs/shared'
-import { isNil, isPlainObject } from '@txjs/bool'
+import { omit, shallowMerge, toArray } from '@txjs/shared'
+import { isNil, isPlainObject, isEqual } from '@txjs/bool'
 import { getToken } from '@/shared/auth'
 import { openWindow } from '@/shared/open-window'
 import { REQUEST_TOKEN_KEY } from '@/constant/http'
 
-// Components
-import { Icon } from '../icon'
-import { uploadProps } from 'ant-design-vue/es/upload/interface'
 import {
   Form,
   Upload,
@@ -35,21 +24,21 @@ import {
   notification,
   type UploadProps
 } from 'ant-design-vue'
-
-// Component utils
+import { uploadProps } from 'ant-design-vue/es/upload/interface'
+import { Icon } from '../icon'
 import { makeNumberProp, makeStringProp } from '../_utils/props'
-import { formatAccept, fileToObj } from './utils'
 
-// Types
-import type {
-  UploadType,
-  UploadResponse,
-  UploadFile
-} from './types'
+import { fileToObj } from './utils'
+import type { UploadType, UploadResponse, UploadFile } from './types'
 
 const [name, bem] = $bem('x-upload')
 
 export const uploadSharedProps = shallowMerge({}, uploadProps(), {
+  action: {
+    type: [String, Function] as PropType<UploadProps['action']>,
+    default: `${import.meta.env.API}/upload`
+  },
+  type: makeStringProp<UploadType>('image'),
   maxCount: makeNumberProp(1),
   maxSize: makeNumberProp(Number.MAX_VALUE),
   urls: [String, Array] as PropType<string | string[]>,
@@ -57,13 +46,8 @@ export const uploadSharedProps = shallowMerge({}, uploadProps(), {
   customRequest: Function as PropType<UploadProps['customRequest']>,
   beforeUpload: Function as PropType<UploadProps['beforeUpload']>,
   formatter: Function as PropType<<T = any>(file: UploadFile<UploadResponse>[]) => T>,
-  accept: makeStringProp('imgage/gif,image/png,image/pjpeg,image/jpeg,image/webp,image/gif'),
+  accept: makeStringProp('image/gif,image/png,image/pjpeg,image/jpeg,image/webp,image/gif'),
   listType: makeStringProp<UploadProps['listType']>('picture-card'),
-  type: makeStringProp<UploadType>('image'),
-  action: {
-    type: [String, Function] as PropType<UploadProps['action']>,
-    default: `${import.meta.env.API}/upload`
-  },
   onRemove: Function as PropType<(file: UploadFile) => void>,
   'onUpdate:fileList': Function as PropType<(fileList: UploadFile) => void>
 })
@@ -109,49 +93,54 @@ export default defineComponent({
     const formItemContext = Form.useInjectFormItemContext()
     const notifyHandler = debounce((message: string) => notification.error({ message }), 1000)
 
-    let handleTimer: any
+    let timer: any
 
-    const onTimerClear = () => {
-      clearTimeout(handleTimer)
-      handleTimer = null
+    const clearTimer = () => {
+      clearTimeout(timer)
+      timer = null
     }
 
     const checkUpload = () => {
       nextTick(() => {
         if (uploadedList.size < props.maxCount) {
-          onTimerClear()
-          handleTimer = setTimeout(() => {
+          clearTimer()
+          timer = setTimeout(() => {
             canUpload.value = true
-          })
+          }, 1)
         } else {
           canUpload.value = false
         }
       })
     }
 
-    const checkFileType = (file: UploadFile) => {
+    const resetUpload = () => {
+      previewUrl.value = undefined
+      previewCurrent.value = 0
+      uploadedList.clear()
+      uploadErrorList.clear()
+      fileList.value = []
+    }
+
+    const validateFileType = (file: UploadFile) => {
       if (!file.type) {
         return false
       }
-
-      const fileTypes = formatAccept(props.accept)
-
-      // 匹配前缀符合的类型
-      const foundAt = fileTypes.findIndex(([type]) => file.type!.startsWith(type))
-
-      if (foundAt === -1) {
-        return false
-      }
-
-      const suffix = fileTypes[foundAt][1]
-
-      // 后缀为 `*` 或 文件类型后缀匹配
-      return suffix === '*' || file.type.endsWith(suffix)
+      const fileType = file.type.toLowerCase()
+      const allowedPatterns = props.accept
+        .split(',')
+        .map((pattern) => {
+          const trimmed = pattern.trim().toLowerCase()
+          const escaped = trimmed
+            .replace(/[.+^${}()|[\]\\]/g, '\\$&')
+            .replace(/\*/g, '.*')
+          return new RegExp(`^${escaped}$`, 'i')
+        })
+      return allowedPatterns.some((regex) => regex.test(fileType))
     }
 
     const beforeRead = (file: UploadFile) => [
       {
-        validator: () => checkFileType(file),
+        validator: () => validateFileType(file),
         message: '选择文件类型不支持'
       },
       {
@@ -245,30 +234,31 @@ export default defineComponent({
       () => props.fileList,
       (values) => {
         if (!values?.length) {
-          uploadedList.clear()
+          resetUpload()
           checkUpload()
         }
-      }
+      },
+      { immediate: true }
+    )
+
+    watch(
+      () => props.urls,
+      (value, oldValue) => {
+        if (value && !isEqual(value, oldValue)) {
+          const values = toArray(value).map(fileToObj)
+          updateFileList(values)
+        }
+      },
+      { immediate: true }
     )
 
     onBeforeMount(() => {
-      if (props.urls) {
-        const values = toArray(props.urls).map(fileToObj)
-        updateFileList(values)
-      }
-
       if (!headers.value[REQUEST_TOKEN_KEY]) {
         headers.value[REQUEST_TOKEN_KEY] = getToken()!
       }
     })
 
-    onMounted(() => {
-      if (!props.fileList?.length) {
-        canUpload.value = true
-      }
-    })
-
-    onUnmounted(onTimerClear)
+    onUnmounted(clearTimer)
 
     const renderUpload = () => (
       <Upload

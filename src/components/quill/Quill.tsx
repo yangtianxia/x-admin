@@ -1,4 +1,3 @@
-// Vue
 import {
   defineComponent,
   ref,
@@ -9,26 +8,23 @@ import {
   type ExtractPropTypes,
   type PropType
 } from 'vue'
-
-// Common
-import Quill, { type QuillOptions } from 'quill'
-import ImageResize from 'quill-resize-module'
-import TableBetter from 'quill-table-better'
+import extend from 'extend'
 import { shallowMerge } from '@txjs/shared'
 import { useExpose } from '@/hooks/expose'
 import { bodyElement } from '@/shared/element'
 
-// Toolbar Icons
+import { Form } from 'ant-design-vue'
+import Quill, { type QuillOptions } from 'quill'
+import ImageResize from 'quill-resize-module'
+import TableBetter from 'quill-table-better'
 import toolBarIcons from './toolbar-icons'
-
-// Quill Style
 import 'quill/dist/quill.snow.css'
 import 'quill-resize-module/dist/resize.css'
 import 'quill-table-better/dist/quill-table-better.css'
 
 Quill.register({
-  'modules/imageResize': ImageResize,
-  'modules/tableBetter': TableBetter
+  'modules/resize': ImageResize,
+  'modules/table-better': TableBetter
 }, true)
 
 shallowMerge(Quill.import('ui/icons') as any, toolBarIcons)
@@ -52,11 +48,11 @@ const getDefaultOptions = () => ({
       ['table-better'],
       ['clean']
     ],
-    imageResize: {
+    resize: {
       embedTags: ['VIDEO', 'IFRAME'],
       tools: ['left', 'center', 'right', 'full']
     },
-    tableBetter: {
+    'table-better': {
       language: 'zh_CN',
       menus: [
         'column',
@@ -109,15 +105,10 @@ export default defineComponent({
   setup(props, { emit }) {
     const editorRef = ref<HTMLDivElement>()
 
+    const formItemContext = Form.useInjectFormItemContext()
+
     const mergeOptions = (target: any, source: any) => {
-      for (const key in source) {
-        if (!target[key] || key !== 'modules') {
-          target[key] = source[key]
-        } else {
-          mergeOptions(target[key], source[key])
-        }
-      }
-      return target
+      return extend(true, {}, target, source)
     }
 
     let quill = null as Quill | null
@@ -126,14 +117,15 @@ export default defineComponent({
 
     const setContent = (html?: string) => {
       if (quill) {
+        quill.setContents([])
+
+        if (!html) {
+          quill.setText('')
+          return
+        }
+
         const delta = quill.clipboard.convert({ html })
-        const [range] = quill.selection.getRange()
         quill.updateContents(delta, Quill.sources.USER)
-        quill.setSelection(
-          delta.length() - (range?.length || 0),
-          Quill.sources.SILENT
-        )
-        quill.scrollSelectionIntoView()
       }
     }
 
@@ -170,15 +162,15 @@ export default defineComponent({
         quill.on('text-change', () => {
           if (props.disabled) {
             quill?.enable(false)
+            return
           }
-          let html = editorRef.value?.children[0].innerHTML
+
+          const html = editorRef.value?.children[0].innerHTML
           const text = quill?.getText()
-          if (html === '<p><br></p>') {
-            html = ''
-          }
-          content = html
+          content = html === '<p><br></p>' ? '' : html
           emit('update:value', content)
-          props.onChange?.({ html, text, quill })
+          formItemContext.onFieldChange()
+          props.onChange?.({ html: content, text, quill })
         })
 
         props.onReady?.(quill)

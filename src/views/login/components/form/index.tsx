@@ -1,21 +1,12 @@
-// Vue
-import {
-  defineComponent,
-  ref,
-  reactive,
-  computed
-} from 'vue'
-
-// Common
+import { defineComponent, ref, reactive, computed } from 'vue'
 import { pick } from '@txjs/shared'
 import { makeString } from '@txjs/make'
 import { useUserStore } from '@/store'
 import { useRedirect } from '@/hooks/redirect'
 import { validator } from '@/shared/validator'
 
-// Components
-import { Icon } from '@/components/icon'
-import { SendCode } from '@/components/send-code'
+import { postLoginCode } from '@/api/user/login'
+
 import {
   Form,
   FormItem,
@@ -24,11 +15,9 @@ import {
   message,
   type FormInstance
 } from 'ant-design-vue'
+import { Icon } from '@/components/icon'
+import { SendCode } from '@/components/send-code'
 
-// Api
-import { postLoginCode } from '@/api/user/login'
-
-// Style
 import style from './index.module.less'
 
 type LoginMethod = 'pwd' | 'sms'

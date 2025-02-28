@@ -1,13 +1,9 @@
-// Vue
 import { defineComponent } from 'vue'
-
-// Common
 import { goBack } from '@/router'
 
-// Component
+import { Button } from 'ant-design-vue'
 import { Result } from '@/components/result'
 import { Icon } from '@/components/icon'
-import { Button } from 'ant-design-vue'
 
 export default defineComponent({
   name: 'NotFoundPage',

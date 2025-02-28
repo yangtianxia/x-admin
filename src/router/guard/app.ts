@@ -2,7 +2,6 @@ import type { Router, RouteLocationNormalizedGeneric } from 'vue-router'
 import NProgress from 'nprogress'
 import { isNonEmptyString } from '@txjs/bool'
 import { camelToKebab } from '@txjs/shared'
-
 import { rootElement } from '@/shared/element'
 
 const setTitle = (...args: (string | undefined)[]) => {

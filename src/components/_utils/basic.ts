@@ -19,7 +19,7 @@ export const createVNode = (
     const { extra = {}, render } = options || {}
     return isFunction(vnode)
       ? vnode(extra)
-      : render
+      : isFunction(render)
         ? render(vnode)
         : vnode
   }

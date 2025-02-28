@@ -1,10 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
-import {
-  LOGIN_NAME,
-  DEFAULT_NAME,
-  FORBIDDEN_NAME,
-  REDIRECT_NAME
-} from '@/constant/route'
+import { LOGIN_NAME, DEFAULT_NAME, FORBIDDEN_NAME, REDIRECT_NAME } from '@/constant/route'
 
 export const DEFAULT_LAYOUT = () => import('@/layout')
 

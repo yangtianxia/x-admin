@@ -1,13 +1,9 @@
-// Vue
 import { defineComponent, computed } from 'vue'
-
-// Common
 import { useRoute } from 'vue-router'
 import { useMenuTree } from '@/hooks/menu-tree'
 
-// Component
-import { Icon } from '@/components/icon'
 import { Breadcrumb } from 'ant-design-vue'
+import { Icon } from '@/components/icon'
 
 export default defineComponent({
   name: 'LayoutBreadcrumb',

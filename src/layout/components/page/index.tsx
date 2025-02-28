@@ -1,11 +1,4 @@
-// Vue
-import {
-  defineComponent,
-  Transition,
-  KeepAlive
-} from 'vue'
-
-// Components
+import { defineComponent, Transition, KeepAlive } from 'vue'
 import { RouterView } from 'vue-router'
 
 export default defineComponent({

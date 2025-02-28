@@ -1,7 +1,7 @@
 {
   "name": "x-admin",
   "description": "一个基于Vue3生态打造的后台应用模版",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "type": "module",
   "private": true,
   "scripts": {
@@ -53,7 +53,7 @@
     "qs": "^6.13.1",
     "quill": "^2.0.3",
     "quill-resize-module": "^2.0.4",
-    "quill-table-better": "1.1.6-rc.0",
+    "quill-table-better": "1.1.6",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },

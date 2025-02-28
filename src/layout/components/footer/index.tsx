@@ -1,7 +1,5 @@
-// Vue
 import { defineComponent } from 'vue'
 
-// Components
 import { Icon } from '@/components/icon'
 
 export default defineComponent({

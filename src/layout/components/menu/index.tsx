@@ -1,27 +1,15 @@
-// Vue
 import { defineComponent, ref } from 'vue'
-
-// Common
-import {
-  useRoute,
-  useRouter,
-  type RouteRecordRaw,
-  type RouteMeta
-} from 'vue-router'
+import { useRoute, useRouter, type RouteRecordRaw, type RouteMeta } from 'vue-router'
 import { isAbsoluteUrl } from '@txjs/bool'
 import { makeArray } from '@txjs/make'
 import { useMenuTree } from '@/hooks/menu-tree'
 import { openWindow } from '@/shared/open-window'
 import { listenerRouteChange } from '@/shared/route-listener'
 
-// Component
 import { Menu } from 'ant-design-vue'
 import { Icon, type IconMap } from '@/components/icon'
-
-// Components utils
 import { addUnit } from '@/components/_utils/style'
 
-// Style
 import style from './index.module.less'
 
 export default defineComponent({

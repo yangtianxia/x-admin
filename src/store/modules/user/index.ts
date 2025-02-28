@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { resetRouter } from '@/router'
-import { setToken, clearToken } from '@/shared/auth'
+import { isLogin, setToken, clearToken } from '@/shared/auth'
 import { removeRouteListener } from '@/shared/route-listener'
 import { TOKEN_HEAD_KEY, REQUEST_TOKEN_KEY } from '@/constant/http'
 
@@ -34,7 +34,7 @@ const useUserStore = defineStore('x_admin_user', {
   }),
   getters: {
     hasUserInfo(state: UserState) {
-      return !!state.id
+      return !!state.id && isLogin()
     },
     userInfo(state: UserState): UserState {
       return { ...state }

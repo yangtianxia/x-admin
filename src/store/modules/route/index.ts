@@ -13,7 +13,7 @@ const NotFoundBase = () => import('@/views/not-found/base')
 
 const layoutComponentMap = {
   Layout: DEFAULT_LAYOUT,
-  Parent: () => import('@/components/parent-view')
+  Parent: () => import('@/layout/parent')
 }
 
 const transformComponentView = (component: string) => {

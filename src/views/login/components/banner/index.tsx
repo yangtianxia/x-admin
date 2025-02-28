@@ -1,11 +1,8 @@
-// Vue
 import { defineComponent, computed } from 'vue'
 
-// Components
-import { Icon } from '@/components/icon'
 import { Carousel } from 'ant-design-vue'
+import { Icon } from '@/components/icon'
 
-// Style
 import style from './index.module.less'
 
 const slides = computed(() => [

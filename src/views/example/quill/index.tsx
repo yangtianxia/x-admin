@@ -1,7 +1,5 @@
-// Vue
 import { defineComponent, ref } from 'vue'
 
-// Components
 import { Scaffold } from '@/components/scaffold'
 import { Quill } from '@/components/quill'
 

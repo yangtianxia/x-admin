@@ -1,7 +1,5 @@
-// Vue
 import { defineComponent } from 'vue'
 
-// Component
 import { Result } from '@/components/result'
 
 export default defineComponent({

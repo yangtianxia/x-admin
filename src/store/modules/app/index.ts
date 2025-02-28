@@ -5,11 +5,7 @@ import { shallowMerge, cloneDeep } from '@txjs/shared'
 import defaultSettings from '@/config/settings'
 import { THEME_DARK, THEME_SYSTEM } from '@/constant/theme'
 import { rootElement } from '@/shared/element'
-import {
-  setThemeListener,
-  listenerThemeChange,
-  removeThemeListener
-} from '@/shared/theme-listener'
+import { setThemeListener, listenerThemeChange, removeThemeListener } from '@/shared/theme-listener'
 
 import type { AppState } from './types'
 

@@ -1,4 +1,3 @@
-// Vue
 import {
   defineComponent,
   computed,
@@ -7,18 +6,14 @@ import {
   type ExtractPropTypes,
   type PropType
 } from 'vue'
-
-// Common
 import { shallowMerge } from '@txjs/shared'
 import { useParent } from '@vant/use'
 import { SCAFFOLD_CONTEXT_KEY } from '@/hooks/scaffold'
 
-// Component
 import { resultSharedProps, type ResultStatus } from '../result'
-
-// Component utils
 import { createInjectionKey } from '../_utils/basic'
 import { truthProp } from '../_utils/props'
+
 import { SCAFFOLD_LOADING_KEY } from './context'
 
 const [name, bem] = $bem('x-scaffold')

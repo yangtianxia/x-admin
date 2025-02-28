@@ -1,4 +1,3 @@
-// Vue
 import {
   defineComponent,
   reactive,
@@ -7,21 +6,15 @@ import {
   type PropType,
   type ExtractPropTypes
 } from 'vue'
-
-// Common
 import { shallowMerge, pick } from '@txjs/shared'
 import { isPlainObject } from '@txjs/bool'
-import { resultSharedProps, resultStatusConfig } from './utils'
 
-// Components
 import { Image } from 'ant-design-vue'
-
-// Component utils
 import { createVNode } from '../_utils/basic'
 import { VNodeProp } from '../_utils/props'
 import type { VNode } from '../_utils/types'
 
-// Types
+import { resultSharedProps, resultStatusConfig } from './utils'
 import type { ResultCode } from './types'
 
 const [name, bem] = $bem('x-result')

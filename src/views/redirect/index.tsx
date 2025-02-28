@@ -1,7 +1,5 @@
-// Vue
 import { defineComponent } from 'vue'
 
-// Common
 import { useRoute, useRouter } from 'vue-router'
 
 export default defineComponent({

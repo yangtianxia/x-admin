@@ -1,20 +1,11 @@
-// Vue
-import {
-  defineComponent,
-  inject,
-  type ExtractPropTypes
-} from 'vue'
-
-// Common
+import { defineComponent, inject, type ExtractPropTypes } from 'vue'
 import { notNil } from '@txjs/bool'
 
-// Components
 import { Spin } from 'ant-design-vue'
 import { Result } from '../result'
-import { SCAFFOLD_KEY } from './Scaffold'
-
-// Component utils
 import { truthProp } from '../_utils/props'
+
+import { SCAFFOLD_KEY } from './Scaffold'
 
 const [name, bem] = $bem('x-scaffold-body')
 

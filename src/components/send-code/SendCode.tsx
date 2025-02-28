@@ -1,31 +1,10 @@
-// Vue
-import {
-  defineComponent,
-  reactive,
-  computed,
-  type PropType,
-  type ExtractPropTypes
-} from 'vue'
-
-// Common
+import { defineComponent, reactive, computed, type PropType, type ExtractPropTypes } from 'vue'
+import { omit, shallowMerge, callInterceptor, type Interceptor } from '@txjs/shared'
 import { useCountDown } from '@vant/use'
-import {
-  omit,
-  shallowMerge,
-  callInterceptor,
-  type Interceptor
-} from '@txjs/shared'
 
-// Components
 import { Button, type ButtonProps } from 'ant-design-vue'
-
-// Component utils
 import { createVNode } from '../_utils/basic'
-import {
-  VNodeProp,
-  makeNumberProp,
-  makeStringProp
-} from '../_utils/props'
+import { VNodeProp, makeNumberProp, makeStringProp } from '../_utils/props'
 
 const [name, bem] = $bem('x-send-code')
 

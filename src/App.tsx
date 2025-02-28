@@ -1,17 +1,9 @@
-// Vue
 import { defineComponent } from 'vue'
-
-// Common
-import zhCN from 'ant-design-vue/es/locale/zh_CN'
+import { RouterView } from 'vue-router'
 import { useAppStore } from '@/store'
 
-// Components
-import { RouterView } from 'vue-router'
-import {
-  ConfigProvider,
-  StyleProvider,
-  legacyLogicalPropertiesTransformer
-} from 'ant-design-vue'
+import { ConfigProvider, StyleProvider, legacyLogicalPropertiesTransformer } from 'ant-design-vue'
+import zhCN from 'ant-design-vue/es/locale/zh_CN'
 
 export default defineComponent({
   setup () {

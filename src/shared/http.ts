@@ -1,29 +1,12 @@
-import axios, {
-  type AxiosError,
-  type AxiosRequestConfig,
-  type AxiosResponse,
-  type RequestContentType,
-  type InternalAxiosRequestConfig
-} from 'axios'
-
 import qs from 'qs'
+import axios, { type AxiosError, type AxiosRequestConfig, type AxiosResponse, type RequestContentType, type InternalAxiosRequestConfig } from 'axios'
 import { notification } from 'ant-design-vue'
 import { toArray, shallowMerge } from '@txjs/shared'
-import {
-  isPlainObject,
-  isUndefined,
-  isNil,
-  notNil,
-  isFunction
-} from '@txjs/bool'
+import { isPlainObject, isUndefined, isNil, notNil, isFunction } from '@txjs/bool'
 
 import { useRedirect } from '@/hooks/redirect'
 import { isLogin, getToken } from '@/shared/auth'
-import {
-  REQUEST_TOKEN_KEY,
-  ERROR_CODE_DEFAULT,
-  REQUEST_ERROR
-} from '@/constant/http'
+import { REQUEST_TOKEN_KEY, ERROR_CODE_DEFAULT, REQUEST_ERROR } from '@/constant/http'
 
 enum RequestContentTypeEnum {
   JSON = 'application/json',

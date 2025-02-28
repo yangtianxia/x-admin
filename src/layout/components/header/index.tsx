@@ -1,24 +1,10 @@
-// Vue
-import {
-  defineComponent,
-  ref,
-  type Ref
-} from 'vue'
-
-// Common
+import { defineComponent, ref, type Ref } from 'vue'
 import { useAppStore, useUserStore } from '@/store'
 import { useRedirect } from '@/hooks/redirect'
 import { THEME_OPTIONS } from '@/constant/theme'
 
-// Components
+import { Avatar, Button, Tooltip, Dropdown, Menu } from 'ant-design-vue'
 import { Icon } from '@/components/icon'
-import {
-  Avatar,
-  Button,
-  Tooltip,
-  Dropdown,
-  Menu
-} from 'ant-design-vue'
 
 export default defineComponent({
   name: 'LayoutHeader',

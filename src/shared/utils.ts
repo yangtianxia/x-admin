@@ -18,7 +18,7 @@ export const upperFirst = (value: string) => {
   if (!value || !value.trim()) {
     return ''
   }
-  return value.charAt(0).toUpperCase() + value.slice(0)
+  return value.charAt(0).toUpperCase() + value.slice(1)
 }
 
 export const transformPathToName = (value: string) => {

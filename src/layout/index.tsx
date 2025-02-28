@@ -1,25 +1,15 @@
-// Vue
-import {
-  defineComponent,
-  computed,
-  type CSSProperties
-} from 'vue'
-
-// Common
+import { defineComponent, computed, type CSSProperties } from 'vue'
 import { useAppStore } from '@/store'
 
-// Components
-import { Icon } from '@/components/icon'
 import { Layout } from 'ant-design-vue'
+import { Icon } from '@/components/icon'
+import { addUnit } from '@/components/_utils/style'
 
 import LayoutHeader from './components/header'
 import LayoutBreadcrumb from './components/breadcrumb'
 import LayoutMenu from './components/menu'
 import LayoutPage from './components/page'
 import LayoutFooter from './components/footer'
-
-// Component utils
-import { addUnit } from '@/components/_utils/style'
 
 export default defineComponent({
   name: 'LayoutWrapper',

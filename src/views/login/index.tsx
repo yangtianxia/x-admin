@@ -1,14 +1,11 @@
-// Vue
 import { defineComponent } from 'vue'
-
-// Common
 import { useAppStore } from '@/store'
 import { THEME_OPTIONS } from '@/constant/theme'
 
-// Components
-import { Icon } from '@/components/icon'
 import { Dropdown, Menu } from 'ant-design-vue'
+import { Icon } from '@/components/icon'
 import LayoutFooter from '@/layout/components/footer'
+
 import LoginBanner from './components/banner'
 import LoginForm from './components/form'
 

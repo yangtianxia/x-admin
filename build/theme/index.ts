@@ -6,8 +6,6 @@ import colors from './colors'
 export default plugin(
   ({ addBase }) => {
     addBase({
-      ':root,:host': variable.light,
-      '.dark': variable.dark,
       ':host,html': {
         fontFamily: variable.fontFamily
       },

@@ -1,13 +1,8 @@
-// Vue
 import { defineComponent, KeepAlive } from 'vue'
-
-// Components
 import { RouterView } from 'vue-router'
 
-const [name] = $bem('x-parent-view')
-
 export default defineComponent({
-  name,
+  name: 'ParentWrapper',
   setup() {
     return () => (
       <RouterView
